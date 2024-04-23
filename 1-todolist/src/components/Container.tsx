@@ -54,11 +54,17 @@ const dataTodolist = [
 
     }
 ]
+
 export const Container = () => {
+
+
+
     return (
         <div className="App">
             {dataTodolist.map((data) => {
                 return (
+
+
                     <Todolist id={data.id}
                               title={data.title}
                               tasks={data.tasks}
