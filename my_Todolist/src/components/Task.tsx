@@ -18,6 +18,7 @@ export const Task = (props: TaskPropsType) => {
             </ul>
             <ul>
                 {data1.students.map((s) => {
+
                     return <li>{s}</li>
                 })}
             </ul>
