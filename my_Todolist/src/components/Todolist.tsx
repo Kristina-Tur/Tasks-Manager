@@ -1,25 +1,25 @@
 import React from 'react';
 
-export type ListPropsType = {
+type TodolistPropsType = {
     title: string
-    tasks: Array<TaskPropsType>
+    tasks: Array<TasksPropsType>
     students: Array<string>
 }
 
-type TaskPropsType = {
+type TasksPropsType = {
     taskId: number
     title: string
     isDone: boolean
 }
 
 
-export const Todolist = (props: ListPropsType) => {
+export const Todolist = ({title, tasks, students}: TodolistPropsType) => {
     return (
         <div>
             <div>
-                <h3>{props.title}</h3>
+                <h3>{title}</h3>
                 <ul>
-                    {props.tasks.map((task) =>
+                    {tasks.map((task) =>
                         <li>
                             <input type={'checkbox'} checked={task.isDone}/>
                             <span>{task.title}</span>
@@ -27,7 +27,7 @@ export const Todolist = (props: ListPropsType) => {
                     )}
                 </ul>
                 <ul>
-                    {props.students.map((student) =>
+                    {students.map((student) =>
                         <li>{student}</li>
                     )}
                 </ul>
