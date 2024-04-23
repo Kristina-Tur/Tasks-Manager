@@ -7,8 +7,6 @@ type TodolistPropsType = {
     id: number
     title: string
     tasks: Array<TasksPropsType>
-
-
 }
 const buttons: Array<{ id: number, title: string, filter: FilterType }> = [
     {id: 1, title: 'All', filter: 'all'},
