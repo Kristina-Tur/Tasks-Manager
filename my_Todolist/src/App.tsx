@@ -15,6 +15,7 @@ const data = [
         {taskId: 2, title: 'JS2', isDone: true}
     ],
     students: [
+
         'Jago Wormald1',
         'Saul Milne2',
         'Aariz Hester3',
