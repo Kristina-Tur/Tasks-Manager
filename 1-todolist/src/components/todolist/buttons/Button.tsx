@@ -1,10 +1,12 @@
 import React, {ReactNode} from 'react';
 
 type ButtonsPropsType = {
-    children: ReactNode
+    /*children: ReactNode*/
+    title: string
+    onClick: () => void
 }
-export const Button = ({children}: ButtonsPropsType) => {
+export const Button = ({/*children*/title, onClick}: ButtonsPropsType) => {
     return (
-        <button>{children}</button>
+        <button onClick={onClick}>{/*children*/title}</button>
     );
 };

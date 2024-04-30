@@ -1,20 +1,27 @@
 import React from 'react';
-import {Tasks, TasksPropsType} from './tasks/Tasks';
 import {Button} from './buttons/Button';
-import {FilterType} from '../Container';
+import {FilterType} from '../../App';
 
 type TodolistPropsType = {
-    id: number
     title: string
     tasks: Array<TasksPropsType>
+    removeTask: (id: number) => void
 }
+
+type TasksPropsType = {
+    id: number
+    isDone: boolean
+    title: string
+}
+
 const buttons: Array<{ id: number, title: string, filter: FilterType }> = [
     {id: 1, title: 'All', filter: 'all'},
     {id: 1, title: 'Active', filter: 'active'},
     {id: 1, title: 'Completed', filter: 'completed'},
 ]
 
-export const Todolist = ({title, tasks}: TodolistPropsType) => {
+
+export const Todolist = ({title, tasks, removeTask}: TodolistPropsType) => {
     return (
         <div>
             <h3>{title}</h3>
@@ -27,16 +34,17 @@ export const Todolist = ({title, tasks}: TodolistPropsType) => {
             ) : (
                 <ul>
                     {tasks.map((task) =>
-                        <Tasks id={task.id}
-                               isDone={task.isDone}
-                               title={task.title}
-                        />
+                        <li>
+                            <input key={task.id} type="checkbox" checked={task.isDone}/>
+                            <span>{task.title}</span>
+                            <Button onClick={() => removeTask(task.id)} title={'x'}/>
+                        </li>
                     )}
                 </ul>
             )}
             <div>
                 {buttons.map((button) =>
-                        <Button key={button.id}>{button.title}</Button>
+                        <Button key={button.id} title={button.title} onClick={() => {}}/>
                 )}
             </div>
         </div>
