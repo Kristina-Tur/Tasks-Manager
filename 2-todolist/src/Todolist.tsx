@@ -24,7 +24,7 @@ export const Todolist = ({title, tasks, removeTask}: PropsType) => {
 							return <li key={task.id}>
 								<input type="checkbox" checked={task.isDone}/>
 								<span>{task.title}</span>
-								<button onClick={() => removeTask(task.id)}>x</button>
+								<Button title={'x'} onClick={() => removeTask(task.id)}/>{/*Передадим функцию removeTask внутрь компоненты Todolist так же как и данные через props и вызовем её*/}
 							</li>
 						})}
 					</ul>
