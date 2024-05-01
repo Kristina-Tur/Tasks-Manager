@@ -44,51 +44,14 @@ function App() {
         setTasks([])
     }
 
-
-    let filteredThreeTasks = tasks
-
-    const displayThreeTasks = () => {
-        filteredThreeTasks = tasks.filter((task, index) => {
-            if (index === 0) {
-                return task
-            }
-            if (index === 1) {
-                return task
-            }
-            if (index === 2) {
-                return task
-            }
-
-        })
-        setTasks(filteredThreeTasks)
-    }
-
-    let [filter, setFilter] = useState<FilterValuesType>('all');
-
-    let tasksForTodolist = tasks;
-
-    if (filter === 'active') {
-        tasksForTodolist = tasks.filter(t => t.isDone === false);
-    }
-    if (filter === 'completed') {
-        tasksForTodolist = tasks.filter(t => t.isDone === true);
-    }
-    if (filter === 'three') {
-        tasksForTodolist = tasks.filter(t => t.id < 4);
-    }
-
-    function changeFilter(value: FilterValuesType) {
-        setFilter(value);
-    }
-
     return (
         <div className="App">
             <Todolist title="What to learn"
-                      tasks={tasksForTodolist}
+                      tasks={tasks}
                       removeTask={removeTask}
-                      changeFilter={changeFilter}
                       removeAllTasks={removeAllTasks}
-                      displayThreeTasks={displayThreeTasks}/>
+                      /*changeFilter={changeFilter}
+                      displayThreeTasks={displayThreeTasks}*//>
         </div>
     );
 }
