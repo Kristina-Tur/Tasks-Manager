@@ -6,6 +6,7 @@ type TodolistPropsType = {
     title: string
     tasks: Array<TasksPropsType>
     removeTask: (id: number) => void
+    changeTodolist: (filter: FilterType) => void
 }
 
 type TasksPropsType = {
@@ -21,7 +22,7 @@ const buttons: Array<{ id: number, title: string, filter: FilterType }> = [
 ]
 
 
-export const Todolist = ({title, tasks, removeTask}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, removeTask, changeTodolist}: TodolistPropsType) => {
     return (
         <div>
             <h3>{title}</h3>
@@ -44,7 +45,7 @@ export const Todolist = ({title, tasks, removeTask}: TodolistPropsType) => {
             )}
             <div>
                 {buttons.map((button) =>
-                        <Button key={button.id} title={button.title} onClick={() => {}}/>
+                        <Button key={button.id} title={button.title} onClick={() => {changeTodolist(button.filter)}}/>
                 )}
             </div>
         </div>
