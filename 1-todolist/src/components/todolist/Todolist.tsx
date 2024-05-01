@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Button} from './buttons/Button';
 import {FilterType} from '../../App';
 import {v1} from 'uuid';
@@ -8,7 +8,7 @@ type TodolistPropsType = {
     tasks: Array<TasksPropsType>
     removeTask: (id: string) => void
     changeTodolist: (filter: FilterType) => void
-    addTask: () => void
+    addTask: (value: string) => void
 }
 
 type TasksPropsType = {
@@ -24,12 +24,22 @@ const buttons: Array<{ id: string, title: string, filter: FilterType }> = [
 ]
 
 export const Todolist = ({title, tasks, removeTask, changeTodolist, addTask}: TodolistPropsType) => {
+
+    const [newTaskTitle, setNewTaskTitle] = useState('')
+    const inputValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setNewTaskTitle(event.currentTarget.value)
+    }
+
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input/>
-                <Button onClick={() => {addTask()}} title={'+'}/>
+                <input value={newTaskTitle} onChange={inputValueHandler}/>
+                <Button onClick={() => {
+                    addTask(newTaskTitle)
+                    setNewTaskTitle('')
+                }}
+                        title={'+'}/>
             </div>
             {tasks.length === 0 ? (
                 <p>No tasks</p>
@@ -46,7 +56,9 @@ export const Todolist = ({title, tasks, removeTask, changeTodolist, addTask}: To
             )}
             <div>
                 {buttons.map((button) =>
-                        <Button key={button.id} title={button.title} onClick={() => {changeTodolist(button.filter)}}/>
+                    <Button key={button.id} title={button.title} onClick={() => {
+                        changeTodolist(button.filter)
+                    }}/>
                 )}
             </div>
         </div>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {Todolist} from './components/todolist/Todolist';
 import {v1} from 'uuid';
@@ -27,11 +27,13 @@ const App = () => {
         setDataTodolist1(filteredTasks)
     }
 
-    const addTask = () => {
-        const newTask = {id: v1(), isDone: false, title: 'New Task'}
+    const addTask = (value: string) => {
+        const newTask = {id: v1(), isDone: false, title: value}
         const newArray = [newTask, ...dataTodolist1]
         setDataTodolist1(newArray)
     }
+
+
 
     const [filter, setFilter] = useState<FilterType>('all');
     let tasksForTodolist = dataTodolist1
