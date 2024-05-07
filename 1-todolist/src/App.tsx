@@ -33,6 +33,13 @@ const App = () => {
         setDataTodolist1(newArray)
     }
 
+    const changeStatus = (taskId: string, isDone: boolean) => {
+        let task = dataTodolist1.find(task => task.id === taskId)
+        if(task){
+            task.isDone = isDone;
+        }
+        setDataTodolist1([...dataTodolist1])
+    }
 
 
     const [filter, setFilter] = useState<FilterType>('all');
@@ -57,6 +64,7 @@ const App = () => {
                       removeTask={removeTask}
                       changeTodolist={changeTodolist}
                       addTask={addTask}
+                      changeStatus={changeStatus}
             />
         </div>
     );
