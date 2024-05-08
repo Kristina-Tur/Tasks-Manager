@@ -19,13 +19,21 @@ type TasksPropsType = {
     title: string
 }
 
-const buttons: Array<{ id: string, title: string, filter: FilterType}> = [
+const buttons: Array<{ id: string, title: string, filter: FilterType }> = [
     {id: v1(), title: 'All', filter: 'all'},
     {id: v1(), title: 'Active', filter: 'active'},
     {id: v1(), title: 'Completed', filter: 'completed'},
 ]
 
-export const Todolist = ({title, tasks, removeTask, changeTodolist, addTask, changeStatus, filter}: TodolistPropsType) => {
+export const Todolist = ({
+                             title,
+                             tasks,
+                             removeTask,
+                             changeTodolist,
+                             addTask,
+                             changeStatus,
+                             filter
+                         }: TodolistPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -36,14 +44,18 @@ export const Todolist = ({title, tasks, removeTask, changeTodolist, addTask, cha
     }
     const onKeyUpInputHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         setError(null)
-        if (event.key === 'Enter') {
-            addTask(newTaskTitle)
-            setNewTaskTitle('')
+        if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
+            if (event.key === 'Enter') {
+                addTask(newTaskTitle)
+                setNewTaskTitle('')
+            }
+        } else {
+            setError('Title is required')
         }
     }
     const addTaskHandler = () => {
-        if(newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20){
-            addTask(newTaskTitle)
+        if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
+            addTask(newTaskTitle.trim())
             setNewTaskTitle('')
         } else {
             setError('Title is required')
@@ -87,7 +99,8 @@ export const Todolist = ({title, tasks, removeTask, changeTodolist, addTask, cha
             )}
             <div>
                 {buttons.map((button) =>
-                    <Button className={button.filter === filter ? 'active-filter' : ''} key={button.id} title={button.title} onClick={() => {
+                    <Button className={button.filter === filter ? 'active-filter' : ''} key={button.id}
+                            title={button.title} onClick={() => {
                         changeTodolist(button.filter)
                     }}/>
                 )}
