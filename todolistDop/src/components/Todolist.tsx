@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Button} from './Button';
 import {filterType, TasksPropsType} from '../App';
 
@@ -7,16 +7,26 @@ type TodolistPropsType = {
     tasks: Array<TasksPropsType>
     removeTask: (taskId: string) => void
     changeFilter: (value: filterType) => void
+    addTask: (value: string) => void
 }
 
 export const Todolist = (props: TodolistPropsType) => {
+    const [value, setValue] = useState('')
+
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setValue(event.currentTarget.value)
+    }
+
+    const onClickButtonHandler = () => {
+        props.addTask(value)
+        setValue('')
+    }
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input/>
-                <Button title={'+'} callback={() => {
-                }}/>
+                <input value={value} onChange={onChangeInputHandler}/>
+                <Button title={'+'} callback={() => onClickButtonHandler()}/>
             </div>
             <ul>
                 {props.tasks.length === 0 ? 'Theres no task' :
@@ -26,7 +36,8 @@ export const Todolist = (props: TodolistPropsType) => {
                             <span>
                         {task.title}
                             </span>
-                            <Button title={'x'} callback={() => {props.removeTask(task.id)}}/>
+                            <button onClick={() => props.removeTask(task.id)}>x</button>
+                            {/*<Button title={'x'} callback={() => props.removeTask(task.id)}/>*/}
                         </li>)
                 }
 
