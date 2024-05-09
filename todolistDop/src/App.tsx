@@ -48,7 +48,6 @@ function App() {
             tasksForFilter = tasks.filter((task) => task.isDone)
         }
 
-
     const changeFilter = (value: filterType) => {
         setFilter(value)
     }
