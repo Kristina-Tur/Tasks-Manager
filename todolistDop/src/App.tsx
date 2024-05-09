@@ -1,26 +1,34 @@
 import React from 'react';
 import './App.css';
+import {v1} from 'uuid';
+import {Todolist} from './components/Todolist';
+
+export type TasksPropsType = {
+    id: string
+    isDone: boolean
+    title: string
+}
 
 function App() {
+    const tasks: Array<TasksPropsType> = [
+        {id: v1(), isDone: true, title: 'HTML&CSS'},
+        {id: v1(), isDone: true, title: 'JS'},
+        {id: v1(), isDone: false, title: 'React'},
+        {id: v1(), title: 'Redux', isDone: false},
+        {id: v1(), title: 'Typescript', isDone: false},
+        {id: v1(), title: 'RTK query', isDone: false}
+    ]
+    const tasks2: Array<any> = []
     return (
         <div className="App">
-            <div>
-                <h3>What to learn</h3>
-                <div>
-                    <input/>
-                    <button>+</button>
-                </div>
-                <ul>
-                    <li><input type="checkbox" checked={true}/> <span>HTML&CSS</span></li>
-                    <li><input type="checkbox" checked={true}/> <span>JS</span></li>
-                    <li><input type="checkbox" checked={false}/> <span>React</span></li>
-                </ul>
-                <div>
-                    <button>All</button>
-                    <button>Active</button>
-                    <button>Completed</button>
-                </div>
-            </div>
+            <Todolist
+                title={'What to learn'}
+                tasks={tasks}
+            />
+            <Todolist
+                title={'What to learn'}
+                tasks={tasks2}
+            />
         </div>
     );
 }
