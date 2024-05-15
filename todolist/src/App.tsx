@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import './App.css';
-import {Todolist} from './components/todolist/Todolist';
+import {TasksPropsType, Todolist} from './components/todolist/Todolist';
 import {v1} from 'uuid';
 
 export type FilterType = 'all' | 'active' | 'completed'
@@ -34,11 +34,13 @@ const App = () => {
     }
 
     const changeStatus = (taskId: string, isDone: boolean) => {
-        let task = dataTodolist1.find(task => task.id === taskId)
+        let nextState: Array<TasksPropsType> = dataTodolist1.map(task => task.id === taskId ? {...task, isDone: isDone } : task)
+        setDataTodolist1(nextState)
+        /*let task = dataTodolist1.find(task => task.id === taskId)
         if(task){
             task.isDone = isDone;
         }
-        setDataTodolist1([...dataTodolist1])
+        setDataTodolist1([...dataTodolist1])*/
     }
 
 
