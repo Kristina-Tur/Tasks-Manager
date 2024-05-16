@@ -2,6 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {Button} from './buttons/Button';
 import {FilterType} from '../../App';
 import {v1} from 'uuid';
+import './../../App.css';
 
 type TodolistPropsType = {
     todolistId: string
@@ -72,10 +73,10 @@ export const Todolist = ({
 
     return (
         <div>
-            <h3>
-                {title}
-                <button onClick={removeTodolistHandler}>{'X'}</button>
-            </h3>
+            <div className={'todolist-title-container'}>
+                <h3>{title}</h3>
+                <Button title={'X'} onClick={removeTodolistHandler}/>
+            </div>
             <div>
                 <input value={newTaskTitle}
                        onChange={onChangeInputHandler}
@@ -93,7 +94,7 @@ export const Todolist = ({
             ) : (
                 <ul>
                     {tasks.map((task) => {
-                        const onRemoveHandler = () => removeTask(todolistId,task.id)
+                        const onRemoveHandler = () => removeTask(todolistId, task.id)
                         const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => changeStatus(todolistId, task.id, event.currentTarget.checked)
                         return (
                             <li key={task.id} className={task.isDone ? 'is-done' : ''}>
@@ -112,7 +113,7 @@ export const Todolist = ({
                 {buttons.map((button) =>
                     <Button className={button.filter === filter ? 'active-filter' : ''} key={button.id}
                             title={button.title} onClick={() => {
-                        changeTodolist( todolistId, button.filter)
+                        changeTodolist(todolistId, button.filter)
                     }}/>
                 )}
             </div>
