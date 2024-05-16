@@ -4,12 +4,14 @@ import {FilterType} from '../../App';
 import {v1} from 'uuid';
 
 type TodolistPropsType = {
+    todolistId: string
     title: string
     tasks: Array<TasksPropsType>
-    removeTask: (id: string) => void
-    changeTodolist: (filter: FilterType) => void
-    addTask: (value: string) => void
-    changeStatus: (taskId: string, isDone: boolean) => void
+    removeTask: (todolistId: string, id: string) => void
+    changeTodolist: (todolistId: string, filter: FilterType) => void
+    addTask: (todolistId: string, value: string) => void
+    changeStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+    removeTodolist: (todolistId: string) => void
     filter: FilterType
 }
 
@@ -32,7 +34,9 @@ export const Todolist = ({
                              changeTodolist,
                              addTask,
                              changeStatus,
-                             filter
+                             filter,
+                             todolistId,
+                             removeTodolist
                          }: TodolistPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
@@ -46,7 +50,7 @@ export const Todolist = ({
         setError(null)
         if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
             if (event.key === 'Enter') {
-                addTask(newTaskTitle)
+                addTask(todolistId, newTaskTitle)
                 setNewTaskTitle('')
             }
         } else {
@@ -55,16 +59,23 @@ export const Todolist = ({
     }
     const addTaskHandler = () => {
         if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
-            addTask(newTaskTitle.trim())
+            addTask(todolistId, newTaskTitle.trim())
             setNewTaskTitle('')
         } else {
             setError('Title is required')
         }
     }
 
+    const removeTodolistHandler = () => {
+        removeTodolist(todolistId)
+    }
+
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>
+                {title}
+                <button onClick={removeTodolistHandler}>{'X'}</button>
+            </h3>
             <div>
                 <input value={newTaskTitle}
                        onChange={onChangeInputHandler}
@@ -82,8 +93,8 @@ export const Todolist = ({
             ) : (
                 <ul>
                     {tasks.map((task) => {
-                        const onRemoveHandler = () => removeTask(task.id)
-                        const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => changeStatus(task.id, event.currentTarget.checked)
+                        const onRemoveHandler = () => removeTask(todolistId,task.id)
+                        const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => changeStatus(todolistId, task.id, event.currentTarget.checked)
                         return (
                             <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                                 <input type="checkbox"
@@ -101,7 +112,7 @@ export const Todolist = ({
                 {buttons.map((button) =>
                     <Button className={button.filter === filter ? 'active-filter' : ''} key={button.id}
                             title={button.title} onClick={() => {
-                        changeTodolist(button.filter)
+                        changeTodolist( todolistId, button.filter)
                     }}/>
                 )}
             </div>
