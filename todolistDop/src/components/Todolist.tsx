@@ -3,17 +3,27 @@ import {Button} from './Button';
 import {filterType, TasksPropsType} from '../App';
 
 type TodolistPropsType = {
+    todolistId: string
     title: string
     tasks: Array<TasksPropsType>
-    removeTask: (taskId: string) => void
-    changeFilter: (value: filterType) => void
-    addTask: (value: string) => void
-    changeStatus: (isDone: boolean, taskId: string) => void
+    removeTask: (todolistId: string, taskId: string) => void
+    changeFilter: (todolistId: string, value: filterType) => void
+    addTask: (todolistId: string, value: string) => void
+    changeStatus: (todolistId: string, isDone: boolean, taskId: string) => void
+    removeTodolist: (todolistId: string) => void
 }
 
 export const Todolist = (props: TodolistPropsType) => {
     const [value, setValue] = useState('')
     const [error, setError] = useState('')
+
+    /*let tasksForFilter = tasks
+    if (todolist.filter === 'active') {
+        tasksForFilter = tasks.filter((task) => !task.isDone)
+    }
+    if (todolist.filter === 'completed') {
+        tasksForFilter = tasks.filter((task) => task.isDone)
+    }*/
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setValue(event.currentTarget.value)
@@ -24,7 +34,7 @@ export const Todolist = (props: TodolistPropsType) => {
         if (value.length > 20 || value.length === 0) {
             setError('Character lengths must be greater than zero and less than 20')
         } else {
-            props.addTask(value)
+            props.addTask(props.todolistId, value)
             setValue('')
         }
 
@@ -36,14 +46,16 @@ export const Todolist = (props: TodolistPropsType) => {
             setError('Character lengths must be greater than zero and less than 20')
         } else {
             if (event.key === 'Enter') {
-                props.addTask(value)
+                props.addTask(props.todolistId, value)
                 setValue('')
             }
         }
     }
     return (
         <div>
+            <Button title={'X'} callback={() => props.removeTodolist(props.todolistId)}/>
             <h3>{props.title}</h3>
+
             <div>
                 <input value={value} onChange={onChangeInputHandler}
                        onKeyUp={onKeyUpHandler}
@@ -59,10 +71,10 @@ export const Todolist = (props: TodolistPropsType) => {
                     props.tasks.map((task) => {
 
                         const onClickButtonHandler = () => {
-                            props.removeTask(task.id)
+                            props.removeTask(props.todolistId, task.id)
                         }
                         const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-                            props.changeStatus(event.currentTarget.checked, task.id)
+                            props.changeStatus(props.todolistId, event.currentTarget.checked, task.id)
                         }
 
                         return <li key={task.id}>
@@ -81,13 +93,13 @@ export const Todolist = (props: TodolistPropsType) => {
             </ul>
             <div>
                 <Button title={'All'} callback={() => {
-                    props.changeFilter('all')
+                    props.changeFilter(props.todolistId, 'all')
                 }}/>
                 <Button title={'Active'} callback={() => {
-                    props.changeFilter('active')
+                    props.changeFilter(props.todolistId, 'active')
                 }}/>
                 <Button title={'Completed'} callback={() => {
-                    props.changeFilter('completed')
+                    props.changeFilter(props.todolistId, 'completed')
                 }}/>
             </div>
         </div>
