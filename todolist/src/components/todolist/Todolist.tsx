@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {Button} from './buttons/Button';
-import {FilterType} from '../../App';
+import {FilterType, TasksPropsType} from '../../App';
 import {v1} from 'uuid';
 import './../../App.css';
 
@@ -14,12 +14,6 @@ type TodolistPropsType = {
     changeStatus: (todolistId: string, taskId: string, isDone: boolean) => void
     removeTodolist: (todolistId: string) => void
     filter: FilterType
-}
-
-export type TasksPropsType = {
-    id: string
-    isDone: boolean
-    title: string
 }
 
 const buttons: Array<{ id: string, title: string, filter: FilterType }> = [
@@ -43,10 +37,17 @@ export const Todolist = ({
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
+    if (filter === 'completed') {
+        tasks = tasks.filter(task => task.isDone)
+    }
+    if (filter === 'active') {
+        tasks = tasks.filter(task => !task.isDone)
+    }
+
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setNewTaskTitle(event.currentTarget.value)
-
     }
+
     const onKeyUpInputHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         setError(null)
         if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {

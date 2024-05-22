@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import './App.css';
-import {TasksPropsType, Todolist} from './components/todolist/Todolist';
+import {Todolist} from './components/todolist/Todolist';
 import {v1} from 'uuid';
 
 export type FilterType = 'all' | 'active' | 'completed'
@@ -10,6 +10,15 @@ type TodolistsType = {
     filter: FilterType
 }
 
+export type TasksPropsType = {
+    id: string
+    isDone: boolean
+    title: string
+}
+
+type TasksType = {
+    [key: string]: TasksPropsType[]
+}
 
 const App = () => {
     const todolistId1 = v1()
@@ -20,7 +29,7 @@ const App = () => {
         {id: todolistId2, title: 'What to buy', filter: 'all'}
     ])
 
-    const [tasks, setTasks] = useState({
+    const [tasks, setTasks] = useState<TasksType>({
         [todolistId1]: [
             {id: v1(), isDone: true, title: 'HTML&CSS'},
             {id: v1(), isDone: true, title: 'JS'},
@@ -37,7 +46,6 @@ const App = () => {
         ],
 
     })
-
 
     const removeTask = (todolistId: string, id: string) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== id)})
@@ -68,14 +76,9 @@ const App = () => {
     return (
         <div className="App">
             {todolists.map(todolist => {
+
                 let tasksForTodolist = tasks[todolist.id]
 
-                if (todolist.filter === 'completed') {
-                    tasksForTodolist = tasksForTodolist.filter(task => task.isDone)
-                }
-                if (todolist.filter === 'active') {
-                    tasksForTodolist = tasksForTodolist.filter(task => !task.isDone)
-                }
                 return <Todolist
                     key={todolist.id}
                     todolistId={todolist.id}
