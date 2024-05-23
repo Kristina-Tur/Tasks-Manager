@@ -2,12 +2,12 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Button} from "./todolist/buttons/Button";
 
 type AddItemFormType = {
-    todolistId: string
-    addTask: (todolistId: string, value: string) => void
+    todolistId?: string
+    addItem: (value: string) => void
 }
 
 export const AddItemForm = ({
-                                addTask,
+                                addItem,
                                 todolistId
                             }: AddItemFormType) => {
 
@@ -22,7 +22,7 @@ export const AddItemForm = ({
         setError(null)
         if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
             if (event.key === 'Enter') {
-                addTask(todolistId, newTaskTitle)
+                addItem(newTaskTitle)
                 setNewTaskTitle('')
             }
         } else {
@@ -30,9 +30,9 @@ export const AddItemForm = ({
         }
     }
 
-    const addTaskHandler = () => {
+    const addItemHandler = () => {
         if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
-            addTask(todolistId, newTaskTitle.trim())
+            addItem(newTaskTitle.trim())
             setNewTaskTitle('')
         } else {
             setError('Title is required')
@@ -47,7 +47,7 @@ export const AddItemForm = ({
                    className={error ? 'error' : ''}
             />
             <Button onClick={() => {
-                addTaskHandler()
+                addItemHandler()
             }}
                     title={'+'}/>
             {error && <div className={'error-message'}>{error}</div>}

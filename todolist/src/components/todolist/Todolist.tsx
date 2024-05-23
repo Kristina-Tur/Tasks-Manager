@@ -46,13 +46,21 @@ export const Todolist = ({
         removeTodolist(todolistId)
     }
 
+    const changeFilterTodolistHandler = (filter: FilterType) => {
+        changeTodolist(todolistId, filter)
+    }
+
+    const addItem = (value: string) => {
+        addTask(todolistId, value)
+    }
+
     return (
         <div>
             <div className={'todolist-title-container'}>
                 <h3>{title}</h3>
                 <Button title={'X'} onClick={removeTodolistHandler}/>
             </div>
-            <AddItemForm todolistId={todolistId} addTask={addTask}/>
+            <AddItemForm todolistId={todolistId} addItem={addItem}/>
             {tasks.length === 0 ? (
                 <p>No tasks</p>
             ) : (
@@ -76,9 +84,8 @@ export const Todolist = ({
             <div>
                 {buttons.map((button) =>
                     <Button className={button.filter === filter ? 'active-filter' : ''} key={button.id}
-                            title={button.title} onClick={() => {
-                        changeTodolist(todolistId, button.filter)
-                    }}/>
+                            title={button.title} onClick={() => changeFilterTodolistHandler(button.filter)}
+                    />
                 )}
             </div>
         </div>
