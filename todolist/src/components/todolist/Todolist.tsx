@@ -3,6 +3,7 @@ import {Button} from './buttons/Button';
 import {FilterType, TasksPropsType} from '../../App';
 import {v1} from 'uuid';
 import './../../App.css';
+import {AddItemForm} from "../AddItemForm";
 
 type TodolistPropsType = {
     todolistId: string
@@ -34,38 +35,11 @@ export const Todolist = ({
                              removeTodolist
                          }: TodolistPropsType) => {
 
-    const [newTaskTitle, setNewTaskTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
-
     if (filter === 'completed') {
         tasks = tasks.filter(task => task.isDone)
     }
     if (filter === 'active') {
         tasks = tasks.filter(task => !task.isDone)
-    }
-
-    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle(event.currentTarget.value)
-    }
-
-    const onKeyUpInputHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
-        if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
-            if (event.key === 'Enter') {
-                addTask(todolistId, newTaskTitle)
-                setNewTaskTitle('')
-            }
-        } else {
-            setError('Title is required')
-        }
-    }
-    const addTaskHandler = () => {
-        if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
-            addTask(todolistId, newTaskTitle.trim())
-            setNewTaskTitle('')
-        } else {
-            setError('Title is required')
-        }
     }
 
     const removeTodolistHandler = () => {
@@ -78,18 +52,7 @@ export const Todolist = ({
                 <h3>{title}</h3>
                 <Button title={'X'} onClick={removeTodolistHandler}/>
             </div>
-            <div>
-                <input value={newTaskTitle}
-                       onChange={onChangeInputHandler}
-                       onKeyUp={onKeyUpInputHandler}
-                       className={error ? 'error' : ''}
-                />
-                <Button onClick={() => {
-                    addTaskHandler()
-                }}
-                        title={'+'}/>
-                {error && <div className={'error-message'}>{error}</div>}
-            </div>
+            <AddItemForm todolistId={todolistId} addTask={addTask}/>
             {tasks.length === 0 ? (
                 <p>No tasks</p>
             ) : (
