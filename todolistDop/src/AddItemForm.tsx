@@ -1,15 +1,16 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+// @flow
+import * as React from 'react';
 import {Button} from "./Button";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
 
-type AddItemForm = {
+type Props = {
     addItem: (title: string) => void
-}
-
-export const AddItemForm = ({addItem}: AddItemForm) => {
+};
+export const AddItemForm = ({addItem}: Props) => {
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
-    const addItemHandler = () => {
+    const addTaskHandler = () => {
         if (taskTitle.trim() !== '') {
             addItem(taskTitle.trim())
             setTaskTitle('')
@@ -18,14 +19,14 @@ export const AddItemForm = ({addItem}: AddItemForm) => {
         }
     }
 
-    const changeItemTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setTaskTitle(event.currentTarget.value)
     }
 
-    const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    const addTaskOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         setError(null)
         if (event.key === 'Enter') {
-            addItemHandler()
+            addTaskHandler()
         }
     }
     return (
@@ -33,10 +34,10 @@ export const AddItemForm = ({addItem}: AddItemForm) => {
             <input
                 className={error ? 'error' : ''}
                 value={taskTitle}
-                onChange={changeItemTitleHandler}
-                onKeyUp={addItemOnKeyUpHandler}
+                onChange={changeTaskTitleHandler}
+                onKeyUp={addTaskOnKeyUpHandler}
             />
-            <Button title={'+'} onClick={addItemHandler}/>
+            <Button title={'+'} onClick={addTaskHandler}/>
             {error && <div className={'error-message'}>{error}</div>}
         </div>
     );
