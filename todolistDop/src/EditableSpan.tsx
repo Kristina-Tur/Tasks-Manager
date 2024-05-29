@@ -2,24 +2,24 @@ import React, {ChangeEvent} from 'react';
 
 type Props = {
     oldTitle: string
-    changeTaskTitle: (todolistId: string, taskId: string, newTitle: string) => void
+    changeItemTitle: (newTitle: string) => void
 }
 
-export const EditableSpan = ({oldTitle}: Props) => {
+export const EditableSpan = ({oldTitle, changeItemTitle}: Props) => {
     const [editMode, setEditMode] = React.useState<boolean>(false)
-    const [title, setTitle] = React.useState<string>(oldTitle)
+    const [newTitle, setNewTitle] = React.useState<string>(oldTitle)
 
     const activateEditMode = () => {
         setEditMode(!editMode)
+        changeItemTitle(newTitle)
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-        changeTaskTitle()
+        setNewTitle(e.currentTarget.value)
     }
     return (
         editMode
-            ? <input value={title}
+            ? <input value={newTitle}
                      onChange={onChangeHandler}
                      onBlur={activateEditMode}
                      autoFocus
