@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button} from "./todolist/buttons/Button";
+import Button from '@mui/material/Button'
 
 type AddItemFormType = {
     todolistId?: string
@@ -46,10 +46,7 @@ export const AddItemForm = ({
                    onKeyUp={onKeyUpInputHandler}
                    className={error ? 'error' : ''}
             />
-            <Button onClick={() => {
-                addItemHandler()
-            }}
-                    title={'+'}/>
+            <Button onClick={() => {addItemHandler()}} variant={'contained'} color={"primary"}>+</Button>
             {error && <div className={'error-message'}>{error}</div>}
         </div>
     )
