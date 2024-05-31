@@ -4,7 +4,7 @@ import {v1} from 'uuid';
 import './../../App.css';
 import {AddItemForm} from "../AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {IconButton} from "@mui/material";
+import {Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Button from '@mui/material/Button'
 
@@ -70,7 +70,7 @@ export const Todolist = ({
             <div className={'todolist-title-container'}>
                 <h3><EditableSpan title={title} onChange={onChangeTitleHandler}/></h3>
                 <IconButton aria-label="delete" onClick={removeTodolistHandler}>
-                    <Delete />
+                    <Delete/>
                 </IconButton>
             </div>
             <AddItemForm todolistId={todolistId} addItem={addItem}/>
@@ -86,12 +86,11 @@ export const Todolist = ({
                             changeTaskTitle(todolistId, task.id, title)
                         return (
                             <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-                                <input type="checkbox"
-                                       onChange={onChangeHandler}
-                                       checked={task.isDone}/>
+                                <Checkbox onChange={onChangeHandler}
+                                          checked={task.isDone}/>
                                 <EditableSpan title={task.title} onChange={onChangeEditableSpanHandler}/>
                                 <IconButton aria-label="delete" onClick={onRemoveHandler}>
-                                    <Delete />
+                                    <Delete/>
                                 </IconButton>
                             </li>
                         )
@@ -101,8 +100,9 @@ export const Todolist = ({
             )}
             <div>
                 {buttons.map((button) =>
-                    <Button color={"primary"} className={button.filter === filter ? 'active-filter' : ''} key={button.id}
-                             onClick={() => changeFilterTodolistHandler(button.filter)}
+                    <Button color={"primary"} className={button.filter === filter ? 'active-filter' : ''}
+                            key={button.id}
+                            onClick={() => changeFilterTodolistHandler(button.filter)}
                     >{button.title}</Button>
                 )}
             </div>

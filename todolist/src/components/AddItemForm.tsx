@@ -1,5 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import Button from '@mui/material/Button'
+import TextField from "@mui/material/TextField";
+import {Icon, IconButton} from "@mui/material";
+import {Add, AddOutlined, ControlPoint} from "@mui/icons-material";
 
 type AddItemFormType = {
     todolistId?: string
@@ -41,13 +44,18 @@ export const AddItemForm = ({
 
     return (
         <div>
-            <input value={newTaskTitle}
-                   onChange={onChangeInputHandler}
-                   onKeyUp={onKeyUpInputHandler}
-                   className={error ? 'error' : ''}
+            <TextField label="Type value"
+                       value={newTaskTitle}
+                       onChange={onChangeInputHandler}
+                       onKeyUp={onKeyUpInputHandler}
+                       error={!!error}
+                       helperText={error}
             />
-            <Button onClick={() => {addItemHandler()}} variant={'contained'} color={"primary"}>+</Button>
-            {error && <div className={'error-message'}>{error}</div>}
+            <IconButton onClick={() => {
+                addItemHandler()
+            }} color={"primary"}>
+                <ControlPoint/>
+            </IconButton>
         </div>
     )
 }
