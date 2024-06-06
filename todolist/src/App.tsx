@@ -16,7 +16,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 
 export type FilterType = 'all' | 'active' | 'completed'
 type ThemeMode = 'dark' | 'light'
-type TodolistsType = {
+export type TodolistsType = {
     id: string
     title: string
     filter: FilterType
