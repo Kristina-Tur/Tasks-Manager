@@ -28,7 +28,7 @@ export type TasksPropsType = {
     title: string
 }
 
-type TasksType = {
+export type TasksType = {
     [key: string]: TasksPropsType[]
 }
 
