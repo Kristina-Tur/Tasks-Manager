@@ -1,10 +1,9 @@
 import {v1} from "uuid";
 import {TasksType} from "../../App";
-import {todolistsReducer} from "../todolist-reducer/todolists-reducer";
-import {removeTodolistAC} from "../todolist-reducer/todolists-reducer.test";
 import {
-    AddTaskActionType, ChangeTaskStatusActionType,
-    ChangeTaskTitleActionType,
+    addTaskAC,
+    AddTaskActionType, changeTaskStatusAC, ChangeTaskStatusActionType, changeTaskTitleAC,
+    ChangeTaskTitleActionType, RefreshTasksACActionType, removeTaskAC,
     RemoveTaskActionType,
     taskReducer
 } from "./task-reducer";
@@ -119,15 +118,6 @@ test('correct change status of task should be changed', () => {
 
 
 
-const removeTaskAC = (todolistId: string, taskId: string): RemoveTaskActionType => {
-    return { type: 'REMOVE-TASK', payload: { todolistId, taskId } } as const
-}
-const addTaskAC = (todolistId: string, title: string): AddTaskActionType => {
-    return { type: 'ADD-TASK', payload: { todolistId, title } } as const
-}
-const changeTaskTitleAC = (todolistId: string, taskId: string, title: string): ChangeTaskTitleActionType => {
-    return { type: 'CHANGE-TASK-TITLE', payload: { todolistId, taskId, title } } as const
-}
-const changeTaskStatusAC = (todolistId: string, taskId: string, isDone: boolean): ChangeTaskStatusActionType => {
-    return { type: 'CHANGE-TASK-STATUS', payload: { todolistId, taskId, isDone } } as const
-}
+/*export const AddNewTodolistAndTasksAC = (todolistId: string): AddNewTodolistAndTasksActionType => {
+   /!* return { type: 'REFRESH-TASKS', payload: {todolistId}} as const*!/
+}*/

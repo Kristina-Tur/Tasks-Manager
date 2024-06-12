@@ -32,13 +32,25 @@ export type ChangeTaskStatusActionType = {
         isDone: boolean
     }
 }
+export type RefreshTasksACActionType = {
+    type: 'REFRESH-TASKS'
+}
+
+export type AddNewTodolistAndTasksActionType = {
+    type: 'ADD-NEW-TODOLIST-AND-TASKS'
+    payload: {
+        todolistId: string
+    }
+}
 
 
 type actionType =
     RemoveTaskActionType |
     AddTaskActionType |
     ChangeTaskTitleActionType |
-    ChangeTaskStatusActionType
+    ChangeTaskStatusActionType |
+    RefreshTasksACActionType |
+    AddNewTodolistAndTasksActionType
 
 export const taskReducer = (state: TasksType, action: actionType) => {
     switch (action.type) {
@@ -66,8 +78,30 @@ export const taskReducer = (state: TasksType, action: actionType) => {
                     ? {...task, isDone: action.payload.isDone} : task)
             }
         }
+        case 'REFRESH-TASKS': {
+            return {...state}
+        }
+        case 'ADD-NEW-TODOLIST-AND-TASKS': {
+            return {[action.payload.todolistId]: [], ...state}
+        }
 
         default:
             return state
     }
+}
+
+export const removeTaskAC = (todolistId: string, taskId: string): RemoveTaskActionType => {
+    return { type: 'REMOVE-TASK', payload: { todolistId, taskId } } as const
+}
+export const addTaskAC = (todolistId: string, title: string): AddTaskActionType => {
+    return { type: 'ADD-TASK', payload: { todolistId, title } } as const
+}
+export const changeTaskTitleAC = (todolistId: string, taskId: string, title: string): ChangeTaskTitleActionType => {
+    return { type: 'CHANGE-TASK-TITLE', payload: { todolistId, taskId, title } } as const
+}
+export const changeTaskStatusAC = (todolistId: string, taskId: string, isDone: boolean): ChangeTaskStatusActionType => {
+    return { type: 'CHANGE-TASK-STATUS', payload: { todolistId, taskId, isDone } } as const
+}
+export const refreshTasksAC = (): RefreshTasksACActionType => {
+    return { type: 'REFRESH-TASKS'} as const
 }
