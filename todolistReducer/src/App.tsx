@@ -20,7 +20,7 @@ import {
     ChangeTodolistTitleAC,
     removeTodolistAC
 } from "./state/todolist-reducer/todolists-reducer";
-import {taskReducer} from "./state/task-reducer/task-reducer";
+import {AddInNewTodolistTasksAC, taskReducer} from "./state/task-reducer/task-reducer";
 import {
     addTaskAC,
     changeTaskStatusAC,
@@ -106,11 +106,11 @@ const App = () => {
     }
 
     const AddTodolist = (value: string) => {
-        const newTodolist: TodolistsType = {id: v1(), title: value, filter: 'all'}
+        const todolistId = v1()
        /* setTodolists([newTodolist, ...todolists])*/
         /*setTasks({[newTodolist.id]: [], ...tasks})*/
-        dispatchTodolists(addTodolistAC(value))
-       /* dispatchTasks(addTaskAC(newTodolist.id, ''))*/
+        dispatchTodolists(addTodolistAC(value, todolistId))
+        dispatchTasks(AddInNewTodolistTasksAC(todolistId))
     }
 
     const changeStatus = (todolistId: string, taskId: string, isDone: boolean) => {
@@ -136,9 +136,9 @@ const App = () => {
 
     const removeTodolist = (todolistId: string) => {
         /*setTodolists(todolists.filter(todolist => todolist.id !== todolistId))*/
-        delete tasks[todolistId]
+        /*delete tasks[todolistId]*/
         /*setTasks({...tasks})*/
-        dispatchTasks(refreshTasksAC())
+        dispatchTasks(refreshTasksAC(todolistId))
         dispatchTodolists(removeTodolistAC(todolistId))
     }
 

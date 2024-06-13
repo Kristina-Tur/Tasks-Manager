@@ -33,11 +33,15 @@ export type ChangeTaskStatusActionType = {
     }
 }
 export type RefreshTasksACActionType = {
-    type: 'REFRESH-TASKS'
+    type: 'REFRESH-TASKS',
+    payload: {
+        todolistId: string
+    }
+
 }
 
 export type AddNewTodolistAndTasksActionType = {
-    type: 'ADD-NEW-TODOLIST-AND-TASKS'
+    type: 'ADD-IN-NEW-TODOLIST-TASKS'
     payload: {
         todolistId: string
     }
@@ -79,10 +83,11 @@ export const taskReducer = (state: TasksType, action: actionType) => {
             }
         }
         case 'REFRESH-TASKS': {
+            delete state[action.payload.todolistId]
             return {...state}
         }
-        case 'ADD-NEW-TODOLIST-AND-TASKS': {
-            return {[action.payload.todolistId]: [], ...state}
+        case 'ADD-IN-NEW-TODOLIST-TASKS': {
+            return {...state, [action.payload.todolistId]: []}
         }
 
         default:
@@ -102,6 +107,9 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, title: str
 export const changeTaskStatusAC = (todolistId: string, taskId: string, isDone: boolean): ChangeTaskStatusActionType => {
     return { type: 'CHANGE-TASK-STATUS', payload: { todolistId, taskId, isDone } } as const
 }
-export const refreshTasksAC = (): RefreshTasksACActionType => {
-    return { type: 'REFRESH-TASKS'} as const
+export const refreshTasksAC = (todolistId: string): RefreshTasksACActionType => {
+    return { type: 'REFRESH-TASKS', payload: {todolistId}} as const
+}
+export const AddInNewTodolistTasksAC = (todolistId: string): AddNewTodolistAndTasksActionType => {
+    return { type: 'ADD-IN-NEW-TODOLIST-TASKS', payload: {todolistId}} as const
 }

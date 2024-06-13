@@ -1,9 +1,10 @@
 import {v1} from "uuid";
-import {TasksType} from "../../App";
+import {TasksType, TodolistsType} from "../../App";
 import {
+    AddInNewTodolistTasksAC,
     addTaskAC,
     AddTaskActionType, changeTaskStatusAC, ChangeTaskStatusActionType, changeTaskTitleAC,
-    ChangeTaskTitleActionType, RefreshTasksACActionType, removeTaskAC,
+    ChangeTaskTitleActionType, refreshTasksAC, RefreshTasksACActionType, removeTaskAC,
     RemoveTaskActionType,
     taskReducer
 } from "./task-reducer";
@@ -116,8 +117,31 @@ test('correct change status of task should be changed', () => {
     expect(endState[todolistId2][2].isDone).toBe(false)
 })
 
+test('correct change in new todolist tasks', () => {
+    const todolistId1 = v1()
+    const todolistId2 = v1()
+
+    const startState: TasksType = {
+        [todolistId1]: [
+            {id: v1(), isDone: true, title: 'HTML&CSS'},
+            {id: v1(), isDone: true, title: 'JS'},
+            {id: v1(), isDone: false, title: 'React'},
+            {id: v1(), isDone: false, title: 'll'},
+            {id: v1(), isDone: false, title: 'ts'},
+            {id: v1(), isDone: false, title: 'styledComponent'},
+        ],
+        [todolistId2]: [
+            {id: v1(), isDone: false, title: 'Milk'},
+            {id: v1(), isDone: false, title: 'Bread'},
+            {id: v1(), isDone: false, title: 'Tea'},
+            {id: v1(), isDone: true, title: 'Coffee'},
+        ]}
+
+    const newTodolist: TodolistsType = {id: v1(), title: '', filter: 'all'}
+    const endState = taskReducer(startState, AddInNewTodolistTasksAC(newTodolist.id))
+
+    expect(endState[newTodolist.id].length).toBe(0)
+    expect(endState[todolistId1].length).toBe(6)
+})
 
 
-/*export const AddNewTodolistAndTasksAC = (todolistId: string): AddNewTodolistAndTasksActionType => {
-   /!* return { type: 'REFRESH-TASKS', payload: {todolistId}} as const*!/
-}*/
