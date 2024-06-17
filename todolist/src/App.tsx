@@ -106,11 +106,10 @@ const App = () => {
     }
 
     const AddTodolist = (value: string) => {
-        const todolistId = v1()
        /* setTodolists([newTodolist, ...todolists])*/
         /*setTasks({[newTodolist.id]: [], ...tasks})*/
-        dispatchTodolists(addTodolistAC(value, todolistId))
-        dispatchTasks(AddInNewTodolistTasksAC(todolistId))
+        dispatchTodolists(addTodolistAC(value))
+        dispatchTasks(AddInNewTodolistTasksAC())
     }
 
     const changeStatus = (todolistId: string, taskId: string, isDone: boolean) => {
