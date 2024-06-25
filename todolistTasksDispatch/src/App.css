@@ -1,0 +1,8 @@
+*{
+    box-sizing: border-box;
+}
+
+.todolist-title-container {
+    display: flex;
+    align-items: center;
+}
