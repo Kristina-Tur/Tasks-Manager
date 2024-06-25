@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import {FilterType, TasksPropsType} from '../../App';
+import {FilterType, TasksPropsType, TasksType} from '../../App';
 import {v1} from 'uuid';
 import './../../App.css';
 import {AddItemForm} from "../AddItemForm";
@@ -11,16 +11,21 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Box from '@mui/material/Box'
 import {filterButtonsContainerSx, getListItemSx} from '../Todolist.styles'
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../../store";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../state/tasks-reducer/tasks-reducer";
 
 type TodolistPropsType = {
     todolistId: string
     title: string
-    tasks: Array<TasksPropsType>
-    removeTask: (todolistId: string, id: string) => void
     changeTodolist: (todolistId: string, filter: FilterType) => void
+
+    /*tasks: Array<TasksPropsType>
+    removeTask: (todolistId: string, id: string) => void
     addTask: (todolistId: string, value: string) => void
     changeStatus: (todolistId: string, taskId: string, isDone: boolean) => void
-    changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
+    changeTaskTitle: (todolistId: string, taskId: string, title: string) => void*/
+
     removeTodolist: (todolistId: string) => void
     changeTodolistTitle: (todolistId: string, title: string) => void
     filter: FilterType
@@ -34,17 +39,14 @@ const buttons: Array<{ id: string, title: string, filter: FilterType }> = [
 
 export const Todolist = ({
                              title,
-                             tasks,
-                             removeTask,
                              changeTodolist,
-                             addTask,
-                             changeStatus,
                              filter,
                              todolistId,
                              removeTodolist,
-                             changeTaskTitle,
                              changeTodolistTitle
                          }: TodolistPropsType) => {
+    const dispatch = useDispatch()
+    let tasks = useSelector<AppRootStateType, TasksPropsType[]>(state => state.tasks[todolistId])
 
     if (filter === 'completed') {
         tasks = tasks.filter(task => task.isDone)
@@ -62,13 +64,12 @@ export const Todolist = ({
     }
 
     const addItem = (value: string) => {
-        addTask(todolistId, value)
+        dispatch(addTaskAC(todolistId, value))
     }
 
     const onChangeTitleHandler = (title: string) => {
         changeTodolistTitle(todolistId, title)
     }
-
     return (
         <div>
             <div className={'todolist-title-container'}>
@@ -83,11 +84,11 @@ export const Todolist = ({
             ) : (
                 <List>
                     {tasks.map((task) => {
-                        const onRemoveHandler = () => removeTask(todolistId, task.id)
+                        const onRemoveHandler = () => dispatch(removeTaskAC(todolistId, task.id))
                         const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) =>
-                            changeStatus(todolistId, task.id, event.currentTarget.checked)
+                            dispatch(changeTaskStatusAC(todolistId, task.id, event.currentTarget.checked))
                         const onChangeEditableSpanHandler = (title: string) =>
-                            changeTaskTitle(todolistId, task.id, title)
+                            dispatch(changeTaskTitleAC(todolistId, task.id, title))
                         return (
                             <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
                                 <div>

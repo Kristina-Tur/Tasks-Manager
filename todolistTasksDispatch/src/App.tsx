@@ -51,28 +51,28 @@ export type TasksType = {
 const App = () => {
     const dispatch = useDispatch()
     const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
 
 
-    const removeTask = (todolistId: string, id: string) => {
+
+    /*const removeTask = (todolistId: string, id: string) => {
         dispatch(removeTaskAC(todolistId, id))
     }
 
     const addTask = (todolistId: string, value: string) => {
         dispatch(addTaskAC(todolistId, value))
-    }
+    }*/
 
     const AddTodolist = (value: string) => {
         dispatch(addTodolistAC(value))
     }
 
-    const changeStatus = (todolistId: string, taskId: string, isDone: boolean) => {
+    /*const changeStatus = (todolistId: string, taskId: string, isDone: boolean) => {
         dispatch(changeTaskStatusAC(todolistId, taskId, isDone))
     }
 
     const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
         dispatch(changeTaskTitleAC(todolistId, taskId, title))
-    }
+    }*/
 
     const changeTodolist = (todolistId: string, filter: FilterType) => {
         dispatch(ChangeTodolistFilterAC(todolistId, filter))
@@ -95,7 +95,6 @@ const App = () => {
             },
         },
     })
-
     const changeModeHandler = () => {
         setThemeMode(themeMode == 'light' ? 'dark' : 'light')
     }
@@ -130,7 +129,7 @@ const App = () => {
                     </Grid>
                     <Grid container spacing={4}>
                         {todolists.map(todolist => {
-                            let tasksForTodolist = tasks[todolist.id]
+                            /*let tasksForTodolist = tasks[todolist.id]*/
                             return (
                                 <Grid>
                                     <Paper elevation={3} sx={{p: '0 20px 20px 20px'}}>
@@ -138,12 +137,13 @@ const App = () => {
                                             key={todolist.id}
                                             todolistId={todolist.id}
                                             title={todolist.title}
-                                            tasks={tasksForTodolist}
-                                            removeTask={removeTask}
                                             changeTodolist={changeTodolist}
+
+                                            /*tasks={tasksForTodolist}
+                                            removeTask={removeTask}
                                             addTask={addTask}
                                             changeStatus={changeStatus}
-                                            changeTaskTitle={changeTaskTitle}
+                                            changeTaskTitle={changeTaskTitle}*/
                                             filter={todolist.filter}
                                             removeTodolist={removeTodolist}
                                             changeTodolistTitle={changeTodolistTitle}
