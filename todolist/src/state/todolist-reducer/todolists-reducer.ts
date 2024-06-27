@@ -1,6 +1,5 @@
 import {FilterType, TodolistsType} from "../../App";
 import {v1} from "uuid";
-import {removeTaskAC} from "../tasks-reducer/tasks-reducer";
 
 
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
