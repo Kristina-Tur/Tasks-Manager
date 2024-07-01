@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useReducer, useState} from 'react';
+import React, {ChangeEvent, useCallback, useReducer, useState} from 'react';
 import './App.css';
 import {Todolist} from './components/todolist/Todolist';
 import {v1} from 'uuid';
@@ -13,14 +13,12 @@ import {MenuButton} from "./components/MenuButton";
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
-import {todolistsReducer} from "./state/todolist-reducer/todolists-reducer";
 import {
     addTodolistAC,
     ChangeTodolistFilterAC,
     ChangeTodolistTitleAC,
     removeTodolistAC
 } from "./state/todolist-reducer/todolists-reducer";
-import {tasksReducer} from "./state/tasks-reducer/tasks-reducer";
 import {
     addTaskAC,
     changeTaskStatusAC,
@@ -49,42 +47,43 @@ export type TasksType = {
 }
 
 const App = () => {
+    console.log('App is called')
     const dispatch = useDispatch()
     const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
 
 
-    const removeTask = (todolistId: string, id: string) => {
+    const removeTask = useCallback((todolistId: string, id: string) => {
         dispatch(removeTaskAC(todolistId, id))
-    }
+    }, [dispatch])
 
-    const addTask = (todolistId: string, value: string) => {
+    const addTask = useCallback((todolistId: string, value: string) => {
         dispatch(addTaskAC(todolistId, value))
-    }
+    }, [dispatch])
 
-    const AddTodolist = (value: string) => {
+    const addTodolist = useCallback((value: string) => {
         dispatch(addTodolistAC(value))
-    }
+    },[dispatch])
 
-    const changeStatus = (todolistId: string, taskId: string, isDone: boolean) => {
+    const changeStatus = useCallback((todolistId: string, taskId: string, isDone: boolean) => {
         dispatch(changeTaskStatusAC(todolistId, taskId, isDone))
-    }
+    }, [dispatch])
 
-    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+    const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
         dispatch(changeTaskTitleAC(todolistId, taskId, title))
-    }
+    }, [dispatch])
 
-    const changeTodolist = (todolistId: string, filter: FilterType) => {
+    const changeTodolist = useCallback((todolistId: string, filter: FilterType) => {
         dispatch(ChangeTodolistFilterAC(todolistId, filter))
-    }
+    }, [dispatch])
 
-    const removeTodolist = (todolistId: string) => {
+    const removeTodolist = useCallback((todolistId: string) => {
         dispatch(removeTodolistAC(todolistId))
-    }
+    }, [dispatch])
 
-    const changeTodolistTitle = (todolistId: string, title: string) => {
+    const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
         dispatch(ChangeTodolistTitleAC(todolistId, title))
-    }
+    }, [dispatch])
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
     const theme = createTheme({
@@ -126,7 +125,7 @@ const App = () => {
                 </AppBar>
                 <Container fixed>
                     <Grid container sx={{mb: '30px'}}>
-                        <AddItemForm addItem={AddTodolist}/>
+                        <AddItemForm addItem={addTodolist}/>
                     </Grid>
                     <Grid container spacing={4}>
                         {todolists.map(todolist => {

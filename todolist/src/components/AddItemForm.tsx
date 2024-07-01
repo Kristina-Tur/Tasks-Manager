@@ -4,14 +4,14 @@ import IconButton from '@mui/material/IconButton'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 
 type AddItemFormType = {
-    todolistId?: string
     addItem: (value: string) => void
 }
 
-export const AddItemForm = ({
+export const AddItemForm = React.memo( ({
                                 addItem,
-                                todolistId
                             }: AddItemFormType) => {
+
+    console.log('AddItemForm is called')
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -21,7 +21,10 @@ export const AddItemForm = ({
     }
 
     const onKeyUpInputHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
+        if(error !== null){
+            setError(null)
+        }
+
         if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
             if (event.key === 'Enter') {
                 addItem(newTaskTitle)
@@ -58,4 +61,4 @@ export const AddItemForm = ({
             </IconButton>
         </div>
     )
-}
+})
