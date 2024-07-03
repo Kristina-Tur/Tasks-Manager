@@ -1,10 +1,10 @@
-import React, {ChangeEvent, useCallback} from 'react';
-import {FilterType, TasksPropsType} from '../../App';
+import React, {ChangeEvent, memo, useCallback, useMemo} from 'react';
+import {FilterType, TasksStateType, TasksType} from '../../App';
 import {v1} from 'uuid';
 import './../../App.css';
 import {AddItemForm} from "../AddItemForm";
 import {EditableSpan} from "../EditableSpan";
-import {Checkbox, IconButton} from "@mui/material";
+import {ButtonProps, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Button from '@mui/material/Button'
 import List from '@mui/material/List'
@@ -12,16 +12,22 @@ import ListItem from '@mui/material/ListItem'
 import Box from '@mui/material/Box'
 import {filterButtonsContainerSx, getListItemSx} from '../Todolist.styles'
 import {Task} from "../Task";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../../store";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../state/tasks-reducer/tasks-reducer";
+import {ButtonWithMemo} from "./buttons/Button";
 
 type TodolistPropsType = {
     todolistId: string
     title: string
-    tasks: Array<TasksPropsType>
-    removeTask: (todolistId: string, id: string) => void
     changeTodolist: (todolistId: string, filter: FilterType) => void
+
+    /*tasks: Array<TasksPropsType>
+    removeTask: (todolistId: string, id: string) => void
     addTask: (todolistId: string, value: string) => void
     changeStatus: (todolistId: string, taskId: string, isDone: boolean) => void
-    changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
+    changeTaskTitle: (todolistId: string, taskId: string, title: string) => void*/
+
     removeTodolist: (todolistId: string) => void
     changeTodolistTitle: (todolistId: string, title: string) => void
     filter: FilterType
@@ -35,26 +41,21 @@ const buttons: Array<{ id: string, title: string, filter: FilterType }> = [
 
 export const Todolist = React.memo(({
                                         title,
-                                        tasks,
-                                        removeTask,
                                         changeTodolist,
-                                        addTask,
-                                        changeStatus,
                                         filter,
                                         todolistId,
                                         removeTodolist,
-                                        changeTaskTitle,
                                         changeTodolistTitle
                                     }: TodolistPropsType) => {
 
     console.log('Todolist is called')
 
-    if (filter === 'completed') {
-        tasks = tasks.filter(task => task.isDone)
-    }
-    if (filter === 'active') {
-        tasks = tasks.filter(task => !task.isDone)
-    }
+    const dispatch = useDispatch()
+    let tasks = useSelector<AppRootStateType, TasksStateType[]>(state => state.tasks[todolistId])
+
+    const addTask = useCallback((todolistId: string, value: string) => {
+        dispatch(addTaskAC(todolistId, value))
+    }, [dispatch])
 
     const removeTodolistHandler = () => {
         removeTodolist(todolistId)
@@ -63,7 +64,7 @@ export const Todolist = React.memo(({
     const changeFilterTodolistHandler = useCallback((filter: FilterType) => {
         console.log('Button')
         changeTodolist(todolistId, filter)
-    }, [])
+    }, [changeTodolist, todolistId])
 
     const addItem = useCallback((value: string) => {
         addTask(todolistId, value)
@@ -72,6 +73,20 @@ export const Todolist = React.memo(({
     const onChangeTitleHandler = useCallback((title: string) => {
         changeTodolistTitle(todolistId, title)
     }, [changeTodolistTitle, todolistId])
+
+    tasks = useMemo( () => {
+        console.log('filterMemo')
+
+        if (filter === 'completed') {
+            tasks = tasks.filter(task => task.isDone)
+        }
+        if (filter === 'active') {
+            tasks = tasks.filter(task => !task.isDone)
+        }
+        return tasks
+    }, [tasks, filter])
+
+
 
     return (
         <div>
@@ -88,27 +103,27 @@ export const Todolist = React.memo(({
                 <List>
                     {tasks.map(task =>
                         <Task
-                        key={task.id}
-                        task={task}
-                        todolistId={todolistId}
-                        removeTask={removeTask}
-                        changeStatus={changeStatus}
-                        changeTaskTitle={changeTaskTitle}
-                    />)}
-                        </List>
-                        )}
-                    <Box sx={filterButtonsContainerSx}>
-                        {buttons.map((button) =>
-                            <Button color={"primary"} className={button.filter === filter ? 'active-filter' : ''}
-                                    variant={button.filter === filter ? 'contained' : 'outlined'}
-                                    key={button.id}
-                                    onClick={() => changeFilterTodolistHandler(button.filter)}
-                            >{button.title}</Button>
-                        )}
-                    </Box>
-                </div>
-            );
-            });
+                            key={task.id}
+                            task={task}
+                            todolistId={todolistId}
+                        />)}
+                </List>
+            )}
+            <Box sx={filterButtonsContainerSx}>
+                {buttons.map((button) =>
+                    <ButtonWithMemo
+                        key={button.id}
+                        color={"primary"} className={button.filter === filter ? 'active-filter' : ''}
+                        variant={button.filter === filter ? 'contained' : 'outlined'}
+                        onClick={() => changeFilterTodolistHandler(button.filter)}
+                        title = {button.title}
+                    />
+                )}
+            </Box>
+        </div>
+    );
+});
+
 
 
 

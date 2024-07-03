@@ -1,13 +1,18 @@
-import React, {ReactNode} from 'react';
+import React, {memo, ReactNode} from 'react';
+import Button from '@mui/material/Button'
+import {FilterType} from "../../../App";
+import {ButtonProps} from "@mui/material";
 
-type ButtonsPropsType = {
-    /*children: ReactNode*/
-    title: string
-    onClick: () => void
-    className?: string
-}
-export const Button = ({/*children*/title, onClick, className}: ButtonsPropsType) => {
-    return (
-        <button className={className} onClick={onClick}>{/*children*/title}</button>
-    );
-};
+type ButtonWithMemoType = {
+} & ButtonProps
+
+
+export const ButtonWithMemo = memo(({variant, color, onClick, className, title, ...rest}: ButtonWithMemoType) => {
+    return <Button
+        variant={variant}
+        color={color}
+        onClick={onClick}
+        {...rest}
+    >{title}
+    </Button>
+})

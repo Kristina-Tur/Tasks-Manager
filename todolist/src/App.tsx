@@ -36,24 +36,23 @@ export type TodolistsType = {
     filter: FilterType
 }
 
-export type TasksPropsType = {
+export type TasksStateType = {
     id: string
     isDone: boolean
     title: string
 }
 
 export type TasksType = {
-    [key: string]: TasksPropsType[]
+    [key: string]: TasksStateType[]
 }
 
 const App = () => {
     console.log('App is called')
     const dispatch = useDispatch()
     const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
 
 
-    const removeTask = useCallback((todolistId: string, id: string) => {
+    /*const removeTask = useCallback((todolistId: string, id: string) => {
         dispatch(removeTaskAC(todolistId, id))
     }, [dispatch])
 
@@ -61,17 +60,17 @@ const App = () => {
         dispatch(addTaskAC(todolistId, value))
     }, [dispatch])
 
-    const addTodolist = useCallback((value: string) => {
-        dispatch(addTodolistAC(value))
-    },[dispatch])
-
     const changeStatus = useCallback((todolistId: string, taskId: string, isDone: boolean) => {
         dispatch(changeTaskStatusAC(todolistId, taskId, isDone))
     }, [dispatch])
 
     const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
         dispatch(changeTaskTitleAC(todolistId, taskId, title))
-    }, [dispatch])
+    }, [dispatch])*/
+
+    const addTodolist = useCallback((value: string) => {
+        dispatch(addTodolistAC(value))
+    },[dispatch])
 
     const changeTodolist = useCallback((todolistId: string, filter: FilterType) => {
         dispatch(ChangeTodolistFilterAC(todolistId, filter))
@@ -129,7 +128,6 @@ const App = () => {
                     </Grid>
                     <Grid container spacing={4}>
                         {todolists.map(todolist => {
-                            let tasksForTodolist = tasks[todolist.id]
                             return (
                                 <Grid>
                                     <Paper elevation={3} sx={{p: '0 20px 20px 20px'}}>
@@ -137,12 +135,14 @@ const App = () => {
                                             key={todolist.id}
                                             todolistId={todolist.id}
                                             title={todolist.title}
-                                            tasks={tasksForTodolist}
-                                            removeTask={removeTask}
                                             changeTodolist={changeTodolist}
+
+                                           /* tasks={tasks[todolist.id]}
+                                            removeTask={removeTask}
                                             addTask={addTask}
                                             changeStatus={changeStatus}
-                                            changeTaskTitle={changeTaskTitle}
+                                            changeTaskTitle={changeTaskTitle}*/
+
                                             filter={todolist.filter}
                                             removeTodolist={removeTodolist}
                                             changeTodolistTitle={changeTodolistTitle}
