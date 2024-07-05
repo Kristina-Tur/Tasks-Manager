@@ -46,7 +46,7 @@ export type TasksType = {
     [key: string]: TasksStateType[]
 }
 
-const App = () => {
+export const App = () => {
     console.log('App is called')
     const dispatch = useDispatch()
     const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)

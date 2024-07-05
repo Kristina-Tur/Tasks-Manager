@@ -7,7 +7,7 @@ export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
 export type ChangeTodolistTitleActionType = ReturnType<typeof ChangeTodolistTitleAC>
 export type ChangeTodolistFilterActionType = ReturnType<typeof ChangeTodolistFilterAC>
 
-type ActionsType =
+export type ActionsType =
     | RemoveTodolistActionType
     | AddTodolistActionType
     | ChangeTodolistTitleActionType
