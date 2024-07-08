@@ -1,4 +1,4 @@
-import {TasksType, TodolistsType} from "../App";
+import {TasksType, TodolistsType} from "../app/App";
 import {addTodolistAC, todolistsReducer} from "./todolist-reducer/todolists-reducer";
 import {tasksReducer} from "./tasks-reducer/tasks-reducer";
 

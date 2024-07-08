@@ -3,9 +3,9 @@ import {Task} from "./Task";
 import {useState} from "react";
 import {ReduxStoreProviderDecorator} from "../state/ReduxStoreProviderDecorator";
 import {useDispatch, useSelector} from "react-redux";
-import AppStories from "../App.stories";
+import AppStories from "../app/App.stories";
 import {AppRootStateType} from "../store";
-import {TaskStateType, TasksType} from "../App";
+import {TaskStateType, TasksType} from "../app/App";
 import {v1} from "uuid";
 import {addTaskAC} from "../state/tasks-reducer/tasks-reducer";
 

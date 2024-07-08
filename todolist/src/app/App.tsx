@@ -1,35 +1,20 @@
-import React, {ChangeEvent, useCallback, useReducer, useState} from 'react';
-import './App.css';
-import {Todolist} from './components/todolist/Todolist';
-import {v1} from 'uuid';
-import {AddItemForm} from "./components/AddItemForm";
-import Button from "@mui/material/Button";
-import {AppBar, Box, IconButton, Toolbar, Typography} from "@mui/material";
+import React from 'react';
+import '../App.css';
+import {Todolist} from '../components/todolist/Todolist';
+import {AddItemForm} from "../addItemForm/AddItemForm";
+import {AppBar, IconButton, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Unstable_Grid2'
 import Paper from '@mui/material/Paper'
-import {MenuButton} from "./components/MenuButton";
-import {createTheme, ThemeProvider} from '@mui/material/styles'
+import {MenuButton} from "../components/MenuButton";
+import {ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
-import {
-    addTodolistAC,
-    ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC,
-    removeTodolistAC
-} from "./state/todolist-reducer/todolists-reducer";
-import {
-    addTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
-    removeTaskAC
-} from "./state/tasks-reducer/tasks-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
+import {useApp} from "./hooks/useApp";
 
 export type FilterType = 'all' | 'active' | 'completed'
-type ThemeMode = 'dark' | 'light'
+
 export type TodolistsType = {
     id: string
     title: string
@@ -48,55 +33,15 @@ export type TasksType = {
 
 export const App = () => {
     console.log('App is called')
-    const dispatch = useDispatch()
-    const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
-
-
-    /*const removeTask = useCallback((todolistId: string, id: string) => {
-        dispatch(removeTaskAC(todolistId, id))
-    }, [dispatch])
-
-    const addTask = useCallback((todolistId: string, value: string) => {
-        dispatch(addTaskAC(todolistId, value))
-    }, [dispatch])
-
-    const changeStatus = useCallback((todolistId: string, taskId: string, isDone: boolean) => {
-        dispatch(changeTaskStatusAC(todolistId, taskId, isDone))
-    }, [dispatch])
-
-    const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
-        dispatch(changeTaskTitleAC(todolistId, taskId, title))
-    }, [dispatch])*/
-
-    const addTodolist = useCallback((value: string) => {
-        dispatch(addTodolistAC(value))
-    },[dispatch])
-
-    const changeTodolist = useCallback((todolistId: string, filter: FilterType) => {
-        dispatch(ChangeTodolistFilterAC(todolistId, filter))
-    }, [dispatch])
-
-    const removeTodolist = useCallback((todolistId: string) => {
-        dispatch(removeTodolistAC(todolistId))
-    }, [dispatch])
-
-    const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
-        dispatch(ChangeTodolistTitleAC(todolistId, title))
-    }, [dispatch])
-
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
-    const theme = createTheme({
-        palette: {
-            mode: themeMode === 'light' ? 'light' : 'dark',
-            primary: {
-                main: '#087EA4',
-            },
-        },
-    })
-
-    const changeModeHandler = () => {
-        setThemeMode(themeMode == 'light' ? 'dark' : 'light')
-    }
+    const {
+        todolists,
+        theme,
+        changeModeHandler,
+        addTodolist,
+        changeTodolist,
+        removeTodolist,
+        changeTodolistTitle
+    } = useApp()
 
     return (
         <ThemeProvider theme={theme}>
@@ -136,13 +81,6 @@ export const App = () => {
                                             todolistId={todolist.id}
                                             title={todolist.title}
                                             changeTodolist={changeTodolist}
-
-                                           /* tasks={tasks[todolist.id]}
-                                            removeTask={removeTask}
-                                            addTask={addTask}
-                                            changeStatus={changeStatus}
-                                            changeTaskTitle={changeTaskTitle}*/
-
                                             filter={todolist.filter}
                                             removeTodolist={removeTodolist}
                                             changeTodolistTitle={changeTodolistTitle}

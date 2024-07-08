@@ -1,8 +1,8 @@
 import React, {ChangeEvent, memo, useCallback, useMemo} from 'react';
-import {FilterType, TaskStateType, TasksType} from '../../App';
+import {FilterType, TaskStateType, TasksType} from '../../app/App';
 import {v1} from 'uuid';
 import './../../App.css';
-import {AddItemForm} from "../AddItemForm";
+import {AddItemForm} from "../../addItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan";
 import {ButtonProps, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";

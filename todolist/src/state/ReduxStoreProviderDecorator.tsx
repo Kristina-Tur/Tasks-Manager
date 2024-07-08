@@ -5,7 +5,7 @@ import {v1} from "uuid";
 import {ActionType, tasksReducer} from "./tasks-reducer/tasks-reducer";
 import {ActionsType, todolistsReducer} from "./todolist-reducer/todolists-reducer";
 import {AppRootStateType} from "../store";
-import {TasksType, TodolistsType} from "../App";
+import {TasksType, TodolistsType} from "../app/App";
 
 type RootStateType = {
     tasks: TasksType

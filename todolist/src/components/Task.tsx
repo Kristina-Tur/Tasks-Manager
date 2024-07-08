@@ -6,7 +6,7 @@ import {getListItemSx} from "./Todolist.styles";
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {TaskStateType} from "../App";
+import {TaskStateType} from "../app/App";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer/tasks-reducer";
 
