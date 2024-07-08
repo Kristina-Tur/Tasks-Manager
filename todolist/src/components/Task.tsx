@@ -6,22 +6,25 @@ import {getListItemSx} from "./Todolist.styles";
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {TasksStateType} from "../App";
+import {TaskStateType} from "../App";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer/tasks-reducer";
 
 type TaskType = {
-    task: TasksStateType
+    task: TaskStateType
     todolistId: string
 };
 export const Task = ({task,todolistId}: TaskType) => {
     const dispatch = useDispatch()
 
     const onRemoveHandler = () => dispatch(removeTaskAC(todolistId, task.id))
+
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) =>
         dispatch(changeTaskStatusAC(todolistId, task.id, event.currentTarget.checked))
+
     const onChangeEditableSpanHandler = (title: string) =>
         dispatch(changeTaskTitleAC(todolistId, task.id, title))
+
     return (
         <ListItem sx={getListItemSx(task.isDone)}>
             <div>

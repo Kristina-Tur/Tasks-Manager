@@ -36,14 +36,14 @@ export type TodolistsType = {
     filter: FilterType
 }
 
-export type TasksStateType = {
+export type TaskStateType = {
     id: string
     isDone: boolean
     title: string
 }
 
 export type TasksType = {
-    [key: string]: TasksStateType[]
+    [key: string]: TaskStateType[]
 }
 
 export const App = () => {

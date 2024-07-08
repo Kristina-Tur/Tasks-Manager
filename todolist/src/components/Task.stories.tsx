@@ -1,17 +1,43 @@
-import {AddItemForm} from "./AddItemForm";
-import {action} from '@storybook/addon-actions'
+import type { Meta, StoryObj } from '@storybook/react';
 import {Task} from "./Task";
-import {ReduxStoreProviderDecorator} from "../stories/ReduxStoreProviderDecorator";
+import {useState} from "react";
+import {ReduxStoreProviderDecorator} from "../state/ReduxStoreProviderDecorator";
+import {useDispatch, useSelector} from "react-redux";
+import AppStories from "../App.stories";
+import {AppRootStateType} from "../store";
+import {TaskStateType, TasksType} from "../App";
 import {v1} from "uuid";
-import {Provider} from "react-redux";
-import {store} from "../store";
+import {addTaskAC} from "../state/tasks-reducer/tasks-reducer";
 
-export default {
-    title: 'Task',
+const meta: Meta<typeof Task> = {
+    title: 'Todolist/Task',
     component: Task,
+    parameters: {
+        layout: 'centered',
+    },
+    tags: ['autodocs'],
+    args: {
+        task: {id: 'fffac', title:'JS', isDone: false},
+        todolistId: 'dddas'
+    },
     decorators: [ReduxStoreProviderDecorator]
 };
 
-export const TaskBase = () => {
-    return  <Task task={{id: '1', title: 'CSS', isDone: false}} todolistId={'todolistId1'}/>
+export default meta;
+type Story = StoryObj<typeof Task>;
+
+
+const TaskRender = () => {
+    let task = useSelector<AppRootStateType, TaskStateType>(state => state.tasks['todolistId1'][0])
+    const dispatch = useDispatch()
+
+    if(!task){
+        task = {id: v1(), title: "HTML&CSS", isDone: true}
+        dispatch(addTaskAC('todolistId1', 'Default task'))
+    }
+
+    return <Task task={task} todolistId={'todolistId1'}/>
+}
+export const TaskStory: Story = {
+    render: () => <TaskRender/>
 };

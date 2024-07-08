@@ -1,5 +1,5 @@
 import React, {ChangeEvent, memo, useCallback, useMemo} from 'react';
-import {FilterType, TasksStateType, TasksType} from '../../App';
+import {FilterType, TaskStateType, TasksType} from '../../App';
 import {v1} from 'uuid';
 import './../../App.css';
 import {AddItemForm} from "../AddItemForm";
@@ -51,7 +51,7 @@ export const Todolist = React.memo(({
     console.log('Todolist is called')
 
     const dispatch = useDispatch()
-    let tasks = useSelector<AppRootStateType, TasksStateType[]>(state => state.tasks[todolistId])
+    let tasks = useSelector<AppRootStateType, TaskStateType[]>(state => state.tasks[todolistId])
 
     const addTask = useCallback((todolistId: string, value: string) => {
         dispatch(addTaskAC(todolistId, value))

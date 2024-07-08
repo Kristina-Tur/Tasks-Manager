@@ -2,8 +2,8 @@ import React, {Reducer} from 'react'
 import {Provider} from "react-redux";
 import {combineReducers, legacy_createStore} from "redux";
 import {v1} from "uuid";
-import {ActionType, tasksReducer} from "../state/tasks-reducer/tasks-reducer";
-import {ActionsType, todolistsReducer} from "../state/todolist-reducer/todolists-reducer";
+import {ActionType, tasksReducer} from "./tasks-reducer/tasks-reducer";
+import {ActionsType, todolistsReducer} from "./todolist-reducer/todolists-reducer";
 import {AppRootStateType} from "../store";
 import {TasksType, TodolistsType} from "../App";
 

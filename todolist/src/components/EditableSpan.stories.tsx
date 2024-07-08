@@ -1,14 +1,22 @@
-import {AddItemForm} from "./AddItemForm";
-import {action} from '@storybook/addon-actions'
+import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import {EditableSpan} from "./EditableSpan";
 
-export default {
-    title: 'EditableSpan',
-    component: AddItemForm
+const meta: Meta<typeof EditableSpan> = {
+    title: 'Todolist/EditableSpan',
+    component: EditableSpan,
+    parameters: {
+        layout: 'centered',
+    },
+    tags: ['autodocs'],
+    args: {
+        onChange: fn(),
+        title: 'HTML'
+    },
 };
 
-const callback = action('value changed')
+export default meta;
+type Story = StoryObj<typeof EditableSpan>;
 
-export const EditableSpanBase = () => {
-    return <EditableSpan title={'start value'} onChange={callback}/>
+export const EditableSpanStory: Story = {
 };
