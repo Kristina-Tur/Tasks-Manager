@@ -1,6 +1,6 @@
 import React from 'react';
 import '../App.css';
-import {Todolist} from '../components/todolist/Todolist';
+import {Todolist} from '../todolist/Todolist';
 import {AddItemForm} from "../addItemForm/AddItemForm";
 import {AppBar, IconButton, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";

@@ -2,9 +2,9 @@
 import * as React from 'react';
 import {ChangeEvent, memo, useCallback} from "react";
 import ListItem from "@mui/material/ListItem";
-import {getListItemSx} from "./Todolist.styles";
+import {getListItemSx} from "../todolist/Todolist.styles";
 import {Checkbox, IconButton} from "@mui/material";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "../editableSpan/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {TaskStateType} from "../app/App";
 import {useDispatch} from "react-redux";
