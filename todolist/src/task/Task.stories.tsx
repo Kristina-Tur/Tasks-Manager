@@ -1,13 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react';
 import {Task} from "./Task";
-import {useState} from "react";
 import {ReduxStoreProviderDecorator} from "../state/ReduxStoreProviderDecorator";
 import {useDispatch, useSelector} from "react-redux";
-import AppStories from "../app/App.stories";
 import {AppRootStateType} from "../store";
-import {TaskStateType, TasksType} from "../app/App";
 import {v1} from "uuid";
 import {addTaskAC} from "../state/tasks-reducer/tasks-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolists-api";
 
 const meta: Meta<typeof Task> = {
     title: 'Todolist/Task',
@@ -17,7 +15,18 @@ const meta: Meta<typeof Task> = {
     },
     tags: ['autodocs'],
     args: {
-        task: {id: 'fffac', title:'JS', isDone: false},
+        task: {
+            id: 'fffac',
+            title:'JS',
+            status: TaskStatuses.New,
+            description: '',
+            priority: TaskPriorities.Low,
+            startDate: '',
+            deadline: '',
+            todoListId: 'dddas',
+            order: 0,
+            addedDate: ''
+        },
         todolistId: 'dddas'
     },
     decorators: [ReduxStoreProviderDecorator]
@@ -28,11 +37,22 @@ type Story = StoryObj<typeof Task>;
 
 
 const TaskRender = () => {
-    let task = useSelector<AppRootStateType, TaskStateType>(state => state.tasks['todolistId1'][0])
+    let task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0])
     const dispatch = useDispatch()
 
     if(!task){
-        task = {id: v1(), title: "HTML&CSS", isDone: true}
+        task = {
+            id: v1(),
+            title: "HTML&CSS",
+            status: TaskStatuses.Completed,
+            description: '',
+            priority: TaskPriorities.Low,
+            startDate: '',
+            deadline: '',
+            todoListId: 'todolistId1',
+            order: 0,
+            addedDate: ''
+        }
         dispatch(addTaskAC('todolistId1', 'Default task'))
     }
 

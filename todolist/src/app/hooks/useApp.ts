@@ -8,13 +8,14 @@ import {
     removeTodolistAC
 } from "../../state/todolist-reducer/todolists-reducer";
 import {createTheme} from "@mui/material/styles";
-import {FilterType, TodolistsType} from "../App";
+import {TodolistDomainType} from "../App";
+import {FilterType} from "../../api/todolists-api";
 
 type ThemeMode = 'dark' | 'light'
 
 export const useApp = () => {
     const dispatch = useDispatch()
-    const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
+    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
 
     const addTodolist = useCallback((value: string) => {
         dispatch(addTodolistAC(value))

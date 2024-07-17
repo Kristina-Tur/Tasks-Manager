@@ -1,6 +1,5 @@
-import React, {memo, ReactNode} from 'react';
+import React, {memo} from 'react';
 import Button from '@mui/material/Button'
-import {FilterType} from "../../app/App";
 import {ButtonProps} from "@mui/material";
 
 type ButtonWithMemoType = {

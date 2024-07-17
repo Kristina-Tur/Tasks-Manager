@@ -12,23 +12,14 @@ import {ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {useApp} from "./hooks/useApp";
+import {FilterType, TaskType, TodolistType} from "../api/todolists-api";
 
-export type FilterType = 'all' | 'active' | 'completed'
-
-export type TodolistsType = {
-    id: string
-    title: string
+export type TodolistDomainType = TodolistType & {
     filter: FilterType
 }
 
-export type TaskStateType = {
-    id: string
-    isDone: boolean
-    title: string
-}
-
 export type TasksType = {
-    [key: string]: TaskStateType[]
+    [key: string]: TaskType[]
 }
 
 export const App = () => {

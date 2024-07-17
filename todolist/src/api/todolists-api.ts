@@ -15,12 +15,41 @@ const instance = axios.create({
         "API-KEY": "0d6fcc4b-d0b8-4c34-b068-91acef8dc727"
     }
 })
+export type FilterType = 'all' | 'active' | 'completed'
 
-type TodolistsType = {
+export type TodolistType = {
     id: string
     title: string
     addedDate: string
     order: number
+}
+
+export enum TaskStatuses  {
+    New = 0,
+    inProgress = 1,
+    Completed = 2,
+    Draft = 3
+}
+
+export enum TaskPriorities  {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
+}
+
+export type TaskType = {
+    description: string
+    title: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
 }
 
 type ResponseType<D = {}> = {
@@ -36,28 +65,12 @@ type GetTasksResponse = {
     error: null | string
 }
 
-export type TaskType = {
-    description: string
-    title: string
-    completed: boolean
-    status: number
-    priority: number
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
-
-
-
 export const todolistsApi = {
     getTodolists() {
-        return instance.get<TodolistsType[]>('todo-lists')
+        return instance.get<TodolistType[]>('todo-lists')
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<{ item: TodolistsType }>>(
+        return instance.post<ResponseType<{ item: TodolistType }>>(
             'todo-lists',
             {title}
         )

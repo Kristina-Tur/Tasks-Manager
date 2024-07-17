@@ -1,21 +1,19 @@
-import React, {ChangeEvent, memo, useCallback, useMemo} from 'react';
-import {FilterType, TaskStateType, TasksType} from '../app/App';
+import React, {useCallback, useMemo} from 'react';
 import {v1} from 'uuid';
 import '../App.css';
 import {AddItemForm} from "../addItemForm/AddItemForm";
 import {EditableSpan} from "../editableSpan/EditableSpan";
-import {ButtonProps, Checkbox, IconButton} from "@mui/material";
+import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import Button from '@mui/material/Button'
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import Box from '@mui/material/Box'
-import {filterButtonsContainerSx, getListItemSx} from './Todolist.styles'
+import {filterButtonsContainerSx} from './Todolist.styles'
 import {Task} from "../task/Task";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../store";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer/tasks-reducer";
+import {addTaskAC} from "../state/tasks-reducer/tasks-reducer";
 import {ButtonWithMemo} from "../components/buttons/Button";
+import {FilterType, TaskStatuses, TaskType} from "../api/todolists-api";
 
 type TodolistPropsType = {
     todolistId: string
@@ -51,7 +49,7 @@ export const Todolist = React.memo(({
     console.log('Todolist is called')
 
     const dispatch = useDispatch()
-    let tasks = useSelector<AppRootStateType, TaskStateType[]>(state => state.tasks[todolistId])
+    let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todolistId])
 
     const addTask = useCallback((todolistId: string, value: string) => {
         dispatch(addTaskAC(todolistId, value))
@@ -78,10 +76,10 @@ export const Todolist = React.memo(({
         console.log('filterMemo')
 
         if (filter === 'completed') {
-            tasks = tasks.filter(task => task.isDone)
+            tasks = tasks.filter(task => task.status === TaskStatuses.Completed)
         }
         if (filter === 'active') {
-            tasks = tasks.filter(task => !task.isDone)
+            tasks = tasks.filter(task => task.status === TaskStatuses.New)
         }
         return tasks
     }, [tasks, filter])
