@@ -2,7 +2,7 @@ import {v1} from "uuid";
 import {TasksType} from "../../app/App";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC} from "../todolist-reducer/todolists-reducer";
-import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
+import {TaskPriorities, TaskStatuses} from "../../api/api";
 
 let startState: TasksType
 

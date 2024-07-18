@@ -13,7 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../store";
 import {addTaskAC} from "../state/tasks-reducer/tasks-reducer";
 import {ButtonWithMemo} from "../components/buttons/Button";
-import {FilterType, TaskStatuses, TaskType} from "../api/todolists-api";
+import {FilterType, TaskStatuses, TaskType} from "../api/api";
 
 type TodolistPropsType = {
     todolistId: string

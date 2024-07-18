@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {TodolistDomainType} from "../../app/App";
-import {FilterType} from "../../api/todolists-api";
+import {FilterType} from "../../api/api";
 
 
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>

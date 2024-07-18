@@ -9,7 +9,7 @@ import {
 } from "../../state/todolist-reducer/todolists-reducer";
 import {createTheme} from "@mui/material/styles";
 import {TodolistDomainType} from "../App";
-import {FilterType} from "../../api/todolists-api";
+import {FilterType} from "../../api/api";
 
 type ThemeMode = 'dark' | 'light'
 

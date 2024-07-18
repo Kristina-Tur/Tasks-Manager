@@ -6,7 +6,7 @@ import {
     todolistId1,
     todolistId2
 } from "../todolist-reducer/todolists-reducer";
-import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
+import {TaskPriorities, TaskStatuses} from "../../api/api";
 
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>

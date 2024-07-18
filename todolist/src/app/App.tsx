@@ -12,7 +12,7 @@ import {ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {useApp} from "./hooks/useApp";
-import {FilterType, TaskType, TodolistType} from "../api/todolists-api";
+import {FilterType, TaskType, TodolistType} from "../api/api";
 
 export type TodolistDomainType = TodolistType & {
     filter: FilterType

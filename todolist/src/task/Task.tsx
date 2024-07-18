@@ -8,7 +8,7 @@ import {EditableSpan} from "../editableSpan/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer/tasks-reducer";
-import {TaskStatuses, TaskType} from "../api/todolists-api";
+import {TaskStatuses, TaskType} from "../api/api";
 
 type TaskComponentType = {
     task: TaskType

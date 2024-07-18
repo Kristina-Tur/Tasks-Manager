@@ -6,7 +6,7 @@ import {ActionType, tasksReducer} from "./tasks-reducer/tasks-reducer";
 import {ActionsType, todolistsReducer} from "./todolist-reducer/todolists-reducer";
 import {AppRootStateType} from "../store";
 import {TasksType, TodolistDomainType} from "../app/App";
-import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
+import {TaskPriorities, TaskStatuses} from "../api/api";
 
 type RootStateType = {
     tasks: TasksType
