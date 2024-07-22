@@ -1,15 +1,15 @@
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store";
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {
     addTodolistAC,
-    ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC,
-    removeTodolistAC
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    removeTodolistAC, setTodolistsAC
 } from "../../state/todolist-reducer/todolists-reducer";
 import {createTheme} from "@mui/material/styles";
 import {TodolistDomainType} from "../App";
-import {FilterType} from "../../api/api";
+import {api, FilterType} from "../../api/api";
 
 type ThemeMode = 'dark' | 'light'
 
@@ -19,10 +19,10 @@ export const useApp = () => {
 
     const addTodolist = useCallback((value: string) => {
         dispatch(addTodolistAC(value))
-    },[dispatch])
+    }, [dispatch])
 
     const changeTodolist = useCallback((todolistId: string, filter: FilterType) => {
-        dispatch(ChangeTodolistFilterAC(todolistId, filter))
+        dispatch(changeTodolistFilterAC(todolistId, filter))
     }, [dispatch])
 
     const removeTodolist = useCallback((todolistId: string) => {
@@ -30,7 +30,7 @@ export const useApp = () => {
     }, [dispatch])
 
     const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
-        dispatch(ChangeTodolistTitleAC(todolistId, title))
+        dispatch(changeTodolistTitleAC(todolistId, title))
     }, [dispatch])
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
@@ -46,6 +46,13 @@ export const useApp = () => {
     const changeModeHandler = () => {
         setThemeMode(themeMode == 'light' ? 'dark' : 'light')
     }
+
+    useEffect(() => {
+        api.getTodolists().then(res => {
+            dispatch(setTodolistsAC(res.data))
+        })
+    }, [])
+
     return {
         todolists,
         theme,
