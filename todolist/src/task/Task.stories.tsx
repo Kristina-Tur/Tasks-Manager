@@ -53,7 +53,7 @@ const TaskRender = () => {
             order: 0,
             addedDate: ''
         }
-        dispatch(addTaskAC('todolistId1', 'Default task'))
+        dispatch(addTaskAC(task))
     }
 
     return <Task task={task} todolistId={'todolistId1'}/>
