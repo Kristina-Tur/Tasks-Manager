@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {v1} from 'uuid';
 import '../App.css';
 import {AddItemForm} from "../addItemForm/AddItemForm";
@@ -10,10 +10,11 @@ import Box from '@mui/material/Box'
 import {filterButtonsContainerSx} from './Todolist.styles'
 import {Task} from "../task/Task";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../state/store";
-import {addTaskAC} from "../state/tasks-reducer/tasks-reducer";
+import {AppRootStateType, ThunkDispatchType} from "../state/store";
+import {addTaskAC, addTasksTC, getTasksTC} from "../state/tasks-reducer/tasks-reducer";
 import {ButtonWithMemo} from "../components/buttons/Button";
 import {FilterType, TaskStatuses, TaskType} from "../api/api";
+import {getTodolistsTC} from "../state/todolist-reducer/todolists-reducer";
 
 type TodolistPropsType = {
     todolistId: string
@@ -48,11 +49,11 @@ export const Todolist = React.memo(({
 
     console.log('Todolist is called')
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<ThunkDispatchType>()
     let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todolistId])
 
     const addTask = useCallback((todolistId: string, value: string) => {
-        dispatch(addTaskAC(todolistId, value))
+        dispatch(addTasksTC(todolistId, value))
     }, [dispatch])
 
     const removeTodolistHandler = () => {
@@ -72,7 +73,7 @@ export const Todolist = React.memo(({
         changeTodolistTitle(todolistId, title)
     }, [changeTodolistTitle, todolistId])
 
-    tasks = useMemo( () => {
+    tasks = useMemo(() => {
         console.log('filterMemo')
 
         if (filter === 'completed') {
@@ -84,7 +85,9 @@ export const Todolist = React.memo(({
         return tasks
     }, [tasks, filter])
 
-
+    useEffect(() => {
+        dispatch(getTasksTC(todolistId))
+    }, [])
 
     return (
         <div>
@@ -114,7 +117,7 @@ export const Todolist = React.memo(({
                         color={"primary"} className={button.filter === filter ? 'active-filter' : ''}
                         variant={button.filter === filter ? 'contained' : 'outlined'}
                         onClick={() => changeFilterTodolistHandler(button.filter)}
-                        title = {button.title}
+                        title={button.title}
                     />
                 )}
             </Box>

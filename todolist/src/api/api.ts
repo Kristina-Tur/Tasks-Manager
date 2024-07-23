@@ -57,6 +57,16 @@ type GetTaskType = {
     error: null | string
 }
 
+export type UpdateTaskModel = {
+    title: string
+    description: string
+    completed: boolean
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+}
+
 export const api = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists')
@@ -82,6 +92,9 @@ export const api = {
     },
     updateTaskTitle(todolistId: string, taskId: string, title: string) {
         return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
+    },
+    updateTaskStatus(todolistId: string, taskId: string, model: UpdateTaskModel) {
+        return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {model})
     },
 
 }

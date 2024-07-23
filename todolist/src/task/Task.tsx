@@ -7,20 +7,27 @@ import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "../editableSpan/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer/tasks-reducer";
+import {
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    deleteTaskTC,
+    removeTaskAC,
+    updateTaskStatusTC
+} from "../state/tasks-reducer/tasks-reducer";
 import {TaskStatuses, TaskType} from "../api/api";
+import {ThunkDispatchType} from "../state/store";
 
 type TaskComponentType = {
     task: TaskType
     todolistId: string
 };
 export const Task = ({task,todolistId}: TaskComponentType) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<ThunkDispatchType>()
 
-    const onRemoveHandler = () => dispatch(removeTaskAC(todolistId, task.id))
+    const onRemoveHandler = () => dispatch(deleteTaskTC(todolistId, task.id))
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) =>
-        dispatch(changeTaskStatusAC(
+        dispatch(updateTaskStatusTC(
             todolistId,
             task.id,
             event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New))
