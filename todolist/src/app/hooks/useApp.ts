@@ -1,10 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../store";
+import {AppRootStateType, ThunkDispatchType} from "../../state/store";
 import {useCallback, useEffect, useState} from "react";
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, getTodolistsTC,
     removeTodolistAC, setTodolistsAC
 } from "../../state/todolist-reducer/todolists-reducer";
 import {createTheme} from "@mui/material/styles";
@@ -14,7 +14,7 @@ import {api, FilterType} from "../../api/api";
 type ThemeMode = 'dark' | 'light'
 
 export const useApp = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<ThunkDispatchType>()
     const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
 
     const addTodolist = useCallback((value: string) => {
@@ -48,9 +48,7 @@ export const useApp = () => {
     }
 
     useEffect(() => {
-        api.getTodolists().then(res => {
-            dispatch(setTodolistsAC(res.data))
-        })
+        dispatch(getTodolistsTC())
     }, [])
 
     return {

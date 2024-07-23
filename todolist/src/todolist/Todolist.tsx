@@ -10,7 +10,7 @@ import Box from '@mui/material/Box'
 import {filterButtonsContainerSx} from './Todolist.styles'
 import {Task} from "../task/Task";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../store";
+import {AppRootStateType} from "../state/store";
 import {addTaskAC} from "../state/tasks-reducer/tasks-reducer";
 import {ButtonWithMemo} from "../components/buttons/Button";
 import {FilterType, TaskStatuses, TaskType} from "../api/api";
