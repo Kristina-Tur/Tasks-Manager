@@ -1,6 +1,9 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-import {api} from "./api";
+import {api, UpdateTaskModel} from "./api";
+import {Dispatch} from "redux";
+import {AppRootStateType} from "../state/store";
+import {changeTaskTitleAC} from "../state/tasks-reducer/tasks-reducer";
 
 export default {
     title: 'API',
@@ -20,7 +23,7 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        api.createTodolist('newTodolist')
+        api.addTodolist('newTodolist')
             .then(res => {
                 console.log({res})
                 setState(res.data)
@@ -36,7 +39,7 @@ export const DeleteTodolist = () => {
     const todolistId = "3b95ef93-410b-458a-8f4b-484e4d30dc1c"
 
     useEffect(() => {
-        api.deleteTodolist(todolistId)
+        api.removeTodolist(todolistId)
             .then((res) => {
                 setState(res.data)
             })
@@ -81,7 +84,7 @@ export const CreateTask = () => {
     const [title, setTitle] = useState('')
 
     const onClickHandler = () => {
-        api.createTask(todolistId, title)
+        api.addTask(todolistId, title)
             .then(res => {
                 setState(res.data.data)
             })
@@ -101,7 +104,7 @@ export const DeleteTask = () => {
     const [taskId, setTaskId] = useState('')
 
     const onClickHandler = () => {
-        api.deleteTask(todolistId, taskId)
+        api.removeTask(todolistId, taskId)
             .then((res) => {
                 setState(res.data)
             })
@@ -116,18 +119,27 @@ export const DeleteTask = () => {
 }
 
 export const UpdateTaskTitle = () => {
+
     const [state, setState] = useState<any>(null)
     const [todolistId, setTodolistId] = useState('')
     const [taskId, setTaskId] = useState('')
     const [title, setTitle] = useState('')
 
+   /* const model: UpdateTaskModel= {
+        title,
+        description: task.description,
+        completed: task.completed,
+        priority: task.priority,
+        startDate: task.startDate,
+        deadline: task.deadline,
+        status: task.status
+    }*/
     const onClickHandler = () => {
-        api.updateTaskTitle(todolistId, taskId, title)
+        api.updateTask(todolistId, taskId, title)
             .then(res => {
                 setState(res.data)
             })
     }
-
     return <div>
         {JSON.stringify(state)}
         <input placeholder={'todolistId'} value={todolistId} onChange={e => setTodolistId(e.currentTarget.value)}/>
