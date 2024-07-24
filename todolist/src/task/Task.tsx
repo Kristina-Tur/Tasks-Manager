@@ -12,7 +12,7 @@ import {
     changeTaskTitleAC,
     deleteTaskTC,
     removeTaskAC,
-    updateTaskStatusTC
+    updateTaskStatusTC, updateTaskTitleTC
 } from "../state/tasks-reducer/tasks-reducer";
 import {TaskStatuses, TaskType} from "../api/api";
 import {ThunkDispatchType} from "../state/store";
@@ -33,7 +33,7 @@ export const Task = ({task,todolistId}: TaskComponentType) => {
             event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New))
 
     const onChangeEditableSpanHandler = (title: string) =>
-        dispatch(changeTaskTitleAC(todolistId, task.id, title))
+        dispatch(updateTaskTitleTC(todolistId, task.id, title))
 
     return (
         <ListItem sx={getListItemSx(task.status === TaskStatuses.Completed)}>

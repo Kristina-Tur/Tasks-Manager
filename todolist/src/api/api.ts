@@ -61,8 +61,8 @@ export type UpdateTaskModel = {
     title: string
     description: string
     completed: boolean
-    status: TaskStatuses
-    priority: TaskPriorities
+    status: TaskStatuses  /*number*/
+    priority: TaskPriorities /*number*/
     startDate: string
     deadline: string
 }
@@ -90,11 +90,7 @@ export const api = {
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
-    updateTaskTitle(todolistId: string, taskId: string, title: string) {
-        return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
-    },
-    updateTaskStatus(todolistId: string, taskId: string, model: UpdateTaskModel) {
-        return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {model})
-    },
-
+    updateTask(todolistId: string, taskId: string, model: UpdateTaskModel) {
+        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+    }
 }

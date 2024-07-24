@@ -54,7 +54,7 @@ export const tasksReducer = (state: TasksType = initialState, action: ActionType
             }
         }
         case 'ADD-TODOLIST': {
-            return {...state, [action.payload.todolistId]: []}
+            return {...state, [action.payload.todolist.id]: []}
         }
         case "REMOVE-TODOLIST": {
             delete state[action.payload.id]
@@ -125,8 +125,30 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
                 deadline: task.deadline,
                 status: status
             }
-            api.updateTaskStatus(todolistId, taskId, model).then(res => {
+            api.updateTask(todolistId, taskId, model).then(() => {
                 dispatch(changeTaskStatusAC(todolistId, taskId, status))
+            })
+        }
+
+    }
+}
+
+export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string) => {
+    return (dispatch: Dispatch, getState: AppRootStateType) => {
+        const task = getState().tasks[todolistId].find((task: { id: string; }) => task.id === taskId)
+
+        if(task) {
+            const model: UpdateTaskModel= {
+                title,
+                description: task.description,
+                completed: task.completed,
+                priority: task.priority,
+                startDate: task.startDate,
+                deadline: task.deadline,
+                status: task.status
+            }
+            api.updateTask(todolistId, taskId, model).then(() => {
+                dispatch(changeTaskTitleAC(todolistId, taskId, title))
             })
         }
 

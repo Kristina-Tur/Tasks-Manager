@@ -52,6 +52,10 @@ export const Todolist = React.memo(({
     const dispatch = useDispatch<ThunkDispatchType>()
     let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todolistId])
 
+    useEffect(() => {
+        dispatch(getTasksTC(todolistId))
+    }, [])
+
     const addTask = useCallback((todolistId: string, value: string) => {
         dispatch(addTasksTC(todolistId, value))
     }, [dispatch])
@@ -85,9 +89,7 @@ export const Todolist = React.memo(({
         return tasks
     }, [tasks, filter])
 
-    useEffect(() => {
-        dispatch(getTasksTC(todolistId))
-    }, [])
+
 
     return (
         <div>
