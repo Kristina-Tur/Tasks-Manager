@@ -1,7 +1,7 @@
 import React from 'react';
-import '../App.css';
-import {Todolist} from '../todolist/Todolist';
-import {AddItemForm} from "../addItemForm/AddItemForm";
+import './App.css';
+import {Todolist} from '../features/TodolistsList/todolist/Todolist';
+import {AddItemForm} from "../components/addItemForm/AddItemForm";
 import {AppBar, IconButton, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import Container from '@mui/material/Container'
@@ -13,25 +13,14 @@ import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {useApp} from "./hooks/useApp";
 import {FilterType, TaskType, TodolistType} from "../api/api";
+import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 
-export type TodolistDomainType = TodolistType & {
-    filter: FilterType
-}
-
-export type TasksType = {
-    [key: string]: TaskType[]
-}
 
 export const App = () => {
     console.log('App is called')
     const {
-        todolists,
         theme,
-        changeModeHandler,
-        addTodolist,
-        changeTodolist,
-        removeTodolist,
-        changeTodolistTitle
+        changeModeHandler
     } = useApp()
 
     return (
@@ -59,28 +48,7 @@ export const App = () => {
                     </Toolbar>
                 </AppBar>
                 <Container fixed>
-                    <Grid container sx={{mb: '30px'}}>
-                        <AddItemForm addItem={addTodolist}/>
-                    </Grid>
-                    <Grid container spacing={4}>
-                        {todolists.map(todolist => {
-                            return (
-                                <Grid>
-                                    <Paper elevation={3} sx={{p: '0 20px 20px 20px'}}>
-                                        <Todolist
-                                            key={todolist.id}
-                                            todolistId={todolist.id}
-                                            title={todolist.title}
-                                            changeTodolist={changeTodolist}
-                                            filter={todolist.filter}
-                                            removeTodolist={removeTodolist}
-                                            changeTodolistTitle={changeTodolistTitle}
-                                        />
-                                    </Paper>
-                                </Grid>
-                            )
-                        })}
-                    </Grid>
+                    <TodolistsList/>
                 </Container>
             </div>
         </ThemeProvider>

@@ -1,19 +1,18 @@
-import React, {Reducer} from 'react'
+import React from 'react'
 import {Provider} from "react-redux";
 import {combineReducers, legacy_createStore} from "redux";
 import {v1} from "uuid";
-import {ActionType, tasksReducer} from "./tasks-reducer/tasks-reducer";
-import {ActionsType, todolistsReducer} from "./todolist-reducer/todolists-reducer";
-import {AppRootStateType} from "./store";
-import {TasksType, TodolistDomainType} from "../app/App";
+import {tasksReducer} from "./tasks-reducer/tasks-reducer";
+import {todolistsReducer} from "./todolist-reducer/todolists-reducer";
+import {AppRootStateType} from "../app/store";
 import {TaskPriorities, TaskStatuses} from "../api/api";
 
-type RootStateType = {
+/*type RootStateType = {
     tasks: TasksType
     todolists: TodolistDomainType[]
-} | undefined
+} | undefined*/
 
-const rootReducer: Reducer<RootStateType, ActionsType & ActionType>  = combineReducers({
+const rootReducer/*: Reducer<RootStateType, ActionsType & ActionType>*/  = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer
 })

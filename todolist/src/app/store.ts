@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
-import {ActionsType, todolistsReducer} from "./todolist-reducer/todolists-reducer";
-import {ActionType, tasksReducer} from "./tasks-reducer/tasks-reducer";
+import {ActionsType, todolistsReducer} from "../features/todolist-reducer/todolists-reducer";
+import {ActionType, tasksReducer} from "../features/tasks-reducer/tasks-reducer";
 import {thunk, ThunkDispatch} from "redux-thunk";
 import {Action} from '@reduxjs/toolkit';
 

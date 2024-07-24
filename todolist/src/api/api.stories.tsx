@@ -1,9 +1,5 @@
-import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-import {api, UpdateTaskModel} from "./api";
-import {Dispatch} from "redux";
-import {AppRootStateType} from "../state/store";
-import {changeTaskTitleAC} from "../state/tasks-reducer/tasks-reducer";
+import {api, TaskPriorities, TaskStatuses} from "./api";
 
 export default {
     title: 'API',
@@ -125,17 +121,17 @@ export const UpdateTaskTitle = () => {
     const [taskId, setTaskId] = useState('')
     const [title, setTitle] = useState('')
 
-   /* const model: UpdateTaskModel= {
+    const model = {
         title,
-        description: task.description,
-        completed: task.completed,
-        priority: task.priority,
-        startDate: task.startDate,
-        deadline: task.deadline,
-        status: task.status
-    }*/
+        description: '',
+        completed: false,
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        status: TaskStatuses.New
+    }
     const onClickHandler = () => {
-        api.updateTask(todolistId, taskId, title)
+        api.updateTask(todolistId, taskId, model)
             .then(res => {
                 setState(res.data)
             })

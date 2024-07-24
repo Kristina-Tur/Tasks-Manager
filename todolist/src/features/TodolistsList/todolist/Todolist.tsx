@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {v1} from 'uuid';
-import '../App.css';
-import {AddItemForm} from "../addItemForm/AddItemForm";
-import {EditableSpan} from "../editableSpan/EditableSpan";
+import '../../../app/App.css';
+import {AddItemForm} from "../../../components/addItemForm/AddItemForm";
+import {EditableSpan} from "../../../components/editableSpan/EditableSpan";
 import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import List from '@mui/material/List'
@@ -10,23 +10,15 @@ import Box from '@mui/material/Box'
 import {filterButtonsContainerSx} from './Todolist.styles'
 import {Task} from "../task/Task";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType, ThunkDispatchType} from "../state/store";
-import {addTaskAC, addTasksTC, getTasksTC} from "../state/tasks-reducer/tasks-reducer";
-import {ButtonWithMemo} from "../components/buttons/Button";
-import {FilterType, TaskStatuses, TaskType} from "../api/api";
-import {getTodolistsTC} from "../state/todolist-reducer/todolists-reducer";
+import {AppRootStateType, ThunkDispatchType} from "../../../app/store";
+import {addTasksTC, getTasksTC} from "../../tasks-reducer/tasks-reducer";
+import {ButtonWithMemo} from "../../../components/buttons/Button";
+import {FilterType, TaskStatuses, TaskType} from "../../../api/api";
 
 type TodolistPropsType = {
     todolistId: string
     title: string
     changeTodolist: (todolistId: string, filter: FilterType) => void
-
-    /*tasks: Array<TasksPropsType>
-    removeTask: (todolistId: string, id: string) => void
-    addTask: (todolistId: string, value: string) => void
-    changeStatus: (todolistId: string, taskId: string, isDone: boolean) => void
-    changeTaskTitle: (todolistId: string, taskId: string, title: string) => void*/
-
     removeTodolist: (todolistId: string) => void
     changeTodolistTitle: (todolistId: string, title: string) => void
     filter: FilterType
