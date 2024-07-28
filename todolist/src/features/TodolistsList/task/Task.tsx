@@ -11,14 +11,14 @@ import {
     removeTaskTC, updateTaskTC
 } from "../../tasks-reducer/tasks-reducer";
 import {TaskStatuses, TaskType} from "../../../api/api";
-import {ThunkDispatchType} from "../../../app/store";
+import {ThunkDispatchType, useAppDispatch} from "../../../app/store";
 
 type TaskComponentType = {
     task: TaskType
     todolistId: string
 };
 export const Task = ({task,todolistId}: TaskComponentType) => {
-    const dispatch = useDispatch<ThunkDispatchType>()
+    const dispatch = useAppDispatch()
 
     const onRemoveHandler = () => dispatch(removeTaskTC(todolistId, task.id))
 

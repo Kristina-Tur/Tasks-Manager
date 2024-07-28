@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType, ThunkDispatchType} from "../../../app/store";
+import {AppRootStateType, ThunkDispatchType, useAppDispatch} from "../../../app/store";
 import {useCallback, useEffect} from "react";
 import {
     addTodolistTC,
@@ -13,7 +13,7 @@ import {TodolistDomainType} from "../TodolistsList";
 
 
 export const useTodolists = () => {
-    const dispatch = useDispatch<ThunkDispatchType>()
+    const dispatch = useAppDispatch()
     const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
 
     useEffect(() => {

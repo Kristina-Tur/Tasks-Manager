@@ -10,7 +10,7 @@ import Box from '@mui/material/Box'
 import {filterButtonsContainerSx} from './Todolist.styles'
 import {Task} from "../task/Task";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType, ThunkDispatchType} from "../../../app/store";
+import {AppRootStateType, ThunkDispatchType, useAppDispatch} from "../../../app/store";
 import {addTasksTC, getTasksTC} from "../../tasks-reducer/tasks-reducer";
 import {ButtonWithMemo} from "../../../components/buttons/Button";
 import {FilterType, TaskStatuses, TaskType} from "../../../api/api";
@@ -41,7 +41,7 @@ export const Todolist = React.memo(({
 
     console.log('Todolist is called')
 
-    const dispatch = useDispatch<ThunkDispatchType>()
+    const dispatch = useAppDispatch()
     let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todolistId])
 
     useEffect(() => {
