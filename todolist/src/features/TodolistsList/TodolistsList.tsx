@@ -6,9 +6,11 @@ import Paper from "@mui/material/Paper";
 import {Todolist} from "./todolist/Todolist";
 import {useTodolists} from "./hooks/useTodolists";
 import {FilterType, TodolistType} from "../../api/api";
+import {RequestStatusType} from "../../app/app-reducer";
 
 export type TodolistDomainType = TodolistType & {
     filter: FilterType
+    entityStatus: RequestStatusType
 }
 
 export const TodolistsList = () => {
@@ -28,10 +30,10 @@ export const TodolistsList = () => {
             <Grid container spacing={4}>
                 {todolists.map(todolist => {
                     return (
-                        <Grid>
+                        <Grid  key={todolist.id}>
                             <Paper elevation={3} sx={{p: '0 20px 20px 20px'}}>
                                 <Todolist
-                                    key={todolist.id}
+
                                     todolistId={todolist.id}
                                     title={todolist.title}
                                     changeTodolist={changeTodolist}

@@ -2,10 +2,10 @@ import React from 'react'
 import {Provider} from "react-redux";
 import {combineReducers, legacy_createStore} from "redux";
 import {v1} from "uuid";
-import {tasksReducer} from "./tasks-reducer/tasks-reducer";
-import {todolistsReducer} from "./todolist-reducer/todolists-reducer";
-import {AppRootStateType} from "../app/store";
-import {TaskPriorities, TaskStatuses} from "../api/api";
+import {tasksReducer} from "../../features/tasks-reducer/tasks-reducer";
+import {todolistsReducer} from "../../features/todolist-reducer/todolists-reducer";
+import {AppRootStateType} from "../../app/store";
+import {TaskPriorities, TaskStatuses} from "../../api/api";
 
 /*type RootStateType = {
     tasks: TasksType
@@ -17,10 +17,10 @@ const rootReducer/*: Reducer<RootStateType, ActionsType & ActionType>*/  = combi
     todolists: todolistsReducer
 })
 
-const initialGlobalState = {
+const initialGlobalState: AppRootStateType = {
     todolists: [
-        {id: "todolistId1", title: "What to learn", filter: "all", addedDate: '', order: 0},
-        {id: "todolistId2", title: "What to buy", filter: "all", addedDate: '', order: 0}
+        {id: "todolistId1", title: "What to learn", filter: "all", addedDate: '', order: 0, entityStatus: 'idle'},
+        {id: "todolistId2", title: "What to buy", filter: "all", addedDate: '', order: 0, entityStatus: 'idle'}
     ] ,
     tasks: {
         ["todolistId1"]: [
@@ -75,9 +75,14 @@ const initialGlobalState = {
                 addedDate: ''
             }
         ]
+    },
+    app: {
+        error: null,
+        status: 'idle'
     }
 };
 
+//@ts-ignore
 export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState as AppRootStateType);
 
 

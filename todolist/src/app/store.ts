@@ -1,22 +1,28 @@
-import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
-import {ActionsType, todolistsReducer} from "../features/todolist-reducer/todolists-reducer";
-import {ActionType, tasksReducer} from "../features/tasks-reducer/tasks-reducer";
-import {thunk, ThunkDispatch} from "redux-thunk";
-import {Action} from '@reduxjs/toolkit';
+import {combineReducers} from "redux";
+import {todolistsReducer} from "../features/todolist-reducer/todolists-reducer";
+import {tasksReducer} from "../features/tasks-reducer/tasks-reducer";
+import {Action, configureStore} from '@reduxjs/toolkit';
 import {useDispatch} from "react-redux";
+import {appReducer} from "./app-reducer";
+import {thunk, ThunkDispatch} from 'redux-thunk'
 
 /*type rootReducerType = {
     todolists: TodolistDomainType[]
     tasks: TasksType
 }*/
 
-const rootReducer: any = combineReducers({
+const rootReducer = combineReducers({
     todolists: todolistsReducer,
-    tasks: tasksReducer
+    tasks: tasksReducer,
+    app: appReducer
 })
 
-export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))
+/*export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))*/
 
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+});
 /*export const store = configureStore({
     reducer: rootReducer,
     middleware: [thunk]

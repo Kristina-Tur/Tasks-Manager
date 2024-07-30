@@ -13,7 +13,7 @@ export const useAddItemForm = (addItem: (value: string) => void) => {
             setError(null)
         }
 
-        if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
+        if (newTaskTitle.trim() !== ''/* && newTaskTitle.trim().length < 20*/) {
             if (event.key === 'Enter') {
                 addItem(newTaskTitle)
                 setNewTaskTitle('')
@@ -24,7 +24,7 @@ export const useAddItemForm = (addItem: (value: string) => void) => {
     }
 
     const addItemHandler = () => {
-        if (newTaskTitle.trim() !== '' && newTaskTitle.trim().length < 20) {
+        if (newTaskTitle.trim() !== ''/* && newTaskTitle.trim().length < 20*/) {
             addItem(newTaskTitle.trim())
             setNewTaskTitle('')
         } else {
