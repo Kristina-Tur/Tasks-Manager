@@ -15,11 +15,11 @@ export enum TaskPriorities {
     Later = 4
 }
 
-type TodolistType = {
-    "id": string
-    "title": string
-    "addedDate": string
-    "order": number
+export type TodolistType = {
+    id: string
+    title: string
+    addedDate: string
+    order: number
 }
 
 type ResponseType<T = {}> = {

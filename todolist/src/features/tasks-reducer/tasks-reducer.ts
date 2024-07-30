@@ -93,6 +93,8 @@ export const getTasksTC = (todolistId: string) => {
         api.getTasks(todolistId).then(res => {
             dispatch(setTasksAC(todolistId, res.data.items))
             dispatch(setAppStatusAC('succeeded'))
+        }).catch((error) => {
+            console.log(error)
         })
     }
 }
