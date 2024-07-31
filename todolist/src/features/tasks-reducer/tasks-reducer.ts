@@ -18,7 +18,6 @@ type UpdateDomainTaskModelType = {
     deadline?: string
 }
 
-
 export type TasksType = {
     [key: string]: TaskType[]
 }
