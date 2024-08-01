@@ -19,8 +19,11 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
 
+type AppPropsType = {
+    demo?: boolean
+}
 
-export const App = () => {
+export const App = ({demo = false}: AppPropsType) => {
     console.log('App is called')
     const {
         theme,
@@ -56,7 +59,7 @@ export const App = () => {
                     {status === 'loading' && <LinearProgress/>}
                 </AppBar>
                 <Container fixed>
-                    <TodolistsList/>
+                    <TodolistsList demo={demo}/>
                 </Container>
             </div>
         </ThemeProvider>

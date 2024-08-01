@@ -21,6 +21,11 @@ type Story = StoryObj<typeof AddItemForm>;
 
 export const AddItemFormStory: Story = {
 };
+export const AddItemFormStoryDisabled: Story = {
+    args: {
+        disabled: true
+    }
+};
 
 type AddItemFormType = {
     addItem: (value: string) => void
@@ -85,3 +90,4 @@ const AddItemFormWithError = React.memo( ({
 export const AddItemFormWithErrorStory: Story = {
     render: args => <AddItemFormWithError addItem={args.addItem}/>
 };
+

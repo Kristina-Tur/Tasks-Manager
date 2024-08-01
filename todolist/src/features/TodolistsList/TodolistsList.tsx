@@ -5,22 +5,20 @@ import {AddItemForm} from "../../components/addItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./todolist/Todolist";
 import {useTodolists} from "./hooks/useTodolists";
-import {FilterType, TodolistType} from "../../api/api";
-import {RequestStatusType} from "../../app/app-reducer";
 
-export type TodolistDomainType = TodolistType & {
-    filter: FilterType
-    entityStatus: RequestStatusType
+
+type TodolistsListPropsType = {
+    demo?: boolean
 }
 
-export const TodolistsList = () => {
+export const TodolistsList = ({demo = false}: TodolistsListPropsType) => {
     const {
         todolists,
         addTodolist,
         changeTodolist,
         removeTodolist,
         changeTodolistTitle
-    } = useTodolists()
+    } = useTodolists(demo)
 
     return (
         <>
@@ -33,13 +31,11 @@ export const TodolistsList = () => {
                         <Grid  key={todolist.id}>
                             <Paper elevation={3} sx={{p: '0 20px 20px 20px'}}>
                                 <Todolist
-
-                                    todolistId={todolist.id}
-                                    title={todolist.title}
+                                    todolist={todolist}
                                     changeTodolist={changeTodolist}
-                                    filter={todolist.filter}
                                     removeTodolist={removeTodolist}
                                     changeTodolistTitle={changeTodolistTitle}
+                                    demo={demo}
                                 />
                             </Paper>
                         </Grid>

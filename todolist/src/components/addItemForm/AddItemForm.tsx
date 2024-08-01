@@ -6,15 +6,18 @@ import {useAddItemForm} from "./hooks/useAddItemForm";
 
 type AddItemFormType = {
     addItem: (value: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = React.memo( ({
-                                addItem,
-                            }: AddItemFormType) => {
+export const AddItemForm = React.memo(({
+                                           addItem,
+                                           disabled = false
+                                       }: AddItemFormType) => {
 
     console.log('AddItemForm is called')
 
-    const {newTaskTitle,
+    const {
+        newTaskTitle,
         error,
         onChangeInputHandler,
         onKeyUpInputHandler,
@@ -25,16 +28,17 @@ export const AddItemForm = React.memo( ({
         <div>
             <TextField
                 label="Type value"
-                       value={newTaskTitle}
-                       onChange={onChangeInputHandler}
-                       onKeyUp={onKeyUpInputHandler}
-                       error={!!error}
-                       helperText={error}
+                disabled={disabled}
+                value={newTaskTitle}
+                onChange={onChangeInputHandler}
+                onKeyUp={onKeyUpInputHandler}
+                error={!!error}
+                helperText={error}
             />
-            <IconButton onClick={() => {
+            <IconButton disabled={disabled} onClick={() => {
                 addItemHandler()
             }} color={"primary"}>
-                <AddBoxIcon />
+                <AddBoxIcon/>
             </IconButton>
         </div>
     )

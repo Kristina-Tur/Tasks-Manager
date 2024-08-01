@@ -15,4 +15,8 @@ const meta: Meta<typeof App> = {
 export default meta;
 type Story = StoryObj<typeof App>;
 
-export const AppStory: Story = {}
+export const AppStory: Story = {
+    args: {
+        demo: true
+    }
+}

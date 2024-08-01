@@ -1,4 +1,5 @@
 import axios from "axios";
+import {RequestStatusType} from "../app/app-reducer";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -22,8 +23,11 @@ export const api = {
     updateTodolistTitle(todolistId: string, title: string) {
         return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
     },
+    /*updateTodolistTitle(todolistId: string, title: string) {
+        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
+    },
+    */
     getTasks(todolistId: string) {
-
         return instance.get<GetTaskType>(`todo-lists/${todolistId}/tasks`)
     },
     addTask(todolistId: string, title: string) {
@@ -41,11 +45,33 @@ export const api = {
 //types
 export type FilterType = 'all' | 'active' | 'completed'
 
+export type TodolistDomainType = TodolistType & {
+    filter: FilterType
+    entityStatus: RequestStatusType
+}
+
 export type TodolistType = {
     id: string
     title: string
     addedDate: string
     order: number
+}
+
+export type TaskDomainType = TaskType & {
+    entityStatus: RequestStatusType
+}
+
+export type TaskType = {
+    description: string
+    title: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
 }
 
 export enum TaskStatuses {
@@ -63,24 +89,12 @@ export enum TaskPriorities {
     Later = 4
 }
 
-export type TaskType = {
-    description: string
-    title: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
 
-type ResponseType<T = {}> = {
+export type ResponseType<D = {}> = {
     resultCode: number
     messages: string[]
     fieldsErrors: string[]
-    data: T
+    data: D
 }
 
 type GetTaskType = {

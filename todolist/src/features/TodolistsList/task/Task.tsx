@@ -10,32 +10,32 @@ import {useDispatch} from "react-redux";
 import {
     removeTaskTC, updateTaskTC
 } from "../../tasks-reducer/tasks-reducer";
-import {TaskStatuses, TaskType} from "../../../api/api";
+import {TaskDomainType, TaskStatuses, TaskType, TodolistDomainType} from "../../../api/api";
 import {ThunkDispatchType, useAppDispatch} from "../../../app/store";
 
 type TaskComponentType = {
-    task: TaskType
-    todolistId: string
+    task: TaskDomainType
+    todolist: TodolistDomainType
 };
-export const Task = ({task,todolistId}: TaskComponentType) => {
+export const Task = ({task,todolist}: TaskComponentType) => {
     const dispatch = useAppDispatch()
 
-    const onRemoveHandler = () => dispatch(removeTaskTC(todolistId, task.id))
+    const onRemoveHandler = () => dispatch(removeTaskTC(todolist.id, task.id))
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const status = event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
-        return  dispatch(updateTaskTC(todolistId, task.id, {status}))
+        return  dispatch(updateTaskTC(todolist.id, task.id, {status}))
     }
 
     const onChangeEditableSpanHandler = (title: string) =>
-        dispatch(updateTaskTC(todolistId, task.id, {title}))
+        dispatch(updateTaskTC(todolist.id, task.id, {title}))
 
     return (
         <ListItem sx={getListItemSx(task.status === TaskStatuses.Completed)}>
             <div>
                 <Checkbox onChange={onChangeHandler}
                           checked={task.status === TaskStatuses.Completed}/>
-                <EditableSpan title={task.title} onChange={onChangeEditableSpanHandler}/>
+                <EditableSpan title={task.title} onChange={onChangeEditableSpanHandler} disabled={task.entityStatus === 'loading'}/>
             </div>
             <IconButton aria-label="delete" onClick={onRemoveHandler}>
                 <Delete/>

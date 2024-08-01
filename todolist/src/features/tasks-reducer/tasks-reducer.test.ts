@@ -24,7 +24,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -36,7 +37,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -48,7 +50,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -60,7 +63,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -72,7 +76,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -84,7 +89,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             }
         ],
         'todolistId2': [
@@ -98,7 +104,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId2',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -110,7 +117,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId2',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -122,7 +130,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId2',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             },
             {
                 id: v1(),
@@ -134,7 +143,8 @@ beforeEach(() => {
                 deadline: '',
                 todoListId: 'todolistId1',
                 order: 0,
-                addedDate: ''
+                addedDate: '',
+                entityStatus: 'idle'
             }
         ]
     }

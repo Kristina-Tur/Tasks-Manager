@@ -6,18 +6,18 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleTC,
     getTodolistsTC,
-    removeTodolistTC
+    removeTodolistTC,
 } from "../../todolist-reducer/todolists-reducer";
-import {FilterType} from "../../../api/api";
-import {TodolistDomainType} from "../TodolistsList";
+import {FilterType, TodolistDomainType} from "../../../api/api";
 
-
-export const useTodolists = () => {
+export const useTodolists = (demo: boolean) => {
     const dispatch = useAppDispatch()
     const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
 
     useEffect(() => {
-        dispatch(getTodolistsTC())
+        if(!demo){
+            dispatch(getTodolistsTC())
+        }
     }, [])
 
     const addTodolist = useCallback((value: string) => {
@@ -41,6 +41,7 @@ export const useTodolists = () => {
         addTodolist,
         changeTodolist,
         removeTodolist,
-        changeTodolistTitle
+        changeTodolistTitle,
+        demo
     }
 }
