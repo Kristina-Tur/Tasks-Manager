@@ -26,11 +26,16 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType, AppThunkDispatch} from './state/store';
 import {TaskStatuses, TaskType, TodolistType} from "./api/api";
+import {LinearProgress} from "@mui/material";
+import {appType, RequestStatusType, setAppLoadingAC} from "./state/app-reducer";
+import Snackbar from "@mui/material/Snackbar";
+import {SnackbarComp} from "./Snackbar";
 
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
+    entityStatus: RequestStatusType
 }
 
 export type TasksStateType = {
@@ -42,11 +47,11 @@ function App() {
 
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const loading = useSelector<AppRootStateType, RequestStatusType>(state => state.app.loading)
     const dispatch = useDispatch<AppThunkDispatch>()
 
     useEffect(() => {
         dispatch(setTodolistTC())
-
     }, []);
     const removeTask = useCallback(function (id: string, todolistId: string) {
         const action = removeTaskTC(id, todolistId);
@@ -99,9 +104,11 @@ function App() {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
+            <SnackbarComp/>
+            {loading === 'loading' && <LinearProgress />}
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
-                    <AddItemForm addItem={addTodolist}/>
+                    <AddItemForm addItem={addTodolist} disabled={loading === 'loading'}/>
                 </Grid>
                 <Grid container spacing={3}>
                     {
@@ -129,6 +136,7 @@ function App() {
                     }
                 </Grid>
             </Container>
+
         </div>
     );
 }

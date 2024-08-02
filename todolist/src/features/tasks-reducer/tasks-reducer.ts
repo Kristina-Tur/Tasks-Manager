@@ -9,6 +9,12 @@ import {AppRootStateType} from "../../app/store";
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
+enum RESULT_CODE {
+    SUCCESS = 0,
+    ERROR = 1,
+    ERROR_RECAPTCHA = 10
+}
+
 type UpdateDomainTaskModelType = {
     title?: string
     description?: string
@@ -108,7 +114,7 @@ export const addTasksTC = (todolistId: string, title: string) => {
         dispatch(setAppStatusAC('loading'))
         api.addTask(todolistId, title)
             .then(res => {
-                if (res.data.resultCode === 0) {
+                if (res.data.resultCode === RESULT_CODE.SUCCESS) {
                     dispatch(addTaskAC(res.data.data.item))
                     dispatch(setAppStatusAC('succeeded'))
                 } else {

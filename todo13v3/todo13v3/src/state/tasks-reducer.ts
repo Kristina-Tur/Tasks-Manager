@@ -4,6 +4,7 @@ import {TasksStateType} from '../App';
 import {TaskPriorities, TaskStatuses, TaskType, todolistApi, TodolistType, UpdateTaskModelType} from "../api/api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
+import {setAppErrorAC, setAppLoadingAC} from "./app-reducer";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -123,24 +124,45 @@ export const setTasksAC = (todolistId: string, tasks: TaskType[]) : SetTaskActio
 
 export const setTasksTC = (todolistId: string) => {
     return (dispatch: Dispatch) => {
-        todolistApi.getTasks(todolistId).then((res) => {
+        dispatch(setAppLoadingAC('loading'))
+        todolistApi.getTasks(todolistId)
+            .then((res) => {
             dispatch(setTasksAC(todolistId, res.data.items))
+            dispatch(setAppLoadingAC('succeeded'))
         })
+            .catch(rej => {
+                dispatch(setAppErrorAC('some error occurred'))
+                dispatch(setAppLoadingAC('failed'))
+            })
     }
 }
 
 export const addTaskTC = (title: string, todolistId: string) => {
     return (dispatch: Dispatch) => {
-        todolistApi.createTask(todolistId, title).then((res) => {
+        dispatch(setAppLoadingAC('loading'))
+        todolistApi.createTask(todolistId, title)
+            .then((res) => {
             dispatch(addTaskAC(res.data.data.item))
+            dispatch(setAppLoadingAC('succeeded'))
         })
+            .catch(rej => {
+                dispatch(setAppErrorAC('some error occurred'))
+                dispatch(setAppLoadingAC('failed'))
+            })
     }
 }
 export const removeTaskTC = (taskId: string, todolistId: string) => {
     return (dispatch: Dispatch) => {
-        todolistApi.deleteTask(todolistId, taskId).then((res) => {
+        dispatch(setAppLoadingAC('loading'))
+        todolistApi.deleteTask(todolistId, taskId)
+            .then((res) => {
             dispatch(removeTaskAC(taskId, todolistId))
+            dispatch(setAppLoadingAC('succeeded'))
         })
+            .catch(rej => {
+                dispatch(setAppErrorAC('some error occurred'))
+                dispatch(setAppLoadingAC('failed'))
+            })
     }
 }
 export const updateTaskTC = (taskId: string, todolistId: string, model: UpdateDomainTaskModelType) => {
@@ -157,9 +179,16 @@ export const updateTaskTC = (taskId: string, todolistId: string, model: UpdateDo
                 startDate: task.startDate,
                 ...model
             }
-            todolistApi.updateTask(todolistId, taskId, apiModel).then((res) => {
+            dispatch(setAppLoadingAC('loading'))
+            todolistApi.updateTask(todolistId, taskId, apiModel)
+                .then((res) => {
                 dispatch(updateTaskAC(taskId, todolistId, model))
+                dispatch(setAppLoadingAC('succeeded'))
             })
+                .catch(rej => {
+                    dispatch(setAppErrorAC('some error occurred'))
+                    dispatch(setAppLoadingAC('failed'))
+                })
         }
     }
 }

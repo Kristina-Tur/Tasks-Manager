@@ -14,7 +14,7 @@ import {TaskDomainType, TaskStatuses, TaskType, TodolistDomainType} from "../../
 import {ThunkDispatchType, useAppDispatch} from "../../../app/store";
 
 type TaskComponentType = {
-    task: TaskDomainType
+    task: TaskType
     todolist: TodolistDomainType
 };
 export const Task = ({task,todolist}: TaskComponentType) => {
@@ -35,7 +35,7 @@ export const Task = ({task,todolist}: TaskComponentType) => {
             <div>
                 <Checkbox onChange={onChangeHandler}
                           checked={task.status === TaskStatuses.Completed}/>
-                <EditableSpan title={task.title} onChange={onChangeEditableSpanHandler} disabled={task.entityStatus === 'loading'}/>
+                <EditableSpan title={task.title} onChange={onChangeEditableSpanHandler} disabled={todolist.entityStatus === 'loading'}/>
             </div>
             <IconButton aria-label="delete" onClick={onRemoveHandler}>
                 <Delete/>

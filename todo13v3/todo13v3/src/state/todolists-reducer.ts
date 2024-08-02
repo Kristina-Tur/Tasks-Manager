@@ -2,6 +2,7 @@ import {v1} from 'uuid';
 import {FilterValuesType, TodolistDomainType} from '../App';
 import {todolistApi, TodolistType} from "../api/api";
 import {Dispatch} from "redux";
+import {setAppErrorAC, setAppLoadingAC} from "./app-reducer";
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST',
@@ -43,7 +44,8 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
                 title: action.todolist.title,
                 filter: 'all',
                 addedDate: '',
-                order: 0
+                order: 0,
+                entityStatus: "idle"
             }, ...state]
         }
         case 'CHANGE-TODOLIST-TITLE': {
@@ -63,7 +65,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             return [...state]
         }
         case "SET-TODOLISTS":
-            return action.todolists.map(tl => ({...tl, filter: 'all'}))
+            return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: "idle"}))
         default:
             return state;
     }
@@ -86,35 +88,63 @@ export const setTodolistAC = (todolists: TodolistType[]): setTodolistActionType 
 }
 
 export const setTodolistTC = () => {
-    return (dispatch: Dispatch<ActionsType>) => {
-        todolistApi.getTodolists().then((res) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setAppLoadingAC('loading'))
+        todolistApi.getTodolists()
+            .then((res) => {
             dispatch(setTodolistAC(res.data))
+            dispatch(setAppLoadingAC('succeeded'))
         })
+            .catch(rej => {
+                dispatch(setAppErrorAC('some error occurred'))
+                dispatch(setAppLoadingAC('failed'))
+            })
     }
 
 }
 
 export const addTodolistTC = (title: string) => {
-    return (dispatch: Dispatch<ActionsType>) => {
-        todolistApi.createTodolist(title).then((res) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setAppLoadingAC('loading'))
+        todolistApi.createTodolist(title)
+            .then((res) => {
             dispatch(addTodolistAC(res.data.data.item))
+            dispatch(setAppLoadingAC('succeeded'))
         })
+            .catch(rej => {
+                dispatch(setAppErrorAC('some error occurred'))
+                dispatch(setAppLoadingAC('failed'))
+            })
     }
 
 }
 export const removeTodolistTC = (todolistId: string) => {
-    return (dispatch: Dispatch<ActionsType>) => {
-        todolistApi.deleteTodolist(todolistId).then((res) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setAppLoadingAC('loading'))
+        todolistApi.deleteTodolist(todolistId)
+            .then((res) => {
             dispatch(removeTodolistAC(todolistId))
+            dispatch(setAppLoadingAC('succeeded'))
         })
+            .catch(rej => {
+                dispatch(setAppErrorAC('some error occurred'))
+                dispatch(setAppLoadingAC('failed'))
+            })
     }
 
 }
 export const updateTodolistTitleTC = (todolistId: string, title: string) => {
-    return (dispatch: Dispatch<ActionsType>) => {
-        todolistApi.updateTodolist(todolistId, title).then((res) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setAppLoadingAC('loading'))
+        todolistApi.updateTodolist(todolistId, title)
+            .then((res) => {
             dispatch(changeTodolistTitleAC(todolistId, title))
+            dispatch(setAppLoadingAC('succeeded'))
         })
+            .catch(rej => {
+                dispatch(setAppErrorAC('some error occurred'))
+                dispatch(setAppLoadingAC('failed'))
+            })
     }
 
 }
