@@ -1,10 +1,11 @@
 import {combineReducers} from "redux";
-import {todolistsReducer} from "../features/todolist-reducer/todolists-reducer";
-import {tasksReducer} from "../features/tasks-reducer/tasks-reducer";
+import {todolistsReducer} from "../features/TodolistsList/todolist-reducer/todolists-reducer";
+import {tasksReducer} from "../features/TodolistsList/tasks-reducer/tasks-reducer";
 import {Action, configureStore} from '@reduxjs/toolkit';
 import {useDispatch} from "react-redux";
 import {appReducer} from "./app-reducer";
 import {thunk, ThunkDispatch} from 'redux-thunk'
+import {authReducer} from "../features/login/auth-reducer";
 
 /*type rootReducerType = {
     todolists: TodolistDomainType[]
@@ -14,7 +15,8 @@ import {thunk, ThunkDispatch} from 'redux-thunk'
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
     tasks: tasksReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 
 /*export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))*/

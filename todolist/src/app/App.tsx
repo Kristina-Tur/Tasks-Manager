@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Todolist} from '../features/TodolistsList/todolist/Todolist';
 import {AddItemForm} from "../components/addItemForm/AddItemForm";
-import {AppBar, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
+import {AppBar, CircularProgress, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Unstable_Grid2'
@@ -12,12 +12,13 @@ import {ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {useApp} from "./hooks/useApp";
-import {FilterType, TaskType, TodolistType} from "../api/api";
+import {FilterType, TaskType, TodolistType} from "../api/API";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {ErrorSnackbar} from "../components/errorSnackbar/ErrorSnackbar";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
-import {RequestStatusType} from "./app-reducer";
+import {AppRootStateType, useAppDispatch} from "./store";
+import {initializedAppTC, RequestStatusType, setAppIsInitializedAC, setAppIsInitializedActionType} from "./app-reducer";
+import {Outlet} from "react-router-dom";
 
 type AppPropsType = {
     demo?: boolean
@@ -27,16 +28,32 @@ export const App = ({demo = false}: AppPropsType) => {
     console.log('App is called')
     const {
         theme,
-        changeModeHandler
+        changeModeHandler,
+        logoutHandler
     } = useApp()
 
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(initializedAppTC())
+    }, []);
+
+    if(!isInitialized) {
+        return (
+            <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
+                <CircularProgress />
+            </div>
+        )
+    }
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <div className="App">
-                <ErrorSnackbar/>
+            <ErrorSnackbar/>
                 <AppBar position="static" sx={{mb: '30px'}}>
                     <Toolbar>
                         <IconButton
@@ -52,14 +69,14 @@ export const App = ({demo = false}: AppPropsType) => {
                             News
                         </Typography>
                         <MenuButton color="inherit" background={theme.palette.primary.dark}>Login</MenuButton>
-                        <MenuButton color="inherit">Logout</MenuButton>
+                        <MenuButton color="inherit" onClick={logoutHandler}>Logout</MenuButton>
                         <MenuButton color="inherit">Faq</MenuButton>
                         <Switch color={'default'} onChange={changeModeHandler} />
                     </Toolbar>
                     {status === 'loading' && <LinearProgress/>}
                 </AppBar>
                 <Container fixed>
-                    <TodolistsList demo={demo}/>
+                    <Outlet/>
                 </Container>
             </div>
         </ThemeProvider>

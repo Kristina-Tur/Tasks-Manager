@@ -5,7 +5,7 @@ import {
     todolistsReducer
 } from './todolists-reducer'
 import { v1 } from 'uuid'
-import {TodolistDomainType} from "../../api/api";
+import {TodolistDomainType} from "../../../api/API";
 
 let todolistId1: string
 let todolistId2: string

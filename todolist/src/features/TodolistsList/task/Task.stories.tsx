@@ -4,7 +4,7 @@ import {ReduxStoreProviderDecorator} from "../../../stories/decorators/ReduxStor
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../app/store";
 import {v1} from "uuid";
-import {addTaskAC} from "../../tasks-reducer/tasks-reducer";
+import {addTaskAC} from "../tasks-reducer/tasks-reducer";
 import {
     FilterType,
     TaskDomainType,
@@ -13,7 +13,7 @@ import {
     TaskType,
     TodolistDomainType,
     TodolistType
-} from "../../../api/api";
+} from "../../../api/API";
 import {RequestStatusType} from '../../../app/app-reducer'
 
 const meta: Meta<typeof Task> = {

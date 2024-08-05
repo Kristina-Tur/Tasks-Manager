@@ -1,21 +1,23 @@
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType, ThunkDispatchType, useAppDispatch} from "../../../app/store";
-import {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {
     addTodolistTC,
     changeTodolistFilterAC,
     changeTodolistTitleTC,
     getTodolistsTC,
     removeTodolistTC,
-} from "../../todolist-reducer/todolists-reducer";
-import {FilterType, TodolistDomainType} from "../../../api/api";
+} from "../todolist-reducer/todolists-reducer";
+import {FilterType, TodolistDomainType} from "../../../api/API";
+import {Navigate} from "react-router-dom";
 
 export const useTodolists = (demo: boolean) => {
     const dispatch = useAppDispatch()
     const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
-        if(!demo){
+        if(!demo || !isLoggedIn){
             dispatch(getTodolistsTC())
         }
     }, [])
@@ -36,12 +38,13 @@ export const useTodolists = (demo: boolean) => {
         dispatch(changeTodolistTitleTC(todolistId, title))
     }, [dispatch])
 
+
     return {
         todolists,
         addTodolist,
         changeTodolist,
         removeTodolist,
         changeTodolistTitle,
-        demo
+        isLoggedIn
     }
 }

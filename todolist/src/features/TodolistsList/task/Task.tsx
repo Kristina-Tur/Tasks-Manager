@@ -9,8 +9,8 @@ import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {
     removeTaskTC, updateTaskTC
-} from "../../tasks-reducer/tasks-reducer";
-import {TaskDomainType, TaskStatuses, TaskType, TodolistDomainType} from "../../../api/api";
+} from "../tasks-reducer/tasks-reducer";
+import {TaskDomainType, TaskStatuses, TaskType, TodolistDomainType} from "../../../api/API";
 import {ThunkDispatchType, useAppDispatch} from "../../../app/store";
 
 type TaskComponentType = {

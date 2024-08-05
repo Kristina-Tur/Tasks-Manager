@@ -5,6 +5,9 @@ import {AddItemForm} from "../../components/addItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./todolist/Todolist";
 import {useTodolists} from "./hooks/useTodolists";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../../app/store";
+import {Navigate} from "react-router-dom";
 
 
 type TodolistsListPropsType = {
@@ -17,9 +20,13 @@ export const TodolistsList = ({demo = false}: TodolistsListPropsType) => {
         addTodolist,
         changeTodolist,
         removeTodolist,
-        changeTodolistTitle
+        changeTodolistTitle,
+        isLoggedIn
     } = useTodolists(demo)
 
+    if(!isLoggedIn){
+        return <Navigate to={'/login'}/>
+    }
     return (
         <>
             <Grid container sx={{mb: '30px'}}>

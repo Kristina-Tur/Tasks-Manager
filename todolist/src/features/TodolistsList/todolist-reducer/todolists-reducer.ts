@@ -1,8 +1,8 @@
 import {v1} from "uuid";
-import {api, FilterType, TodolistDomainType, TodolistType} from "../../api/api";
+import {todolistAPI, FilterType, TodolistDomainType, TodolistType} from "../../../api/API";
 import {Dispatch} from "redux";
-import {RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
-import {handleServerNetworkError} from "../../utils/error-utils";
+import {RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../../app/app-reducer";
+import {handleServerNetworkError} from "../../../utils/error-utils";
 
 
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
@@ -84,7 +84,7 @@ export const setTodolistsAC = (todolists: TodolistType[]) => {
 export const getTodolistsTC = () => {
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
-        api.getTodolists()
+        todolistAPI.getTodolists()
             .then(res => {
                 dispatch(setTodolistsAC(res.data))
                 dispatch(setAppStatusAC('succeeded'))
@@ -98,7 +98,7 @@ export const removeTodolistTC = (todolistId: string) => {
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
         dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
-        api.removeTodolist(todolistId)
+        todolistAPI.removeTodolist(todolistId)
             .then(() => {
                 dispatch(setAppStatusAC('succeeded'))
                 dispatch(removeTodolistAC(todolistId))
@@ -111,7 +111,7 @@ export const removeTodolistTC = (todolistId: string) => {
 export const addTodolistTC = (title: string) => {
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
-        api.addTodolist(title)
+        todolistAPI.addTodolist(title)
             .then(res => {
                 dispatch(addTodolistAC(res.data.data.item))
                 dispatch(setAppStatusAC('succeeded'))
@@ -124,7 +124,7 @@ export const addTodolistTC = (title: string) => {
 export const changeTodolistTitleTC = (todolistId: string, title: string) => {
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
-        api.updateTodolistTitle(todolistId, title)
+        todolistAPI.updateTodolistTitle(todolistId, title)
             .then(res => {
                 dispatch(changeTodolistTitleAC(todolistId, title))
                 dispatch(setAppStatusAC('succeeded'))
