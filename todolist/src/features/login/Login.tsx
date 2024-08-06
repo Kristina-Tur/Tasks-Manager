@@ -21,18 +21,19 @@ export const Login = () => {
         validate: (values) => {
             console.log(values.email)
             if(!values.email){
-
                 return {
                     email: 'Email is requared'
                 }
             }
-            if(!values.password){
+            if(values.password && values.password.length < 5){
                 console.log(values.password)
                 return {
                     password: 'Password is requared'
                 }
             }
-
+            /*if (values.firstName && values.firstName.length < 5) {
+                errors.firstName = 'Must be 5 characters or more';
+            }*/
         },
         initialValues: {
             email: '',
