@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import reportWebVitals from './reportWebVitals';
 import App from './app/App';
-import {Provider} from "react-redux";
-import {store} from "./app/store";
-import {BrowserRouter, createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
+import {Provider} from 'react-redux';
+import {store} from './app/store';
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import {TodolistsList} from "./features/TodolistsList/TodolistsList";
-import {ErrorPage} from "./components/errorPage/ErrorPage";
-import {Login} from './features/login/Login';
+import {ErrorPage} from "./components/ErrorPage/ErrorPage";
+import {Login} from "./features/Login";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
 root.render(
     <Provider store={store}>
         <RouterProvider router={router}/>
@@ -47,4 +49,4 @@ root.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-
+reportWebVitals();
