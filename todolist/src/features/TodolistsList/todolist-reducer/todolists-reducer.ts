@@ -3,6 +3,7 @@ import {todolistAPI, FilterType, TodolistDomainType, TodolistType} from "../../.
 import {Dispatch} from "redux";
 import {RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../../app/app-reducer";
 import {handleServerNetworkError} from "../../../utils/error-utils";
+import {AppThunk} from "../../../app/store";
 
 
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
@@ -81,8 +82,8 @@ export const setTodolistsAC = (todolists: TodolistType[]) => {
 }
 
 //thunks
-export const getTodolistsTC = () => {
-    return (dispatch: ThunkDispatch) => {
+export const fetchTodolistsTC = (): AppThunk => {
+    return (dispatch) => {
         dispatch(setAppStatusAC('loading'))
         todolistAPI.getTodolists()
             .then(res => {
@@ -94,6 +95,20 @@ export const getTodolistsTC = () => {
             })
     }
 }
+/*export const fetchTodolistsTC = () => {
+    return async (dispatch: ThunkDispatch) => {
+        dispatch(setAppStatusAC('loading'))
+        const res = await todolistAPI.getTodolists()
+        debugger
+            try{
+                dispatch(setTodolistsAC(res.data))
+                dispatch(setAppStatusAC('succeeded'))
+            } catch(error) {
+            handleServerNetworkError(error.message, dispatch)
+        }
+    }
+}*/
+
 export const removeTodolistTC = (todolistId: string) => {
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))

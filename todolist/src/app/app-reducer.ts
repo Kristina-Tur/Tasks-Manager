@@ -1,7 +1,7 @@
 import {authAPI, LoginParamsType} from "../api/API";
 import {Dispatch} from "redux";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
-import {loginAC} from "../features/login/auth-reducer";
+import {setIsLoginInAC} from "../features/login/auth-reducer";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -50,7 +50,7 @@ export const initializedAppTC = () => {
         authAPI.me()
             .then(res => {
                     if (res.data.resultCode === 0) {
-                        dispatch(loginAC(true))
+                        dispatch(setIsLoginInAC(true))
                         dispatch(setAppStatusAC('succeeded'))
                     } else {
                         handleServerAppError(res.data, dispatch)

@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {Task} from "./Task";
 import {ReduxStoreProviderDecorator} from "../../../stories/decorators/ReduxStoreProviderDecorator";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../../app/store";
+import {AppRootStateType, useAppSelector} from "../../../app/store";
 import {v1} from "uuid";
 import {addTaskAC} from "../tasks-reducer/tasks-reducer";
 import {
@@ -53,8 +53,8 @@ type Story = StoryObj<typeof Task>;
 
 
 const TaskRender = () => {
-    let task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0])
-    let todolist = useSelector<AppRootStateType, TodolistDomainType>(state => state.todolists[0])
+    let task = useAppSelector<TaskType>(state => state.tasks['todolistId1'][0])
+    let todolist = useAppSelector<TodolistDomainType>(state => state.todolists[0])
     const dispatch = useDispatch()
 
     if(!task){

@@ -16,7 +16,7 @@ import {FilterType, TaskType, TodolistType} from "../api/API";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {ErrorSnackbar} from "../components/errorSnackbar/ErrorSnackbar";
 import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "./store";
+import {AppRootStateType, useAppDispatch, useAppSelector} from "./store";
 import {initializedAppTC, RequestStatusType, setAppIsInitializedAC, setAppIsInitializedActionType} from "./app-reducer";
 import {Outlet} from "react-router-dom";
 
@@ -32,8 +32,8 @@ export const App = ({demo = false}: AppPropsType) => {
         logoutHandler
     } = useApp()
 
-    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const status = useAppSelector<RequestStatusType>(state => state.app.status)
+    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
 
     const dispatch = useAppDispatch()
 
@@ -68,9 +68,8 @@ export const App = ({demo = false}: AppPropsType) => {
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                             News
                         </Typography>
-                        <MenuButton color="inherit" background={theme.palette.primary.dark}>Login</MenuButton>
+                        <MenuButton color="inherit"  background={theme.palette.primary.dark}>Login</MenuButton>
                         <MenuButton color="inherit" onClick={logoutHandler}>Logout</MenuButton>
-                        <MenuButton color="inherit">Faq</MenuButton>
                         <Switch color={'default'} onChange={changeModeHandler} />
                     </Toolbar>
                     {status === 'loading' && <LinearProgress/>}

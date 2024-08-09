@@ -11,7 +11,7 @@ import {
     removeTaskTC, updateTaskTC
 } from "../tasks-reducer/tasks-reducer";
 import {TaskDomainType, TaskStatuses, TaskType, TodolistDomainType} from "../../../api/API";
-import {ThunkDispatchType, useAppDispatch} from "../../../app/store";
+import {AppDispatchType, useAppDispatch} from "../../../app/store";
 
 type TaskComponentType = {
     task: TaskType

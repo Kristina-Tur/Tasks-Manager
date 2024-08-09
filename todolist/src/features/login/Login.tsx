@@ -10,38 +10,42 @@ import Button from '@mui/material/Button'
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "./auth-reducer";
-import {AppRootStateType, useAppDispatch} from "../../app/store";
+import {AppRootStateType, useAppDispatch, useAppSelector} from "../../app/store";
 import {Navigate} from "react-router-dom";
+
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
 
 export const Login = () => {
     const dispatch = useAppDispatch()
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
     const formik = useFormik({
-        validate: (values) => {
-            console.log(values.email)
-            if(!values.email){
-                return {
-                    email: 'Email is requared'
-                }
-            }
-            if(values.password && values.password.length < 5){
-                console.log(values.password)
-                return {
-                    password: 'Password is requared'
-                }
-            }
-            /*if (values.firstName && values.firstName.length < 5) {
-                errors.firstName = 'Must be 5 characters or more';
-            }*/
-        },
         initialValues: {
             email: '',
             password: '',
             rememberMe: false,
         },
+        validate: (values) => {
+            const errors: FormikErrorType = {}
+            if (!values.email.trim()) {
+                errors.email = 'Required'
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address'
+            }
+            if (!values.password.trim()) {
+                errors.password = 'Required'
+            } else if (values.password.length < 6) {
+                errors.password = 'Must be more 5 symbols'
+            }
+            return errors
+        },
         onSubmit: values => {
            dispatch(loginTC(values))
+            /*alert(JSON.stringify(values))*/
             formik.resetForm()
         },
     })
@@ -69,18 +73,19 @@ export const Login = () => {
                         <FormGroup>
                             <TextField label="Email"
                                        margin="normal"
-                                       {...formik.getFieldProps('password')}
+                                       {...formik.getFieldProps('email')}
                             />
-                            {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                            {formik.touched && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
                             <TextField type="password"
                                        label="Password"
                                        margin="normal"
                                        {...formik.getFieldProps('password')}
                             />
-                            {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                            {formik.touched && formik.errors.password && <div style={{color: 'red'}}>{formik.errors.password}</div>}
                             <FormControlLabel label={'Remember me'} control={
-                                <Checkbox   {...formik.getFieldProps('password')}
+                                <Checkbox
                                            checked={formik.values.rememberMe}
+                                           {...formik.getFieldProps('rememberMe')}
                                 />}/>
                             <Button type={'submit'} variant={'contained'} color={'primary'}>
                                 Login

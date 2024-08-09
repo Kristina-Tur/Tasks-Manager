@@ -11,15 +11,16 @@ const initialState = {
 }
 
 export const authReducer = (state: LoginType = initialState, action: ActionsType): LoginType => {
-    switch (action.type){
+    switch (action.type) {
         case "login/SET-IS-LOGGED-IN":
             return {...state, isLoggedIn: action.value}
-        default: return state
+        default:
+            return state
     }
 }
 
 //AC
-export const loginAC = (value: boolean) => {
+export const setIsLoginInAC = (value: boolean) => {
     return {type: 'login/SET-IS-LOGGED-IN', value}
 }
 
@@ -30,11 +31,11 @@ export const loginTC = (value: LoginParamsType) => {
         authAPI.login(value)
             .then(res => {
                     if (res.data.resultCode === 0) {
-                        dispatch(loginAC(true))
-                        dispatch(setAppStatusAC('succeeded'))
+                        dispatch(setIsLoginInAC(true))
                     } else {
                         handleServerAppError(res.data, dispatch)
                     }
+                    dispatch(setAppStatusAC('idle'))
                 }
             )
             .catch(error => {
@@ -48,7 +49,7 @@ export const logoutTC = () => {
         authAPI.logout()
             .then(res => {
                     if (res.data.resultCode === 0) {
-                        dispatch(loginAC(false))
+                        dispatch(setIsLoginInAC(false))
                         dispatch(setAppStatusAC('succeeded'))
                     } else {
                         handleServerAppError(res.data, dispatch)
@@ -62,4 +63,4 @@ export const logoutTC = () => {
 }
 
 //type
-type ActionsType = ReturnType<typeof loginAC>
+type ActionsType = ReturnType<typeof setIsLoginInAC>
