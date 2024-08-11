@@ -1,9 +1,7 @@
 import { useCallback, useState } from "react"
 import { createTheme } from "@mui/material/styles"
-import { FilterType } from "../../api/API"
-import { changeTodolistFilterAC } from "features/TodolistsList/todolist-reducer/todolistsSlice"
 import { useAppDispatch } from "../store"
-import { loginTC, logoutTC } from "features/login/authSlice"
+import { logoutTC } from "features/login/authSlice"
 
 type ThemeMode = "dark" | "light"
 

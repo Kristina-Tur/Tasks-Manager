@@ -1,15 +1,13 @@
-import { useDispatch, useSelector } from "react-redux"
-import { AppRootStateType, AppDispatchType, useAppDispatch, useAppSelector } from "../../../app/store"
-import React, { useCallback, useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "app/store"
+import { useCallback, useEffect } from "react"
 import {
   addTodolistTC,
-  changeTodolistFilterAC,
+  changeTodolistFilter,
   changeTodolistTitleTC,
   fetchTodolistsTC,
   removeTodolistTC,
 } from "features/TodolistsList/todolist-reducer/todolistsSlice"
-import { FilterType, TodolistDomainType } from "../../../api/API"
-import { Navigate } from "react-router-dom"
+import { FilterType, TodolistDomainType } from "api/API"
 
 export const useTodolists = (demo: boolean) => {
   const dispatch = useAppDispatch()
@@ -31,7 +29,7 @@ export const useTodolists = (demo: boolean) => {
 
   const changeTodolist = useCallback(
     (todolistId: string, filter: FilterType) => {
-      dispatch(changeTodolistFilterAC(todolistId, filter))
+      dispatch(changeTodolistFilter({ todolistId, filter }))
     },
     [dispatch],
   )
