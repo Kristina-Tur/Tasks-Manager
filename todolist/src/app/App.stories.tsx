@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import App from "./App"
-import { ReduxStoreProviderDecorator } from "../stories/decorators/ReduxStoreProviderDecorator"
+import { BrowserRouter, ReduxStoreProviderDecorator } from "../stories/decorators/ReduxStoreProviderDecorator"
 
 const meta: Meta<typeof App> = {
   title: "Todolist/App",
@@ -9,7 +9,7 @@ const meta: Meta<typeof App> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  decorators: [ReduxStoreProviderDecorator],
+  decorators: [ReduxStoreProviderDecorator, BrowserRouter],
 }
 
 export default meta

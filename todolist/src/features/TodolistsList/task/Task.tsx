@@ -5,10 +5,9 @@ import ListItem from "@mui/material/ListItem"
 import { getListItemSx } from "../todolist/Todolist.styles"
 import { Checkbox, IconButton } from "@mui/material"
 import { Delete } from "@mui/icons-material"
-import { useDispatch } from "react-redux"
-import { removeTaskTC, updateTaskTC } from "../tasks-reducer/tasks-reducer"
-import { TaskDomainType, TaskStatuses, TaskType, TodolistDomainType } from "../../../api/API"
-import { AppDispatchType, useAppDispatch } from "../../../app/store"
+import { removeTaskTC, updateTaskTC } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { TaskStatuses, TaskType, TodolistDomainType } from "api/API"
+import { useAppDispatch } from "app/store"
 import { EditableSpan } from "components/editableSpan/EditableSpan"
 
 type TaskComponentType = {

@@ -10,22 +10,24 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { useApp } from "./hooks/useApp"
 import { ErrorSnackbar } from "components/errorSnackbar/ErrorSnackbar"
 import { useAppDispatch, useAppSelector } from "./store"
-import { initializedAppTC, RequestStatusType } from "app/appSlice"
+import { initializedAppTC, selectIsInitialized, selectStatus } from "app/appSlice"
 import { Outlet } from "react-router-dom"
+import { selectIsLoginIn } from "features/login/authSlice"
 
 type AppPropsType = {
   demo?: boolean
 }
 
 export const App = ({ demo = false }: AppPropsType) => {
-  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
   console.log("App is called")
-  const { theme, changeModeHandler, logoutHandler } = useApp()
 
-  const status = useAppSelector<RequestStatusType>((state) => state.app.status)
-  const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
+  const isLoggedIn = useAppSelector(selectIsLoginIn)
+  const status = useAppSelector(selectStatus)
+  const isInitialized = useAppSelector(selectIsInitialized)
 
   const dispatch = useAppDispatch()
+
+  const { theme, changeModeHandler, logoutHandler } = useApp()
 
   useEffect(() => {
     dispatch(initializedAppTC())

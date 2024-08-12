@@ -3,10 +3,10 @@ import Snackbar from "@mui/material/Snackbar"
 import Alert from "@mui/material/Alert"
 import { useDispatch } from "react-redux"
 import { useAppSelector } from "app/store"
-import { setAppError } from "app/appSlice"
+import { selectError, setAppError } from "app/appSlice"
 
 export const ErrorSnackbar = () => {
-  const error = useAppSelector<string | null>((state) => state.app.error)
+  const error = useAppSelector(selectError)
   const dispatch = useDispatch()
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {

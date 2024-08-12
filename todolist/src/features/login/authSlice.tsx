@@ -15,6 +15,9 @@ const slice = createSlice({
       state.isLoggedIn = action.payload.isLoggedIn
     },
   },
+  selectors: {
+    selectIsLoginIn: (state) => state.isLoggedIn,
+  },
 })
 
 //TC
@@ -60,3 +63,4 @@ export const logoutTC = () => {
 /*export type AuthActionsType = ReturnType<typeof setIsLoginInAC>*/
 export const authReducer = slice.reducer
 export const { setIsLoginIn } = slice.actions
+export const { selectIsLoginIn } = slice.selectors

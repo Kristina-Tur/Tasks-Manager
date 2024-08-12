@@ -1,7 +1,7 @@
 import { FilterType, todolistAPI, TodolistDomainType, TodolistType } from "api/API"
 import { handleServerNetworkError } from "utils/error-utils"
 import { AppThunk } from "app/store"
-import { getTasksTC } from "../tasks-reducer/tasks-reducer"
+import { getTasksTC } from "features/TodolistsList/tasks-reducer/tasksSlice"
 import { RequestStatusType, setAppStatus } from "app/appSlice"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
@@ -48,32 +48,24 @@ const slice = createSlice({
       }
     },
     setTodolists: (state, action: PayloadAction<{ todolists: TodolistType[] }>) => {
-      /* return action.payload.todolists.map((tl) => ({
-              ...tl,
-              filter: "all",
-              entityStatus: "idle",
-            }))*/
-      action.payload.todolists.forEach((t) => {
+      return action.payload.todolists.map((tl) => ({
+        ...tl,
+        filter: "all",
+        entityStatus: "idle",
+      }))
+
+      /*action.payload.todolists.forEach((t) => {
         state.push({ ...t, entityStatus: "idle", filter: "all" })
-      })
+      })*/
     },
     clearData: (state, action: PayloadAction) => {
-      /* return []*/
-      state = []
+      return []
     },
   },
+  selectors: {
+    selectTodolists: (state) => state,
+  },
 })
-
-export const todolistsReducer = slice.reducer
-export const {
-  removeTodolist,
-  changeTodolistEntityStatus,
-  changeTodolistFilter,
-  changeTodolistTitle,
-  clearData,
-  setTodolists,
-  addTodolist,
-} = slice.actions
 
 //thunks
 export const fetchTodolistsTC = (): AppThunk => {
@@ -169,3 +161,14 @@ export const changeTodolistTitleTC = (todolistId: string, title: string): AppThu
         })
     }
 }*/
+export const todolistsReducer = slice.reducer
+export const {
+  removeTodolist,
+  changeTodolistEntityStatus,
+  changeTodolistFilter,
+  changeTodolistTitle,
+  clearData,
+  setTodolists,
+  addTodolist,
+} = slice.actions
+export const { selectTodolists } = slice.selectors

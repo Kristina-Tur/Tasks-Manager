@@ -1,20 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Task } from "./Task"
-import { ReduxStoreProviderDecorator } from "../../../stories/decorators/ReduxStoreProviderDecorator"
-import { useDispatch, useSelector } from "react-redux"
-import { AppRootStateType, useAppSelector } from "../../../app/store"
+import { ReduxStoreProviderDecorator } from "stories/decorators/ReduxStoreProviderDecorator"
+import { useDispatch } from "react-redux"
+import { useAppSelector } from "app/store"
 import { v1 } from "uuid"
-import { addTaskAC } from "../tasks-reducer/tasks-reducer"
-import {
-  FilterType,
-  TaskDomainType,
-  TaskPriorities,
-  TaskStatuses,
-  TaskType,
-  TodolistDomainType,
-  TodolistType,
-} from "../../../api/API"
-import { RequestStatusType } from "app/appSlice"
+import { TaskPriorities, TaskStatuses, TaskType, TodolistDomainType } from "api/API"
+import { addTask } from "features/TodolistsList/tasks-reducer/tasksSlice"
 
 const meta: Meta<typeof Task> = {
   title: "Todolist/Task",
@@ -69,7 +60,7 @@ const TaskRender = () => {
       order: 0,
       addedDate: "",
     }
-    dispatch(addTaskAC(task))
+    dispatch(addTask({ task }))
   }
 
   return <Task task={task} todolist={todolist} />

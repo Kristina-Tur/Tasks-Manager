@@ -11,7 +11,7 @@ import { filterButtonsContainerSx } from "./Todolist.styles"
 import { Task } from "../task/Task"
 import { useDispatch, useSelector } from "react-redux"
 import { AppRootStateType, AppDispatchType, useAppDispatch, useAppSelector } from "../../../app/store"
-import { addTasksTC, getTasksTC } from "../tasks-reducer/tasks-reducer"
+import { addTasksTC, getTasksTC } from "features/TodolistsList/tasks-reducer/tasksSlice"
 import { ButtonWithMemo } from "../../../components/buttons/Button"
 import { FilterType, TaskDomainType, TaskStatuses, TaskType, TodolistDomainType, TodolistType } from "../../../api/API"
 

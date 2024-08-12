@@ -1,7 +1,14 @@
 import { v1 } from "uuid"
-import { addTaskAC, updateTaskAC, removeTaskAC, setTasksAC, tasksReducer, TasksType } from "./tasks-reducer"
-import { TaskPriorities, TaskStatuses, TodolistType } from "api/API"
+import { TaskPriorities, TaskStatuses } from "api/API"
 import { addTodolist, removeTodolist, setTodolists } from "features/TodolistsList/todolist-reducer/todolistsSlice"
+import {
+  addTask,
+  removeTask,
+  setTasks,
+  tasksReducer,
+  TasksType,
+  updateTask,
+} from "features/TodolistsList/tasks-reducer/tasksSlice"
 
 let startState: TasksType
 
@@ -145,7 +152,10 @@ beforeEach(() => {
 })
 
 test("correct task should be removed", () => {
-  const endState = tasksReducer(startState, removeTaskAC("todolistId1", startState["todolistId1"][0].id))
+  const endState = tasksReducer(
+    startState,
+    removeTask({ todolistId: "todolistId1", taskId: startState["todolistId1"][0].id }),
+  )
 
   expect(endState["todolistId1"].length).toBe(5)
   expect(endState["todolistId2"].length).toBe(4)
@@ -154,17 +164,19 @@ test("correct task should be removed", () => {
 test("correct task should be add", () => {
   const endState = tasksReducer(
     startState,
-    addTaskAC({
-      id: "sss",
-      todoListId: "todolistId1",
-      order: 0,
-      addedDate: "",
-      deadline: "",
-      status: TaskStatuses.New,
-      priority: TaskPriorities.Low,
-      startDate: "",
-      title: "MUI",
-      description: "",
+    addTask({
+      task: {
+        id: "sss",
+        todoListId: "todolistId1",
+        order: 0,
+        addedDate: "",
+        deadline: "",
+        status: TaskStatuses.New,
+        priority: TaskPriorities.Low,
+        startDate: "",
+        title: "MUI",
+        description: "",
+      },
     }),
   )
 
@@ -176,7 +188,11 @@ test("correct task should be add", () => {
 })
 
 test("correct task should change its name", () => {
-  const action = updateTaskAC("todolistId2", startState["todolistId2"][0].id, { title: "Apple" })
+  const action = updateTask({
+    todolistId: "todolistId2",
+    taskId: startState["todolistId2"][0].id,
+    model: { title: "Apple" },
+  })
 
   const endState = tasksReducer(startState, action)
 
@@ -187,7 +203,11 @@ test("correct task should change its name", () => {
 })
 
 test("correct change status of task should be changed", () => {
-  const action = updateTaskAC("todolistId2", startState["todolistId2"][3].id, { status: TaskStatuses.New })
+  const action = updateTask({
+    todolistId: "todolistId2",
+    taskId: startState["todolistId2"][3].id,
+    model: { status: TaskStatuses.New },
+  })
   const endState = tasksReducer(startState, action)
 
   expect(endState["todolistId1"].length).toBe(6)
@@ -247,7 +267,7 @@ test("empty arrays should be added when we set todolists", () => {
 })
 
 test("tasks should be added for todolist", () => {
-  const action = setTasksAC("todolistId1", startState["todolistId1"])
+  const action = setTasks({ todolistId: "todolistId1", tasks: startState["todolistId1"] })
 
   const endState = tasksReducer(
     {

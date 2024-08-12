@@ -6,13 +6,15 @@ import {
   changeTodolistTitleTC,
   fetchTodolistsTC,
   removeTodolistTC,
+  selectTodolists,
 } from "features/TodolistsList/todolist-reducer/todolistsSlice"
-import { FilterType, TodolistDomainType } from "api/API"
+import { FilterType } from "api/API"
+import { selectIsLoginIn } from "features/login/authSlice"
 
 export const useTodolists = (demo: boolean) => {
   const dispatch = useAppDispatch()
-  const todolists = useAppSelector<TodolistDomainType[]>((state) => state.todolists)
-  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+  const todolists = useAppSelector(selectTodolists)
+  const isLoggedIn = useAppSelector(selectIsLoginIn)
 
   useEffect(() => {
     if (!demo || !isLoggedIn) {
