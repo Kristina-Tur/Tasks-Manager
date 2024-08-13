@@ -4,8 +4,9 @@ import { ReduxStoreProviderDecorator } from "stories/decorators/ReduxStoreProvid
 import { useDispatch } from "react-redux"
 import { useAppSelector } from "app/store"
 import { v1 } from "uuid"
-import { TaskPriorities, TaskStatuses, TaskType, TodolistDomainType } from "features/TodolistsList/todolistApi"
-import { addTask, fetchTasks } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { addTask } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { TaskPriorities, TaskStatuses } from "common/enums"
+import { TaskType, TodolistDomainType } from "features/TodolistsList/todolistApi"
 
 const meta: Meta<typeof Task> = {
   title: "Todolist/Task",

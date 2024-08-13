@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { todolistAPI, TaskPriorities, TaskStatuses } from "./API"
+import { todolistAPI } from "features/TodolistsList/todolistApi"
+import { TaskPriorities, TaskStatuses } from "common/enums"
 
 export default {
   title: "API",
@@ -78,7 +79,7 @@ export const CreateTask = () => {
   const [title, setTitle] = useState("")
 
   const onClickHandler = () => {
-    todolistAPI.addTask(todolistId, title).then((res) => {
+    todolistAPI.createTask(todolistId, title).then((res) => {
       setState(res.data.data)
     })
   }

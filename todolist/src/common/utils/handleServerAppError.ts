@@ -1,8 +1,8 @@
 import { Dispatch } from "redux"
-import { ResponseType } from "features/TodolistsList/todolistApi"
 import { setAppError, setAppStatus } from "app/appSlice"
+import { BaseResponse } from "common/types/types"
 
-export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch) => {
+export const handleServerAppError = <T>(data: BaseResponse<T>, dispatch: Dispatch) => {
   if (data.messages.length) {
     dispatch(setAppError({ error: data.messages[0] }))
   } else {

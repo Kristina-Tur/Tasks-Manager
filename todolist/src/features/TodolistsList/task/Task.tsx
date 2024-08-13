@@ -5,10 +5,11 @@ import ListItem from "@mui/material/ListItem"
 import { getListItemSx } from "../todolist/Todolist.styles"
 import { Checkbox, IconButton } from "@mui/material"
 import { Delete } from "@mui/icons-material"
-import { removeTaskTC, updateTask } from "features/TodolistsList/tasks-reducer/tasksSlice"
-import { TaskStatuses, TaskType, TodolistDomainType } from "features/TodolistsList/todolistApi"
+import { removeTask, updateTask } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { TaskType, TodolistDomainType } from "features/TodolistsList/todolistApi"
 import { useAppDispatch } from "app/store"
 import { EditableSpan } from "common/components/editableSpan/EditableSpan"
+import { TaskStatuses } from "common/enums"
 
 type TaskComponentType = {
   task: TaskType
@@ -17,7 +18,7 @@ type TaskComponentType = {
 export const Task = ({ task, todolist }: TaskComponentType) => {
   const dispatch = useAppDispatch()
 
-  const onRemoveHandler = () => dispatch(removeTaskTC(todolist.id, task.id))
+  const onRemoveHandler = () => dispatch(removeTask({ todolistId: todolist.id, taskId: task.id }))
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const status = event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New

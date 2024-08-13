@@ -1,8 +1,10 @@
-import { authAPI } from "features/TodolistsList/todolistApi"
 import { Dispatch } from "redux"
-import { handleServerAppError, handleServerNetworkError } from "common/utils/handleServerAppError"
+import { handleServerAppError } from "common/utils/handleServerAppError"
 import { setIsLoginIn } from "features/auth/model/authSlice"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { RESULT_CODE } from "common/enums"
+import { authAPI } from "features/auth/api/authApi"
+import { handleServerNetworkError } from "common/utils"
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 
@@ -37,7 +39,7 @@ export const initializedAppTC = () => {
     authAPI
       .me()
       .then((res) => {
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === RESULT_CODE.SUCCESS) {
           dispatch(setIsLoginIn({ isLoggedIn: true }))
           dispatch(setAppStatus({ status: "succeeded" }))
         } else {

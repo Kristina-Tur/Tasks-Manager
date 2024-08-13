@@ -5,8 +5,6 @@ import { AddItemForm } from "common/components/addItemForm/AddItemForm"
 import Paper from "@mui/material/Paper"
 import { Todolist } from "./todolist/Todolist"
 import { useTodolists } from "./hooks/useTodolists"
-import { useSelector } from "react-redux"
-import { AppRootStateType } from "../../app/store"
 import { Navigate } from "react-router-dom"
 
 type TodolistsListPropsType = {
@@ -14,7 +12,14 @@ type TodolistsListPropsType = {
 }
 
 export const TodolistsList = ({ demo = false }: TodolistsListPropsType) => {
-  const { todolists, addTodolist, changeTodolist, removeTodolist, changeTodolistTitle, isLoggedIn } = useTodolists(demo)
+  const {
+    todolists,
+    changeTodolist,
+    isLoggedIn,
+    changeTodolistTitleCallback,
+    removeTodolistCallback,
+    addTodolistCallback,
+  } = useTodolists(demo)
 
   if (!isLoggedIn) {
     return <Navigate to={"/auth"} />
@@ -22,7 +27,7 @@ export const TodolistsList = ({ demo = false }: TodolistsListPropsType) => {
   return (
     <>
       <Grid container sx={{ mb: "30px" }}>
-        <AddItemForm addItem={addTodolist} />
+        <AddItemForm addItem={addTodolistCallback} />
       </Grid>
       <Grid container spacing={4}>
         {todolists.map((todolist) => {
@@ -32,8 +37,8 @@ export const TodolistsList = ({ demo = false }: TodolistsListPropsType) => {
                 <Todolist
                   todolist={todolist}
                   changeTodolist={changeTodolist}
-                  removeTodolist={removeTodolist}
-                  changeTodolistTitle={changeTodolistTitle}
+                  removeTodolist={removeTodolistCallback}
+                  changeTodolistTitle={changeTodolistTitleCallback}
                   demo={demo}
                 />
               </Paper>

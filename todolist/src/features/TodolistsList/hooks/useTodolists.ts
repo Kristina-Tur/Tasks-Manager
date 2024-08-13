@@ -1,15 +1,15 @@
 import { useAppDispatch, useAppSelector } from "app/store"
 import { useCallback, useEffect } from "react"
-import {
-  addTodolistTC,
-  changeTodolistFilter,
-  changeTodolistTitleTC,
-  fetchTodolistsTC,
-  removeTodolistTC,
-  selectTodolists,
-} from "features/TodolistsList/todolist-reducer/todolistsSlice"
 import { FilterType } from "features/TodolistsList/todolistApi"
 import { selectIsLoginIn } from "features/auth/model/authSlice"
+import {
+  addTodolist,
+  changeTodolistFilter,
+  changeTodolistTitle,
+  fetchTodolists,
+  removeTodolist,
+  selectTodolists,
+} from "features/TodolistsList/todolist-reducer/todolistsSlice"
 
 export const useTodolists = (demo: boolean) => {
   const dispatch = useAppDispatch()
@@ -18,13 +18,13 @@ export const useTodolists = (demo: boolean) => {
 
   useEffect(() => {
     if (!demo || !isLoggedIn) {
-      dispatch(fetchTodolistsTC())
+      dispatch(fetchTodolists())
     }
   }, [])
 
-  const addTodolist = useCallback(
+  const addTodolistCallback = useCallback(
     (value: string) => {
-      dispatch(addTodolistTC(value))
+      dispatch(addTodolist(value))
     },
     [dispatch],
   )
@@ -36,26 +36,26 @@ export const useTodolists = (demo: boolean) => {
     [dispatch],
   )
 
-  const removeTodolist = useCallback(
+  const removeTodolistCallback = useCallback(
     (todolistId: string) => {
-      dispatch(removeTodolistTC(todolistId))
+      dispatch(removeTodolist(todolistId))
     },
     [dispatch],
   )
 
-  const changeTodolistTitle = useCallback(
+  const changeTodolistTitleCallback = useCallback(
     (todolistId: string, title: string) => {
-      dispatch(changeTodolistTitleTC(todolistId, title))
+      dispatch(changeTodolistTitle({ todolistId, title }))
     },
     [dispatch],
   )
 
   return {
     todolists,
-    addTodolist,
+    addTodolistCallback,
     changeTodolist,
-    removeTodolist,
-    changeTodolistTitle,
+    removeTodolistCallback,
+    changeTodolistTitleCallback,
     isLoggedIn,
   }
 }

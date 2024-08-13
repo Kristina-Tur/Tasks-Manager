@@ -1,19 +1,19 @@
 import React, { useCallback, useEffect, useMemo } from "react"
 import { v1 } from "uuid"
 import "../../../app/App.css"
-import { AddItemForm } from "../../../components/addItemForm/AddItemForm"
-import { EditableSpan } from "../../../components/editableSpan/EditableSpan"
+import { AddItemForm } from "common/components/addItemForm/AddItemForm"
+import { EditableSpan } from "common/components/editableSpan/EditableSpan"
 import { IconButton } from "@mui/material"
 import { Delete } from "@mui/icons-material"
 import List from "@mui/material/List"
 import Box from "@mui/material/Box"
 import { filterButtonsContainerSx } from "./Todolist.styles"
 import { Task } from "../task/Task"
-import { useDispatch, useSelector } from "react-redux"
-import { AppRootStateType, AppDispatchType, useAppDispatch, useAppSelector } from "../../../app/store"
-import { addTasksTC, getTasksTC } from "features/TodolistsList/tasks-reducer/tasksSlice"
-import { ButtonWithMemo } from "../../../components/buttons/Button"
-import { FilterType, TaskDomainType, TaskStatuses, TaskType, TodolistDomainType, TodolistType } from "../../../api/API"
+import { useAppDispatch, useAppSelector } from "app/store"
+import { addTask, fetchTasks } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { ButtonWithMemo } from "common/components/buttons/Button"
+import { FilterType, TaskType, TodolistDomainType } from "features/TodolistsList/todolistApi"
+import { TaskStatuses } from "common/enums"
 
 type TodolistPropsType = {
   todolist: TodolistDomainType
@@ -37,15 +37,15 @@ export const Todolist = React.memo(
 
     let tasks = useAppSelector<TaskType[]>((state) => state.tasks[todolist.id])
 
-    /*useEffect(() => {
-        if(!demo){
-            dispatch(getTasksTC(todolist.id))
-        }
-    }, [])*/
+    useEffect(() => {
+      if (!demo) {
+        dispatch(fetchTasks(todolist.id))
+      }
+    }, [])
 
-    const addTask = useCallback(
+    const addTaskCallback = useCallback(
       (todolistId: string, value: string) => {
-        dispatch(addTasksTC(todolistId, value))
+        dispatch(addTask({ todolistId, title: value }))
       },
       [dispatch],
     )
@@ -64,7 +64,7 @@ export const Todolist = React.memo(
 
     const addItem = useCallback(
       (value: string) => {
-        addTask(todolist.id, value)
+        addTaskCallback(todolist.id, value)
       },
       [addTask, todolist.id],
     )

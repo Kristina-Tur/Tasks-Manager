@@ -1,9 +1,12 @@
 import { Dispatch } from "redux"
 import { setAppStatus } from "app/appSlice"
-import { authAPI, LoginParamsType } from "api/API"
-import { handleServerAppError, handleServerNetworkError } from "utils/error-utils"
-import { clearData } from "features/TodolistsList/todolist-reducer/todolistsSlice"
+import { handleServerAppError } from "common/utils/handleServerAppError"
+import { clearTodolists } from "features/TodolistsList/todolist-reducer/todolistsSlice"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { LoginParamsType } from "features/auth/api/authApi.types"
+import { authAPI } from "features/auth/api/authApi"
+import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
+import { clearTasks } from "features/TodolistsList/tasks-reducer/tasksSlice"
 
 const slice = createSlice({
   name: "auth",
@@ -47,7 +50,9 @@ export const logoutTC = () => {
       .then((res) => {
         if (res.data.resultCode === 0) {
           dispatch(setIsLoginIn({ isLoggedIn: false }))
-          dispatch(clearData())
+          /*dispatch(clearData())*/
+          dispatch(clearTodolists())
+          dispatch(clearTasks())
           dispatch(setAppStatus({ status: "succeeded" }))
         } else {
           handleServerAppError(res.data, dispatch)
