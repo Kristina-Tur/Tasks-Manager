@@ -8,8 +8,8 @@ import {
   removeTodolistTC,
   selectTodolists,
 } from "features/TodolistsList/todolist-reducer/todolistsSlice"
-import { FilterType } from "api/API"
-import { selectIsLoginIn } from "features/login/authSlice"
+import { FilterType } from "features/TodolistsList/todolistApi"
+import { selectIsLoginIn } from "features/auth/model/authSlice"
 
 export const useTodolists = (demo: boolean) => {
   const dispatch = useAppDispatch()

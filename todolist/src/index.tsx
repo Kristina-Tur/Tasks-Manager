@@ -6,8 +6,8 @@ import { Provider } from "react-redux"
 import { store } from "./app/store"
 import { BrowserRouter, createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import { TodolistsList } from "./features/TodolistsList/TodolistsList"
-import { ErrorPage } from "./components/errorPage/ErrorPage"
-import { Login } from "./features/login/Login"
+import { ErrorPage } from "./common/components/errorPage/ErrorPage"
+import { Login } from "features/auth/ui/Login"
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         element: <Navigate to="/todolists" />,
       },
       {
-        path: "/login",
+        path: "/auth",
         element: <Login />,
       },
       {

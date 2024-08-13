@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react"
 import Grid from "@mui/material/Unstable_Grid2"
-import { AddItemForm } from "../../components/addItemForm/AddItemForm"
+import { AddItemForm } from "common/components/addItemForm/AddItemForm"
 import Paper from "@mui/material/Paper"
 import { Todolist } from "./todolist/Todolist"
 import { useTodolists } from "./hooks/useTodolists"
@@ -17,7 +17,7 @@ export const TodolistsList = ({ demo = false }: TodolistsListPropsType) => {
   const { todolists, addTodolist, changeTodolist, removeTodolist, changeTodolistTitle, isLoggedIn } = useTodolists(demo)
 
   if (!isLoggedIn) {
-    return <Navigate to={"/login"} />
+    return <Navigate to={"/auth"} />
   }
   return (
     <>

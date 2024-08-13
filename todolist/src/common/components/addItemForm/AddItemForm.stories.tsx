@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
-import { AddItemForm } from "./AddItemForm"
+import { AddItemForm } from "common/components/addItemForm/AddItemForm"
 import React, { ChangeEvent, KeyboardEvent, useState } from "react"
 import TextField from "@mui/material/TextField"
 import IconButton from "@mui/material/IconButton"

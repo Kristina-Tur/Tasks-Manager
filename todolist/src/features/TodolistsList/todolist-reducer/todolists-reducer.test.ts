@@ -1,5 +1,5 @@
 import { v1 } from "uuid"
-import { TodolistDomainType } from "api/API"
+import { TodolistDomainType } from "features/TodolistsList/todolistApi"
 import {
   addTodolist,
   changeTodolistEntityStatus,

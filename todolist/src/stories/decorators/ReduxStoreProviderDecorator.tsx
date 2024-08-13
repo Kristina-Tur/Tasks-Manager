@@ -5,11 +5,11 @@ import { v1 } from "uuid"
 import { tasksReducer } from "features/TodolistsList/tasks-reducer/tasksSlice"
 import { todolistsReducer } from "features/TodolistsList/todolist-reducer/todolistsSlice"
 import { AppRootStateType } from "../../app/store"
-import { TaskPriorities, TaskStatuses } from "../../api/API"
+import { TaskPriorities, TaskStatuses } from "features/TodolistsList/todolistApi"
 import { appReducer } from "app/appSlice"
 import { thunk } from "redux-thunk"
 import { configureStore } from "@reduxjs/toolkit"
-import { authReducer } from "features/login/authSlice"
+import { authReducer } from "features/auth/model/authSlice"
 import { HashRouter } from "react-router-dom"
 
 /*type RootStateType = {

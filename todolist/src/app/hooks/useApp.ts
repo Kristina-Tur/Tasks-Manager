@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
 import { createTheme } from "@mui/material/styles"
 import { useAppDispatch } from "../store"
-import { logoutTC } from "features/login/authSlice"
+import { logoutTC } from "features/auth/model/authSlice"
 
 type ThemeMode = "dark" | "light"
 

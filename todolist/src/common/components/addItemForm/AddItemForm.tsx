@@ -2,7 +2,7 @@ import React, { ChangeEvent, KeyboardEvent, useState } from "react"
 import TextField from "@mui/material/TextField"
 import IconButton from "@mui/material/IconButton"
 import AddBoxIcon from "@mui/icons-material/AddBox"
-import { useAddItemForm } from "./hooks/useAddItemForm"
+import { useAddItemForm } from "common/components/addItemForm/hooks/useAddItemForm"
 
 type AddItemFormType = {
   addItem: (value: string) => void

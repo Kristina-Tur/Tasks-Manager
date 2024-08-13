@@ -4,8 +4,8 @@ import { ReduxStoreProviderDecorator } from "stories/decorators/ReduxStoreProvid
 import { useDispatch } from "react-redux"
 import { useAppSelector } from "app/store"
 import { v1 } from "uuid"
-import { TaskPriorities, TaskStatuses, TaskType, TodolistDomainType } from "api/API"
-import { addTask } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { TaskPriorities, TaskStatuses, TaskType, TodolistDomainType } from "features/TodolistsList/todolistApi"
+import { addTask, fetchTasks } from "features/TodolistsList/tasks-reducer/tasksSlice"
 
 const meta: Meta<typeof Task> = {
   title: "Todolist/Task",
@@ -47,6 +47,14 @@ const TaskRender = () => {
   let todolist = useAppSelector<TodolistDomainType>((state) => state.todolists[0])
   const dispatch = useDispatch()
 
+  type Action = Omit<ReturnType<typeof addTask.fulfilled>, "meta">
+  const action: Action = {
+    type: addTask.fulfilled.type,
+    payload: {
+      task: task,
+    },
+  }
+
   if (!task) {
     task = {
       id: v1(),
@@ -60,7 +68,7 @@ const TaskRender = () => {
       order: 0,
       addedDate: "",
     }
-    dispatch(addTask({ task }))
+    dispatch(action)
   }
 
   return <Task task={task} todolist={todolist} />

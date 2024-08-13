@@ -5,7 +5,7 @@ import { configureStore, ThunkAction } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 import { appReducer } from "app/appSlice"
 import { ThunkDispatch } from "redux-thunk"
-import { authReducer } from "features/login/authSlice"
+import { authReducer } from "features/auth/model/authSlice"
 
 /*type rootReducerType = {
     todolists: TodolistDomainType[]

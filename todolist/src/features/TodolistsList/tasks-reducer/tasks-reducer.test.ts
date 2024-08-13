@@ -1,14 +1,15 @@
 import { v1 } from "uuid"
-import { TaskPriorities, TaskStatuses } from "api/API"
+import { TaskPriorities, TaskStatuses } from "features/TodolistsList/todolistApi"
 import { addTodolist, removeTodolist, setTodolists } from "features/TodolistsList/todolist-reducer/todolistsSlice"
 import {
   addTask,
+  fetchTasks,
   removeTask,
-  setTasks,
   tasksReducer,
   TasksType,
   updateTask,
 } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { Action } from "common/types/types"
 
 let startState: TasksType
 
@@ -162,9 +163,10 @@ test("correct task should be removed", () => {
 })
 
 test("correct task should be add", () => {
-  const endState = tasksReducer(
-    startState,
-    addTask({
+  type Action = Omit<ReturnType<typeof addTask.fulfilled>, "meta">
+  const action: Action = {
+    type: addTask.fulfilled.type,
+    payload: {
       task: {
         id: "sss",
         todoListId: "todolistId1",
@@ -177,8 +179,9 @@ test("correct task should be add", () => {
         title: "MUI",
         description: "",
       },
-    }),
-  )
+    },
+  }
+  const endState = tasksReducer(startState, action)
 
   expect(endState["todolistId1"].length).toBe(7)
   expect(endState["todolistId2"].length).toBe(4)
@@ -188,12 +191,14 @@ test("correct task should be add", () => {
 })
 
 test("correct task should change its name", () => {
-  const action = updateTask({
-    todolistId: "todolistId2",
-    taskId: startState["todolistId2"][0].id,
-    model: { title: "Apple" },
-  })
-
+  const action: Action<typeof updateTask.fulfilled> = {
+    type: updateTask.fulfilled.type,
+    payload: {
+      todolistId: "todolistId2",
+      taskId: startState["todolistId2"][0].id,
+      domainModel: { title: "Apple" },
+    },
+  }
   const endState = tasksReducer(startState, action)
 
   expect(endState["todolistId1"].length).toBe(6)
@@ -203,11 +208,14 @@ test("correct task should change its name", () => {
 })
 
 test("correct change status of task should be changed", () => {
-  const action = updateTask({
-    todolistId: "todolistId2",
-    taskId: startState["todolistId2"][3].id,
-    model: { status: TaskStatuses.New },
-  })
+  const action: Action<typeof updateTask.fulfilled> = {
+    type: updateTask.fulfilled.type,
+    payload: {
+      todolistId: "todolistId2",
+      taskId: startState["todolistId2"][3].id,
+      domainModel: { status: TaskStatuses.New },
+    },
+  }
   const endState = tasksReducer(startState, action)
 
   expect(endState["todolistId1"].length).toBe(6)
@@ -267,7 +275,20 @@ test("empty arrays should be added when we set todolists", () => {
 })
 
 test("tasks should be added for todolist", () => {
-  const action = setTasks({ todolistId: "todolistId1", tasks: startState["todolistId1"] })
+  const action: Action<typeof fetchTasks.fulfilled> = {
+    type: fetchTasks.fulfilled.type,
+    payload: {
+      tasks: startState["todolistId1"],
+      todolistId: "todolistId1",
+    },
+  }
+
+  /*const _action = fetchTasks.fulfilled(
+    //первый параметр: что санка возвращает, 2: requestId, 3: аргументы самой санки
+    { todolistId: "todolistId1", tasks: startState["todolistId1"] },
+    "requestId",
+    "todolistId1",
+  )*/
 
   const endState = tasksReducer(
     {

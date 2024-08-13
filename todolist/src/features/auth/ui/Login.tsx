@@ -9,8 +9,8 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import { useFormik } from "formik"
 import { useDispatch, useSelector } from "react-redux"
-import { loginTC, selectIsLoginIn } from "features/login/authSlice"
-import { AppRootStateType, useAppDispatch, useAppSelector } from "../../app/store"
+import { loginTC, selectIsLoginIn } from "features/auth/model/authSlice"
+import { AppRootStateType, useAppDispatch, useAppSelector } from "app/store"
 import { Navigate } from "react-router-dom"
 
 type FormikErrorType = {

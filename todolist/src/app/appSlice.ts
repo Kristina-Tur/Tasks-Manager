@@ -1,7 +1,7 @@
-import { authAPI } from "api/API"
+import { authAPI } from "features/TodolistsList/todolistApi"
 import { Dispatch } from "redux"
-import { handleServerAppError, handleServerNetworkError } from "utils/error-utils"
-import { setIsLoginIn } from "features/login/authSlice"
+import { handleServerAppError, handleServerNetworkError } from "common/utils/handleServerAppError"
+import { setIsLoginIn } from "features/auth/model/authSlice"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"

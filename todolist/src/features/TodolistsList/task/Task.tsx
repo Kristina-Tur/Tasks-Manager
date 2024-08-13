@@ -5,10 +5,10 @@ import ListItem from "@mui/material/ListItem"
 import { getListItemSx } from "../todolist/Todolist.styles"
 import { Checkbox, IconButton } from "@mui/material"
 import { Delete } from "@mui/icons-material"
-import { removeTaskTC, updateTaskTC } from "features/TodolistsList/tasks-reducer/tasksSlice"
-import { TaskStatuses, TaskType, TodolistDomainType } from "api/API"
+import { removeTaskTC, updateTask } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { TaskStatuses, TaskType, TodolistDomainType } from "features/TodolistsList/todolistApi"
 import { useAppDispatch } from "app/store"
-import { EditableSpan } from "components/editableSpan/EditableSpan"
+import { EditableSpan } from "common/components/editableSpan/EditableSpan"
 
 type TaskComponentType = {
   task: TaskType
@@ -21,10 +21,11 @@ export const Task = ({ task, todolist }: TaskComponentType) => {
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const status = event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
-    return dispatch(updateTaskTC(todolist.id, task.id, { status }))
+    return dispatch(updateTask({ todolistId: todolist.id, taskId: task.id, domainModel: { status } }))
   }
 
-  const onChangeEditableSpanHandler = (title: string) => dispatch(updateTaskTC(todolist.id, task.id, { title }))
+  const onChangeEditableSpanHandler = (title: string) =>
+    dispatch(updateTask({ todolistId: todolist.id, taskId: task.id, domainModel: { title } }))
 
   return (
     <ListItem sx={getListItemSx(task.status === TaskStatuses.Completed)}>
