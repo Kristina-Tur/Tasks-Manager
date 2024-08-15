@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { todolistAPI } from "features/TodolistsList/todolistApi"
+import { todolistAPI } from "features/TodolistsList/services/todolistApi"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 
 export default {

@@ -1,6 +1,7 @@
 import { AppDispatchType } from "app/store"
 import axios from "axios"
 import { setAppError, setAppStatus } from "app/appSlice"
+import { Dispatch } from "redux"
 
 export const handleServerNetworkError = (err: unknown, dispatch: AppDispatchType): void => {
   let errorMessage = "Some error occurred"

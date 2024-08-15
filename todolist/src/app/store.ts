@@ -1,6 +1,6 @@
 import { combineReducers, UnknownAction } from "redux"
-import { todolistsReducer } from "features/TodolistsList/todolist-reducer/todolistsSlice"
-import { tasksReducer } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { todolistsReducer } from "features/TodolistsList/model/todolistSlice/todolistsSlice"
+import { tasksReducer } from "features/TodolistsList/model/tasksSlice/tasksSlice"
 import { configureStore, ThunkAction } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 import { appReducer } from "app/appSlice"

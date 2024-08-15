@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Task } from "./Task"
+import { Task } from "features/TodolistsList/uiTodo/task/Task"
 import { ReduxStoreProviderDecorator } from "stories/decorators/ReduxStoreProviderDecorator"
 import { useDispatch } from "react-redux"
 import { useAppSelector } from "app/store"
 import { v1 } from "uuid"
-import { addTask } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { addTask } from "features/TodolistsList/model/tasksSlice/tasksSlice"
 import { TaskPriorities, TaskStatuses } from "common/enums"
-import { TaskType, TodolistDomainType } from "features/TodolistsList/todolistApi"
+import { TaskType, TodolistDomainType } from "features/TodolistsList/services/todolistApi"
 
 const meta: Meta<typeof Task> = {
   title: "Todolist/Task",

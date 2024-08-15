@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "app/store"
 import { useCallback, useEffect } from "react"
-import { FilterType } from "features/TodolistsList/todolistApi"
+import { FilterType } from "features/TodolistsList/services/todolistApi"
 import { selectIsLoginIn } from "features/auth/model/authSlice"
 import {
   addTodolist,
@@ -9,7 +9,7 @@ import {
   fetchTodolists,
   removeTodolist,
   selectTodolists,
-} from "features/TodolistsList/todolist-reducer/todolistsSlice"
+} from "features/TodolistsList/model/todolistSlice/todolistsSlice"
 
 export const useTodolists = (demo: boolean) => {
   const dispatch = useAppDispatch()

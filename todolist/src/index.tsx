@@ -5,7 +5,7 @@ import App from "./app/App"
 import { Provider } from "react-redux"
 import { store } from "./app/store"
 import { BrowserRouter, createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
-import { TodolistsList } from "./features/TodolistsList/TodolistsList"
+import { TodolistsList } from "features/TodolistsList/uiTodo/TodolistsList"
 import { ErrorPage } from "./common/components/errorPage/ErrorPage"
 import { Login } from "features/auth/ui/Login"
 

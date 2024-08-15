@@ -4,7 +4,7 @@ import { instance } from "common/instance/instance"
 import { BaseResponse } from "common/types/types"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 
-//api
+//services
 export const todolistAPI = {
   getTodolists() {
     return instance.get<TodolistType[]>("todo-lists")

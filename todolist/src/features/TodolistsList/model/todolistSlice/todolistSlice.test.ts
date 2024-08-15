@@ -1,5 +1,5 @@
 import { v1 } from "uuid"
-import { TodolistDomainType } from "features/TodolistsList/todolistApi"
+import { TodolistDomainType } from "features/TodolistsList/services/todolistApi"
 import {
   addTodolist,
   changeTodolistEntityStatus,
@@ -8,8 +8,8 @@ import {
   fetchTodolists,
   removeTodolist,
   todolistsReducer,
-} from "features/TodolistsList/todolist-reducer/todolistsSlice"
-import { removeTask } from "features/TodolistsList/tasks-reducer/tasksSlice"
+} from "features/TodolistsList/model/todolistSlice/todolistsSlice"
+import { removeTask } from "features/TodolistsList/model/tasksSlice/tasksSlice"
 
 let todolistId1: string
 let todolistId2: string

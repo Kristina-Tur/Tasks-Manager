@@ -1,12 +1,12 @@
 import { Dispatch } from "redux"
 import { setAppStatus } from "app/appSlice"
 import { handleServerAppError } from "common/utils/handleServerAppError"
-import { clearTodolists } from "features/TodolistsList/todolist-reducer/todolistsSlice"
+import { clearTodolists } from "features/TodolistsList/model/todolistSlice/todolistsSlice"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { LoginParamsType } from "features/auth/api/authApi.types"
 import { authAPI } from "features/auth/api/authApi"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
-import { clearTasks } from "features/TodolistsList/tasks-reducer/tasksSlice"
+import { clearTasks } from "features/TodolistsList/model/tasksSlice/tasksSlice"
 
 const slice = createSlice({
   name: "auth",

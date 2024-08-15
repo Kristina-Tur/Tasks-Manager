@@ -1,5 +1,5 @@
 import { v1 } from "uuid"
-import { addTodolist, fetchTodolists, removeTodolist } from "features/TodolistsList/todolist-reducer/todolistsSlice"
+import { addTodolist, fetchTodolists, removeTodolist } from "features/TodolistsList/model/todolistSlice/todolistsSlice"
 import {
   addTask,
   fetchTasks,
@@ -7,7 +7,7 @@ import {
   tasksReducer,
   TasksType,
   updateTask,
-} from "features/TodolistsList/tasks-reducer/tasksSlice"
+} from "features/TodolistsList/model/tasksSlice/tasksSlice"
 import { Action } from "common/types/types"
 import { TaskPriorities, TaskStatuses } from "common/enums"
 

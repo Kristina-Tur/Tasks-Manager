@@ -3,8 +3,8 @@ import * as React from "react"
 import Grid from "@mui/material/Unstable_Grid2"
 import { AddItemForm } from "common/components/addItemForm/AddItemForm"
 import Paper from "@mui/material/Paper"
-import { Todolist } from "./todolist/Todolist"
-import { useTodolists } from "./hooks/useTodolists"
+import { Todolist } from "features/TodolistsList/uiTodo/todolist/Todolist"
+import { useTodolists } from "features/TodolistsList/common/hooks/useTodolists"
 import { Navigate } from "react-router-dom"
 
 type TodolistsListPropsType = {
