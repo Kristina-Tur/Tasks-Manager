@@ -10,7 +10,7 @@ import Box from "@mui/material/Box"
 import { filterButtonsContainerSx } from "features/TodolistsList/uiTodo/todolist/Todolist.styles"
 import { Task } from "features/TodolistsList/uiTodo/task/Task"
 import { useAppDispatch, useAppSelector } from "app/store"
-import { addTask, fetchTasks } from "features/TodolistsList/model/tasksSlice/tasksSlice"
+import { addTask, fetchTasks, selectFilteredTasks } from "features/TodolistsList/model/tasksSlice/tasksSlice"
 import { ButtonWithMemo } from "common/components/buttons/Button"
 import { FilterType, TaskType, TodolistDomainType } from "features/TodolistsList/services/todolistApi"
 import { TaskStatuses } from "common/enums"
@@ -35,7 +35,7 @@ export const Todolist = React.memo(
 
     const dispatch = useAppDispatch()
 
-    let tasks = useAppSelector<TaskType[]>((state) => state.tasks[todolist.id])
+    let tasks = useAppSelector<TaskType[]>((state) => selectFilteredTasks(state, todolist.filter, todolist.id))
 
     useEffect(() => {
       if (!demo) {
@@ -76,20 +76,8 @@ export const Todolist = React.memo(
       [changeTodolistTitle, todolist.id],
     )
 
-    tasks = useMemo(() => {
-      console.log("filterMemo")
-
-      if (todolist.filter === "completed") {
-        tasks = tasks.filter((task) => task.status === TaskStatuses.Completed)
-      }
-      if (todolist.filter === "active") {
-        tasks = tasks.filter((task) => task.status === TaskStatuses.New)
-      }
-      return tasks
-    }, [tasks, todolist.filter])
-
     return (
-      <div>
+      <div style={{ width: "300px" }}>
         <div className={"todolist-title-container"}>
           <h3>
             <EditableSpan
@@ -110,7 +98,7 @@ export const Todolist = React.memo(
         {tasks.length === 0 ? (
           <p>No tasks</p>
         ) : (
-          <List>
+          <List sx={{ height: "226px", overflow: "auto" }}>
             {tasks.map((task) => (
               <Task key={task.id} task={task} todolist={todolist} />
             ))}

@@ -10,6 +10,7 @@ import { TaskType, TodolistDomainType } from "features/TodolistsList/services/to
 import { useAppDispatch } from "app/store"
 import { EditableSpan } from "common/components/editableSpan/EditableSpan"
 import { TaskStatuses } from "common/enums"
+import EditIcon from "@mui/icons-material/Edit"
 
 type TaskComponentType = {
   task: TaskType
@@ -30,7 +31,15 @@ export const Task = ({ task, todolist }: TaskComponentType) => {
 
   return (
     <ListItem sx={getListItemSx(task.status === TaskStatuses.Completed)}>
-      <div>
+      <div
+        style={{
+          overflowX: "hidden",
+          wordWrap: "break-word",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "end",
+        }}
+      >
         <Checkbox onChange={onChangeHandler} checked={task.status === TaskStatuses.Completed} />
         <EditableSpan
           title={task.title}

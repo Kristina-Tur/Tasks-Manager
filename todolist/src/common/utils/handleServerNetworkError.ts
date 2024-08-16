@@ -6,7 +6,6 @@ import { Dispatch } from "redux"
 export const handleServerNetworkError = (err: unknown, dispatch: AppDispatchType): void => {
   let errorMessage = "Some error occurred"
 
-  // ❗Проверка на наличие axios ошибки
   if (axios.isAxiosError(err)) {
     // ⏺️ err.response?.data?.message - например получение тасок с невалидной todolistId
     // ⏺️ err?.message - например при создании таски в offline режиме

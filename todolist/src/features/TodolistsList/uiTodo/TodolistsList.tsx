@@ -29,7 +29,7 @@ export const TodolistsList = ({ demo = false }: TodolistsListPropsType) => {
       <Grid container sx={{ mb: "30px" }}>
         <AddItemForm addItem={addTodolistCallback} />
       </Grid>
-      <Grid container spacing={4}>
+      <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
         {todolists.map((todolist) => {
           return (
             <Grid key={todolist.id}>
@@ -45,7 +45,7 @@ export const TodolistsList = ({ demo = false }: TodolistsListPropsType) => {
             </Grid>
           )
         })}
-      </Grid>
+      </div>
     </>
   )
 }

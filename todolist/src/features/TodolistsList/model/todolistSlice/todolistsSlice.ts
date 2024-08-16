@@ -1,16 +1,9 @@
-import {
-  FilterType,
-  TaskDomainType,
-  todolistAPI,
-  TodolistDomainType,
-  TodolistType,
-} from "features/TodolistsList/services/todolistApi"
-import { AppDispatchType, AppThunk } from "app/store"
-import { addTask, fetchTasks } from "features/TodolistsList/model/tasksSlice/tasksSlice"
+import { FilterType, todolistAPI, TodolistDomainType, TodolistType } from "features/TodolistsList/services/todolistApi"
+import { AppDispatchType } from "app/store"
+import { fetchTasks } from "features/TodolistsList/model/tasksSlice/tasksSlice"
 import { RequestStatusType, setAppStatus } from "app/appSlice"
-import { asyncThunkCreator, buildCreateSlice, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { createAppAsyncThunk, handleServerNetworkError } from "common/utils"
-import { BaseResponse } from "common/types/types"
+import { asyncThunkCreator, buildCreateSlice, PayloadAction } from "@reduxjs/toolkit"
+import { handleServerNetworkError } from "common/utils"
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },

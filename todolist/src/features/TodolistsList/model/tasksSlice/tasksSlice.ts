@@ -1,17 +1,17 @@
 import {
+  FilterType,
   TaskDomainType,
   TaskType,
   todolistAPI,
-  TodolistType,
   UpdateTaskArgs,
   UpdateTaskModelType,
 } from "features/TodolistsList/services/todolistApi"
-import { AppDispatchType, AppRootStateType, AppThunk } from "app/store"
+import { AppDispatchType, AppRootStateType } from "app/store"
 import { setAppStatus } from "app/appSlice"
-import { asyncThunkCreator, buildCreateSlice, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { asyncThunkCreator, buildCreateSlice } from "@reduxjs/toolkit"
 import { addTodolist, fetchTodolists, removeTodolist } from "features/TodolistsList/model/todolistSlice/todolistsSlice"
-import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "common/utils"
-import { RESULT_CODE } from "common/enums"
+import { handleServerAppError, handleServerNetworkError } from "common/utils"
+import { RESULT_CODE, TaskStatuses } from "common/enums"
 
 export type TasksType = {
   [key: string]: TaskDomainType[]
@@ -186,7 +186,20 @@ const slice = createAppSlice({
                 return {}
               })*/
   },
+  selectors: {
+    selectFilteredTasks: (state, filter: FilterType, todolistId: string) => {
+      let tasksForTodolist: TaskType[] = state[todolistId]
+      if (filter === "completed") {
+        tasksForTodolist = tasksForTodolist.filter((task) => task.status === TaskStatuses.Completed)
+      }
+      if (filter === "active") {
+        tasksForTodolist = tasksForTodolist.filter((task) => task.status === TaskStatuses.New)
+      }
+      return tasksForTodolist
+    },
+  },
 })
 
 export const tasksReducer = slice.reducer
 export const { clearTasks, fetchTasks, removeTask, updateTask, addTask } = slice.actions
+export const { selectFilteredTasks } = slice.selectors

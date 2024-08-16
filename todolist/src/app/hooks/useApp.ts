@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
 import { createTheme } from "@mui/material/styles"
 import { useAppDispatch } from "../store"
-import { logoutTC } from "features/auth/model/authSlice"
+import { logout } from "features/auth/model/authSlice"
 
 type ThemeMode = "dark" | "light"
 
@@ -22,7 +22,7 @@ export const useApp = () => {
   }
 
   const logoutHandler = useCallback(() => {
-    dispatch(logoutTC())
+    dispatch(logout())
   }, [])
 
   return {

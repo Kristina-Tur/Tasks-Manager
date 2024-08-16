@@ -9,10 +9,10 @@ import Switch from "@mui/material/Switch"
 import CssBaseline from "@mui/material/CssBaseline"
 import { useApp } from "./hooks/useApp"
 import { ErrorSnackbar } from "common/components/errorSnackbar/ErrorSnackbar"
-import { useAppDispatch, useAppSelector } from "./store"
-import { initializedAppTC, selectIsInitialized, selectStatus } from "app/appSlice"
+import { selectIsInitialized, selectStatus } from "app/appSlice"
 import { Outlet } from "react-router-dom"
-import { selectIsLoginIn } from "features/auth/model/authSlice"
+import { initializedApp, selectIsLoginIn } from "features/auth/model/authSlice"
+import { useAppDispatch, useAppSelector } from "app/store"
 
 type AppPropsType = {
   demo?: boolean
@@ -30,7 +30,7 @@ export const App = ({ demo = false }: AppPropsType) => {
   const { theme, changeModeHandler, logoutHandler } = useApp()
 
   useEffect(() => {
-    dispatch(initializedAppTC())
+    dispatch(initializedApp())
   }, [])
 
   if (!isInitialized) {
@@ -53,7 +53,7 @@ export const App = ({ demo = false }: AppPropsType) => {
       <CssBaseline />
       <div className="App">
         <ErrorSnackbar />
-        <AppBar position="static" sx={{ mb: "30px" }}>
+        <AppBar position="static" sx={{ mb: "30px", height: "68px" }}>
           <Toolbar>
             <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
               <Menu />

@@ -8,10 +8,10 @@ import FormLabel from "@mui/material/FormLabel"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import { useFormik } from "formik"
-import { useDispatch, useSelector } from "react-redux"
-import { loginTC, selectIsLoginIn } from "features/auth/model/authSlice"
-import { AppRootStateType, useAppDispatch, useAppSelector } from "app/store"
+import { login, selectIsLoginIn } from "features/auth/model/authSlice"
+import { useAppDispatch, useAppSelector } from "app/store"
 import { Navigate } from "react-router-dom"
+import { BaseResponse } from "common/types/types"
 
 type FormikErrorType = {
   email?: string
@@ -31,6 +31,7 @@ export const Login = () => {
     },
     validate: (values) => {
       const errors: FormikErrorType = {}
+      //проверка фронта для ввода корректного мэйла и пароля, без запроса на сервер
       if (!values.email.trim()) {
         errors.email = "Required"
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -43,10 +44,17 @@ export const Login = () => {
       }
       return errors
     },
-    onSubmit: (values) => {
-      dispatch(loginTC(values))
-      /*alert(JSON.stringify(values))*/
-      formik.resetForm()
+    onSubmit: (values, formikHelpers) => {
+      dispatch(login({ values }))
+        //.unwrap() используем в Redux Toolkit , читать документацию. санка createAsyncThunk возвращает всегда зарезолвленный промис
+        .unwrap()
+        //проверка из зарежджектного промиса для ввода корректного мэйла и пароля
+        .catch((error: BaseResponse) => {
+          if (error.fieldsErrors) {
+            error.fieldsErrors.forEach((el) => formikHelpers.setFieldError(el.field, el.error))
+          }
+        })
+      //formik.resetForm()
     },
   })
 

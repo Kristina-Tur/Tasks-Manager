@@ -12,34 +12,33 @@ import { authReducer } from "features/auth/model/authSlice"
     tasks: TasksType
 }*/
 
-const rootReducer = combineReducers({
-  todolists: todolistsReducer,
-  tasks: tasksReducer,
-  app: appReducer,
-  auth: authReducer,
+/*const rootReducer = combineReducers()*/
+
+export const store = configureStore({
+  reducer: {
+    todolists: todolistsReducer,
+    tasks: tasksReducer,
+    app: appReducer,
+    auth: authReducer,
+  },
 })
 
-/*export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))*/
-
-export const store = configureStore({ reducer: rootReducer })
-/*export const store = configureStore({
-    reducer: rootReducer,
-    middleware: [thunk]
-});*/
-
-//type AllActionsType = TodolistsActionsType | TasksActionsType | AuthActionsType | AppActionsType
-
-export type AppRootStateType = ReturnType<typeof rootReducer>
-export type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, /*AllActionsType*/ UnknownAction>
+export type AppRootStateType = ReturnType<typeof store.getState>
+export type AppDispatchType = typeof store.dispatch
 
 export const useAppDispatch = () => useDispatch<AppDispatchType>()
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
-export type AppThunk<ReturnType = void> = ThunkAction<
+/*export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   AppRootStateType,
   unknown,
-  /*AllActionsType*/ UnknownAction
->
+  /!*AllActionsType*!/ UnknownAction
+>*/
 // @ts-ignore
 window.store = store
+/*export const store = configureStore({
+    reducer: rootReducer,
+    middleware: [thunk]
+});*/
+/*export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))*/

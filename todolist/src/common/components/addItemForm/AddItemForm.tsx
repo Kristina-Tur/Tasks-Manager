@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField"
 import IconButton from "@mui/material/IconButton"
 import AddBoxIcon from "@mui/icons-material/AddBox"
 import { useAddItemForm } from "common/components/addItemForm/hooks/useAddItemForm"
+import EditIcon from "@mui/icons-material/Edit"
 
 type AddItemFormType = {
   addItem: (value: string) => void

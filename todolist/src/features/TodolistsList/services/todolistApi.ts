@@ -83,17 +83,9 @@ export type UpdateTaskModelType = {
   startDate: string
   deadline: string
 }
-type UpdateDomainTaskModelType = {
-  title?: string
-  description?: string
-  completed?: boolean
-  status?: TaskStatuses
-  priority?: TaskPriorities
-  startDate?: string
-  deadline?: string
-}
+
 export type UpdateTaskArgs = {
   todolistId: string
   taskId: string
-  domainModel: UpdateDomainTaskModelType
+  domainModel: Partial<UpdateTaskModelType>
 }

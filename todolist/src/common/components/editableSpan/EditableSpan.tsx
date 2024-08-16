@@ -1,5 +1,7 @@
 import React from "react"
 import TextField from "@mui/material/TextField"
+import EditIcon from "@mui/icons-material/Edit"
+import { IconButton } from "@mui/material"
 
 type EditableSpan = {
   title: string
@@ -22,9 +24,25 @@ export const EditableSpan = React.memo(({ title, onChange, disabled }: EditableS
   }
   const onChangeValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
 
-  return editMode ? (
-    <TextField disabled={disabled} value={value} onChange={onChangeValueHandler} onBlur={activateViewMode} autoFocus />
-  ) : (
-    <span onDoubleClick={activateEditMode}>{title}</span>
+  return (
+    <div style={{ width: "260px" }}>
+      {editMode ? (
+        <TextField
+          disabled={disabled}
+          value={value}
+          onChange={onChangeValueHandler}
+          onBlur={activateViewMode}
+          autoFocus
+          style={{ width: "170px" }}
+        />
+      ) : (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span style={{ height: "40px", lineHeight: "2.5" }} /*onDoubleClick={activateEditMode}*/>{title}</span>
+          <IconButton aria-label="edit">
+            <EditIcon onClick={activateEditMode} />
+          </IconButton>
+        </div>
+      )}
+    </div>
   )
 })
