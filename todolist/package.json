@@ -1,6 +1,7 @@
 {
   "name": "1-lesson",
   "version": "0.1.0",
+  "homepage": "https://Kristina-Tur.github.io",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -19,6 +20,7 @@
     "@types/uuid": "^9.0.8",
     "axios": "^1.7.2",
     "formik": "^2.4.6",
+    "gh-pages": "^6.2.0",
     "init": "^0.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -28,6 +30,7 @@
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
     "storybook": "^8.1.11",
+    "styled-components": "^6.1.12",
     "typescript": "^4.8.4",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
@@ -41,7 +44,9 @@
     "build-storybook": "storybook build",
     "jest:integration": "jest -c integration/jest.config.js",
     "jest:update-integration": "jest -c integration/jest.config.js --updateSnapshot",
-    "test:integration": "start-server-and-test storybook http-get://localhost:6006 jest:integration"
+    "test:integration": "start-server-and-test storybook http-get://localhost:6006 jest:integration",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

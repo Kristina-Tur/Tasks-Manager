@@ -1,9 +1,10 @@
-import { FilterType, todolistAPI, TodolistDomainType, TodolistType } from "features/TodolistsList/services/todolistApi"
 import { AppDispatchType } from "app/store"
 import { fetchTasks } from "features/TodolistsList/model/tasksSlice/tasksSlice"
 import { RequestStatusType, setAppStatus } from "app/appSlice"
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from "@reduxjs/toolkit"
 import { handleServerNetworkError } from "common/utils"
+import { FilterType, TodolistDomainType, TodolistType } from "features/TodolistsList/ui/todolistApi.types"
+import { todolistAPI } from "features/TodolistsList/ui/todolistApi"
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -15,13 +16,7 @@ const slice = createAppSlice({
   reducers: (creators) => {
     return {
       changeTodolistFilter: creators.reducer(
-        (
-          state,
-          action: PayloadAction<{
-            todolistId: string
-            filter: FilterType
-          }>,
-        ) => {
+        (state, action: PayloadAction<{ todolistId: string; filter: FilterType }>) => {
           const todolist = state.find((todolist) => todolist.id === action.payload.todolistId)
           if (todolist) {
             todolist.filter = action.payload.filter
@@ -29,13 +24,7 @@ const slice = createAppSlice({
         },
       ),
       changeTodolistEntityStatus: creators.reducer(
-        (
-          state,
-          action: PayloadAction<{
-            todolistId: string
-            status: RequestStatusType
-          }>,
-        ) => {
+        (state, action: PayloadAction<{ todolistId: string; status: RequestStatusType }>) => {
           const todolist = state.find((todolist) => todolist.id === action.payload.todolistId)
           if (todolist) {
             todolist.entityStatus = action.payload.status

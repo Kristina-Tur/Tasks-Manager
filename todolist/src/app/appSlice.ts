@@ -1,11 +1,4 @@
-import { Dispatch } from "redux"
-import { handleServerAppError } from "common/utils/handleServerAppError"
-import { asyncThunkCreator, buildCreateSlice, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RESULT_CODE } from "common/enums"
-import { authAPI } from "features/auth/api/authApi"
-import { handleServerNetworkError } from "common/utils"
-import { LoginParamsType } from "features/auth/api/authApi.types"
-import { AppDispatchType } from "app/store"
+import { asyncThunkCreator, buildCreateSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 

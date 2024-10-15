@@ -2,15 +2,20 @@ import React from "react"
 import TextField from "@mui/material/TextField"
 import EditIcon from "@mui/icons-material/Edit"
 import { IconButton } from "@mui/material"
+import { styled } from "styled-components"
+import { TaskStatuses } from "common/enums"
+import { TaskDomainType } from "features/TodolistsList/ui/taskApi.types"
 
 type EditableSpan = {
   title: string
   onChange: (title: string) => void
   disabled: boolean
+  status?: TaskStatuses
 }
-export const EditableSpan = React.memo(({ title, onChange, disabled }: EditableSpan) => {
-  console.log("EditableSpan")
-
+type TitleProps = {
+  status: TaskStatuses | undefined
+}
+export const EditableSpan = React.memo(({ title, onChange, disabled, status }: EditableSpan) => {
   const [editMode, setEditMode] = React.useState<boolean>(false)
   const [value, setValue] = React.useState("")
 
@@ -25,7 +30,7 @@ export const EditableSpan = React.memo(({ title, onChange, disabled }: EditableS
   const onChangeValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
 
   return (
-    <div style={{ width: "260px" }}>
+    <Wrapper>
       {editMode ? (
         <TextField
           disabled={disabled}
@@ -33,16 +38,31 @@ export const EditableSpan = React.memo(({ title, onChange, disabled }: EditableS
           onChange={onChangeValueHandler}
           onBlur={activateViewMode}
           autoFocus
-          style={{ width: "170px" }}
+          sx={{ width: "170px" }}
         />
       ) : (
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ height: "40px", lineHeight: "2.5" }} /*onDoubleClick={activateEditMode}*/>{title}</span>
-          <IconButton aria-label="edit">
-            <EditIcon onClick={activateEditMode} />
+        <WrapperIcons>
+          <Title status={status}>{title}</Title>
+          <IconButton onClick={activateEditMode} aria-label="edit" disabled={disabled}>
+            <EditIcon />
           </IconButton>
-        </div>
+        </WrapperIcons>
       )}
-    </div>
+    </Wrapper>
   )
 })
+
+const Wrapper = styled.div`
+  width: 260px;
+`
+const WrapperIcons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+`
+
+const Title = styled.span<TitleProps>`
+  height: 40px;
+  line-height: 3;
+  opacity: ${({ status }) => (status === TaskStatuses.Completed ? 0.5 : 1)};
+`

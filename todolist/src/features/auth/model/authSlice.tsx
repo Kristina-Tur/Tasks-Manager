@@ -1,7 +1,7 @@
 import { setAppIsInitialized, setAppStatus } from "app/appSlice"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { clearTodolists } from "features/TodolistsList/model/todolistSlice/todolistsSlice"
-import { asyncThunkCreator, buildCreateSlice, PayloadAction } from "@reduxjs/toolkit"
+import { asyncThunkCreator, buildCreateSlice, isFulfilled, PayloadAction } from "@reduxjs/toolkit"
 import { LoginParamsType } from "features/auth/api/authApi.types"
 import { authAPI } from "features/auth/api/authApi"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
@@ -114,6 +114,14 @@ const slice = createAppSlice({
       ),
     }
   },
+  /*extraReducers: (builder) => {
+    builder.addMatcher(
+      isFulfilled(login, logout, initializedApp),
+      (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+        state.isLoggedIn = action.payload.isLoggedIn
+      },
+    )
+  },*/
   selectors: {
     selectIsLoginIn: (state) => state.isLoggedIn,
   },

@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Task } from "features/TodolistsList/uiTodo/task/Task"
+import { Task } from "features/TodolistsList/uiTodo/todolist/tasks/task/Task"
 import { ReduxStoreProviderDecorator } from "stories/decorators/ReduxStoreProviderDecorator"
 import { useDispatch } from "react-redux"
 import { useAppSelector } from "app/store"
 import { v1 } from "uuid"
 import { addTask } from "features/TodolistsList/model/tasksSlice/tasksSlice"
 import { TaskPriorities, TaskStatuses } from "common/enums"
-import { TaskType, TodolistDomainType } from "features/TodolistsList/services/todolistApi"
+import { TaskDomainType } from "features/TodolistsList/ui/taskApi.types"
+import { TodolistDomainType } from "features/TodolistsList/ui/todolistApi.types"
 
 const meta: Meta<typeof Task> = {
   title: "Todolist/Task",
@@ -27,7 +28,8 @@ const meta: Meta<typeof Task> = {
       todoListId: "dddas",
       order: 0,
       addedDate: "",
-    },
+      entityStatus: "idle",
+    } /*,
     todolist: {
       filter: "all",
       entityStatus: "idle",
@@ -35,7 +37,7 @@ const meta: Meta<typeof Task> = {
       title: "",
       addedDate: "",
       order: 0,
-    },
+    },*/,
   },
   decorators: [ReduxStoreProviderDecorator],
 }
@@ -44,7 +46,7 @@ export default meta
 type Story = StoryObj<typeof Task>
 
 const TaskRender = () => {
-  let task = useAppSelector<TaskType>((state) => state.tasks["todolistId1"][0])
+  let task = useAppSelector<TaskDomainType>((state) => state.tasks["todolistId1"][0])
   let todolist = useAppSelector<TodolistDomainType>((state) => state.todolists[0])
   const dispatch = useDispatch()
 
@@ -68,11 +70,12 @@ const TaskRender = () => {
       todoListId: "todolistId1",
       order: 0,
       addedDate: "",
+      entityStatus: "idle",
     }
     dispatch(action)
   }
 
-  return <Task task={task} todolist={todolist} />
+  return <Task task={task} /*todolist={todolist}*/ />
 }
 export const TaskStory: Story = {
   render: () => <TaskRender />,
